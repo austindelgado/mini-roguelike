@@ -492,6 +492,7 @@ MonoBehaviour:
   speed: 3
   acceleration: 20
   deceleration: 20
+  cam: {fileID: 519420031}
 --- !u!212 &1522022965
 SpriteRenderer:
   m_ObjectHideFlags: 0

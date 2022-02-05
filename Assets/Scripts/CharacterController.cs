@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    private Vector2 velocity;
     public float speed;
     public float acceleration;
     public float deceleration;
+
+    private Vector2 velocity;
     private Vector2 moveInput;
+    private Vector2 mouseInput;
+    private Vector2 lookDir;
+
+    public Camera cam;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +25,12 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        mouseInput = cam.ScreenToWorldPoint(Input.mousePosition);
     }
 
     void FixedUpdate()
     {
+        // Movement
         if (moveInput != Vector2.zero)
         {
             velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput.x, acceleration * Time.fixedDeltaTime);
@@ -35,6 +42,10 @@ public class CharacterController : MonoBehaviour
             velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.fixedDeltaTime);
         }
 
+        Debug.Log(velocity.magnitude);
         transform.Translate(velocity * Time.fixedDeltaTime);
+
+        // Aiming
+        lookDir = mouseInput - (Vector2)transform.position;
     }
 }
