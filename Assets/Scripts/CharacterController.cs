@@ -12,9 +12,12 @@ public class CharacterController : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 mouseInput;
     private Vector2 lookDir;
+    private float lookAngle;
 
     public Camera cam;
     public CircleCollider2D circleCollider;
+
+    public GameObject projectilePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,9 @@ public class CharacterController : MonoBehaviour
     {
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         mouseInput = cam.ScreenToWorldPoint(Input.mousePosition);
+
+        if (Input.GetButtonDown("Fire1"))
+            Shoot();
     }
 
     void FixedUpdate()
@@ -47,9 +53,10 @@ public class CharacterController : MonoBehaviour
 
         // Aiming
         lookDir = mouseInput - (Vector2)transform.position;
+        lookAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
 
         // Collision
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius, 0);
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider.
@@ -66,5 +73,11 @@ public class CharacterController : MonoBehaviour
                 transform.Translate(colliderDistance.pointA - colliderDistance.pointB);
             }
         }
+    }
+
+    // this is temporary and will probably move out of here
+    void Shoot()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.AngleAxis(lookAngle, Vector3.forward));
     }
 }

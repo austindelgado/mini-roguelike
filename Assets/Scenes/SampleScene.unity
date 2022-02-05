@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 1522022967}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -494,6 +494,7 @@ MonoBehaviour:
   deceleration: 20
   cam: {fileID: 519420031}
   circleCollider: {fileID: 1522022967}
+  projectilePrefab: {fileID: 1810171906407645525, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
 --- !u!212 &1522022965
 SpriteRenderer:
   m_ObjectHideFlags: 0
