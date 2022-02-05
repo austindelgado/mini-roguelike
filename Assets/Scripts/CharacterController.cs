@@ -12,7 +12,6 @@ public class CharacterController : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 mouseInput;
     private Vector2 lookDir;
-    private float lookAngle;
 
     public Camera cam;
     public CircleCollider2D circleCollider;
@@ -48,19 +47,17 @@ public class CharacterController : MonoBehaviour
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.fixedDeltaTime);
             velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.fixedDeltaTime);
         }
-
         transform.Translate(velocity * Time.fixedDeltaTime);
 
         // Aiming
-        lookDir = mouseInput - (Vector2)transform.position;
-        lookAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        lookDir = (mouseInput - (Vector2)transform.position).normalized;
 
         // Collision
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius, 0);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider.
-            if (hit == circleCollider)
+            if (hit == circleCollider || hit.gameObject.tag == "Projectile")
                 continue;
 
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
@@ -78,6 +75,7 @@ public class CharacterController : MonoBehaviour
     // this is temporary and will probably move out of here
     void Shoot()
     {
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.AngleAxis(lookAngle, Vector3.forward));
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+        projectile.GetComponent<Projectile>().dir = lookDir;
     }
 }

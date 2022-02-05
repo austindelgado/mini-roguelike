@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public Vector2 dir;
     public float speed;
     public CircleCollider2D circleCollider;
 
     void FixedUpdate()
     {
-        transform.Translate(transform.up * speed * Time.fixedDeltaTime);
+        transform.Translate(dir * speed * Time.fixedDeltaTime);
 
         // Collision
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius, 1);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider and player
