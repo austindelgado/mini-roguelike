@@ -14,6 +14,7 @@ public class CharacterController : MonoBehaviour
     private Vector2 lookDir;
 
     public Camera cam;
+    public CircleCollider2D circleCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -42,10 +43,28 @@ public class CharacterController : MonoBehaviour
             velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.fixedDeltaTime);
         }
 
-        Debug.Log(velocity.magnitude);
         transform.Translate(velocity * Time.fixedDeltaTime);
 
         // Aiming
         lookDir = mouseInput - (Vector2)transform.position;
+
+        // Collision
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
+        foreach (Collider2D hit in hits)
+        {
+            // Ignore our own collider.
+            if (hit == circleCollider)
+                continue;
+
+            ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
+
+            // Ensure that we are still overlapping this collider.
+            // The overlap may no longer exist due to another intersected collider
+            // pushing us out of this one.
+            if (colliderDistance.isOverlapped)
+            {
+                transform.Translate(colliderDistance.pointA - colliderDistance.pointB);
+            }
+        }
     }
 }
