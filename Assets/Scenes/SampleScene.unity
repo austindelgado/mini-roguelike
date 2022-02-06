@@ -693,9 +693,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da60de5db0778c24795587c2f29fc69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1522022964}
   enemyPrefab: {fileID: 7121922833392969348, guid: 681a9e93601a86b41bac293179bd408f, type: 3}
   spawnPoints: []
+  startingTimeBtw: 5
+  currTimeBtw: 0
 --- !u!4 &970109647
 Transform:
   m_ObjectHideFlags: 0

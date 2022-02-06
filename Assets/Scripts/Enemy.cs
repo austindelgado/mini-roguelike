@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     public Text scoreText;
 
-    public float speed;
+    public float baseSpeed;
+    public float currSpeed;
     public float acceleration;
     public float deceleration;
 
@@ -21,6 +22,8 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.Find("Player");
         scoreText = GameObject.Find("Score").GetComponent<Text>();
+
+        currSpeed = baseSpeed;
     }
 
     // Update is called once per frame
@@ -28,6 +31,7 @@ public class Enemy : MonoBehaviour
     {
         // Get Player Position
         moveInput = (player.transform.position - transform.position).normalized;
+        currSpeed = baseSpeed + player.GetComponent<CharacterController>().enemyKillCount * .1f;
     }
 
     void FixedUpdate()
@@ -35,8 +39,8 @@ public class Enemy : MonoBehaviour
         // Movement
         if (moveInput != Vector2.zero)
         {
-            velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput.x, acceleration * Time.fixedDeltaTime);
-            velocity.y = Mathf.MoveTowards(velocity.y, speed * moveInput.y, acceleration * Time.fixedDeltaTime);
+            velocity.x = Mathf.MoveTowards(velocity.x, currSpeed * moveInput.x, acceleration * Time.fixedDeltaTime);
+            velocity.y = Mathf.MoveTowards(velocity.y, currSpeed * moveInput.y, acceleration * Time.fixedDeltaTime);
         }
         else
         {

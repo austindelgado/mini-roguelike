@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public CharacterController player;
     public GameObject enemyPrefab;
     public Transform[] spawnPoints;
+
+    public float startingTimeBtw;
+    public float currTimeBtw;
+    private bool onCooldown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -16,17 +21,28 @@ public class Spawner : MonoBehaviour
             spawnPoints[i] = transform.GetChild(i);
         }
 
-        SpawnEnemy();
+        currTimeBtw = startingTimeBtw;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        currTimeBtw = startingTimeBtw - player.enemyKillCount * 0.25f;
+
+        if (!onCooldown)
+            SpawnEnemy();
     }
 
     void SpawnEnemy()
     {
         Instantiate(enemyPrefab, spawnPoints[Random.Range(0, spawnPoints.Length)].position, transform.rotation);
+        StartCoroutine(StartCooldown());
+    }
+
+    public IEnumerator StartCooldown()
+    {
+        onCooldown = true;
+        yield return new WaitForSeconds(currTimeBtw);
+        onCooldown = false;
     }
 }
