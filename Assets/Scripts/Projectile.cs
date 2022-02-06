@@ -17,7 +17,12 @@ public class Projectile : MonoBehaviour
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider and player
-            if (hit.gameObject.tag != "Projectile" && hit.gameObject.tag != "Player")
+            if (hit.gameObject.tag == "Enemy")
+            {
+                hit.gameObject.GetComponent<Enemy>().Kill();
+                Destroy(gameObject);
+            }
+            else if (hit.gameObject.tag != "Projectile" && hit.gameObject.tag != "Player")
                 Destroy(gameObject);
         }
     }

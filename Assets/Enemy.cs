@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider.
-            if (hit == circleCollider || hit.gameObject.tag == "Projectile")
+            if (hit == circleCollider)
                 continue;
 
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
@@ -55,5 +55,11 @@ public class Enemy : MonoBehaviour
                 transform.Translate(colliderDistance.pointA - colliderDistance.pointB);
             }
         }
+    }
+
+    public void Kill()
+    {
+        Debug.Log("Enemy killed");
+        Destroy(gameObject);
     }
 }
