@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
+    public Text scoreText;
 
     public float speed;
     public float acceleration;
@@ -14,6 +16,12 @@ public class Enemy : MonoBehaviour
     private Vector2 moveInput;
 
     public CircleCollider2D circleCollider;
+
+    void Start()
+    {
+        player = GameObject.Find("Player");
+        scoreText = GameObject.Find("Score").GetComponent<Text>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -63,6 +71,8 @@ public class Enemy : MonoBehaviour
     public void Kill()
     {
         Debug.Log("Enemy killed");
+        player.GetComponent<CharacterController>().enemyKillCount++;
+        scoreText.text = player.GetComponent<CharacterController>().enemyKillCount.ToString();
         Destroy(gameObject);
     }
 }

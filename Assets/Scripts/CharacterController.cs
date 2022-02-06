@@ -18,11 +18,7 @@ public class CharacterController : MonoBehaviour
 
     public GameObject projectilePrefab;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int enemyKillCount;
 
     // Update is called once per frame
     void Update()
