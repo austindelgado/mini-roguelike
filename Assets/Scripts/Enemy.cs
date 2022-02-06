@@ -40,6 +40,9 @@ public class Enemy : MonoBehaviour
         currSpeed = baseSpeed + player.GetComponent<CharacterController>().enemyKillCount * .1f;
         currAcceleration = baseAcceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
         currDeceleration = baseDeceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
+
+        if (currSpeed > 3)
+            currSpeed = 3;
     }
 
     void FixedUpdate()

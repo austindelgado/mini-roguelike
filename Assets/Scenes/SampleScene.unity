@@ -696,7 +696,7 @@ MonoBehaviour:
   player: {fileID: 1522022964}
   enemyPrefab: {fileID: 7121922833392969348, guid: 681a9e93601a86b41bac293179bd408f, type: 3}
   spawnPoints: []
-  startingTimeBtw: 5
+  startingTimeBtw: 3
   currTimeBtw: 0
 --- !u!4 &970109647
 Transform:
