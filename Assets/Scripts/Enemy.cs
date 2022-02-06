@@ -50,10 +50,9 @@ public class Enemy : MonoBehaviour
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider.
-            if (hit == circleCollider)
+            if (hit.gameObject.tag != "Player")
                 continue;
-
-            if (hit.gameObject.tag == "Player")
+            else if (hit.gameObject.tag == "Player")
                 hit.gameObject.GetComponent<CharacterController>().Kill();
 
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
