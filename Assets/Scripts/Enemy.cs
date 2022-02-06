@@ -10,8 +10,12 @@ public class Enemy : MonoBehaviour
 
     public float baseSpeed;
     public float currSpeed;
-    public float acceleration;
-    public float deceleration;
+
+    public float baseAcceleration;
+    public float currAcceleration;
+    
+    public float baseDeceleration;
+    public float currDeceleration;
 
     private Vector2 velocity;
     private Vector2 moveInput;
@@ -24,6 +28,8 @@ public class Enemy : MonoBehaviour
         scoreText = GameObject.Find("Score").GetComponent<Text>();
 
         currSpeed = baseSpeed;
+        currAcceleration = baseAcceleration;
+        currDeceleration = baseDeceleration;
     }
 
     // Update is called once per frame
@@ -32,6 +38,8 @@ public class Enemy : MonoBehaviour
         // Get Player Position
         moveInput = (player.transform.position - transform.position).normalized;
         currSpeed = baseSpeed + player.GetComponent<CharacterController>().enemyKillCount * .1f;
+        currAcceleration = baseAcceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
+        currDeceleration = baseDeceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
     }
 
     void FixedUpdate()
@@ -39,13 +47,13 @@ public class Enemy : MonoBehaviour
         // Movement
         if (moveInput != Vector2.zero)
         {
-            velocity.x = Mathf.MoveTowards(velocity.x, currSpeed * moveInput.x, acceleration * Time.fixedDeltaTime);
-            velocity.y = Mathf.MoveTowards(velocity.y, currSpeed * moveInput.y, acceleration * Time.fixedDeltaTime);
+            velocity.x = Mathf.MoveTowards(velocity.x, currSpeed * moveInput.x, currAcceleration * Time.fixedDeltaTime);
+            velocity.y = Mathf.MoveTowards(velocity.y, currSpeed * moveInput.y, currAcceleration * Time.fixedDeltaTime);
         }
         else
         {
-            velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.fixedDeltaTime);
-            velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.fixedDeltaTime);
+            velocity.x = Mathf.MoveTowards(velocity.x, 0, currDeceleration * Time.fixedDeltaTime);
+            velocity.y = Mathf.MoveTowards(velocity.y, 0, currDeceleration * Time.fixedDeltaTime);
         }
         transform.Translate(velocity * Time.fixedDeltaTime);
 

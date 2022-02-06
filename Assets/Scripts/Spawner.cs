@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currTimeBtw = startingTimeBtw - player.enemyKillCount * 0.1f;
+        currTimeBtw = startingTimeBtw - player.enemyKillCount * 0.25f;
         if (currTimeBtw < .25f)
             currTimeBtw = .25f;
 
