@@ -45,6 +45,9 @@ public class Enemy : MonoBehaviour
             if (hit == circleCollider)
                 continue;
 
+            if (hit.gameObject.tag == "Player")
+                hit.gameObject.GetComponent<CharacterController>().Kill();
+
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
 
             // Ensure that we are still overlapping this collider.

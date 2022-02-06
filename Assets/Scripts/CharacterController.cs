@@ -78,4 +78,9 @@ public class CharacterController : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
         projectile.GetComponent<Projectile>().dir = lookDir;
     }
+
+    public void Kill()
+    {
+        Application.Quit();
+    }
 }
