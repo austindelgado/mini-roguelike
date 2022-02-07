@@ -33,7 +33,7 @@ public class AbilitySlot : MonoBehaviour
                 {
                     ability.Activate(gameObject, level);
                     state = AbilityState.active;
-                    activeTime = ability.activeTime;
+                    activeTime = ability.activeTime[level];
                 }
             break;
             case AbilityState.active:
@@ -43,7 +43,7 @@ public class AbilitySlot : MonoBehaviour
                 {
                     ability.BeginCooldown(gameObject, level);
                     state = AbilityState.cooldown; 
-                    cooldownTime = ability.cooldownTime;
+                    cooldownTime = ability.cooldownTime[level];
                 }
             break;
             case AbilityState.cooldown:

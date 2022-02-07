@@ -13,6 +13,16 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   name: Pistol
-  cooldownTime: 0.2
-  activeTime: 0
+  cooldownTime:
+  - 0
+  - 0.2
+  - 0.15
+  - 0.1
+  - 0.05
+  activeTime:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   projectilePrefab: {fileID: 1810171906407645525, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
