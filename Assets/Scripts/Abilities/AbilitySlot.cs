@@ -26,7 +26,7 @@ public class AbilitySlot : MonoBehaviour
             case AbilityState.ready:
                 if (Input.GetKeyDown(key))
                 {
-                    ability.Activate();
+                    ability.Activate(gameObject);
                     state = AbilityState.active;
                     activeTime = ability.activeTime;
                 }
