@@ -1320,6 +1320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
+  enemy: 0
   key: 323
 --- !u!1 &1527182265
 GameObject:
