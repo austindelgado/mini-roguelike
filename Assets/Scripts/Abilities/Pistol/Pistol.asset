@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c54b5e34e7c0154698a4bc163127d23, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  name: 
-  cooldownTime: 0
+  name: Pistol
+  cooldownTime: 0.2
   activeTime: 0
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 1810171906407645525, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
