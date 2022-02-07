@@ -36,6 +36,7 @@ public class AbilitySlot : MonoBehaviour
                     activeTime -= Time.deltaTime;
                 else
                 {
+                    ability.BeginCooldown(gameObject);
                     state = AbilityState.cooldown; 
                     cooldownTime = ability.cooldownTime;
                 }
