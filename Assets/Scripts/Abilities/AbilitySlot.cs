@@ -31,7 +31,7 @@ public class AbilitySlot : MonoBehaviour
             case AbilityState.ready:
                 if (Input.GetKey(key))
                 {
-                    ability.Activate(gameObject);
+                    ability.Activate(gameObject, level);
                     state = AbilityState.active;
                     activeTime = ability.activeTime;
                 }
@@ -41,7 +41,7 @@ public class AbilitySlot : MonoBehaviour
                     activeTime -= Time.deltaTime;
                 else
                 {
-                    ability.BeginCooldown(gameObject);
+                    ability.BeginCooldown(gameObject, level);
                     state = AbilityState.cooldown; 
                     cooldownTime = ability.cooldownTime;
                 }
