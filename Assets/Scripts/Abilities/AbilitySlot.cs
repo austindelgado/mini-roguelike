@@ -5,6 +5,7 @@ using UnityEngine;
 public class AbilitySlot : MonoBehaviour
 {
     public Ability ability;
+    public int level;
     float cooldownTime;
     float activeTime;
 
@@ -21,6 +22,10 @@ public class AbilitySlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Level 1 check
+        if (level == 0)
+            return;
+
         switch (state)
         {
             case AbilityState.ready:
