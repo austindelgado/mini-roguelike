@@ -1198,6 +1198,7 @@ GameObject:
   - component: {fileID: 1522022965}
   - component: {fileID: 1522022964}
   - component: {fileID: 1522022967}
+  - component: {fileID: 1522022968}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1220,6 +1221,7 @@ MonoBehaviour:
   speed: 3
   acceleration: 20
   deceleration: 20
+  lookDir: {x: 0, y: 0}
   cam: {fileID: 519420031}
   circleCollider: {fileID: 1522022967}
   projectilePrefab: {fileID: 1810171906407645525, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
@@ -1305,6 +1307,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
+--- !u!114 &1522022968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522022963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c38900198c1c29042bd7a677637f809a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
+  key: 323
 --- !u!1 &1527182265
 GameObject:
   m_ObjectHideFlags: 0

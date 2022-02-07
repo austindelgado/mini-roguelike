@@ -24,7 +24,7 @@ public class AbilitySlot : MonoBehaviour
         switch (state)
         {
             case AbilityState.ready:
-                if (Input.GetKeyDown(key))
+                if (Input.GetKey(key))
                 {
                     ability.Activate(gameObject);
                     state = AbilityState.active;
