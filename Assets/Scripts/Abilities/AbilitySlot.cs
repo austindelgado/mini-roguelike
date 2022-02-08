@@ -6,6 +6,8 @@ public class AbilitySlot : MonoBehaviour
 {
     public Ability ability;
     public int level;
+    public bool available;
+    
     float cooldownTime;
     float activeTime;
 
@@ -23,7 +25,7 @@ public class AbilitySlot : MonoBehaviour
     void Update()
     {
         // Level 1 check
-        if (level == 0)
+        if (!available)
             return;
 
         switch (state)
