@@ -1319,7 +1319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38900198c1c29042bd7a677637f809a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ability: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
+  ability: {fileID: 11400000, guid: 7808396d76ed25d4a83d90e5028e482c, type: 2}
   level: 1
   available: 1
   key: 323

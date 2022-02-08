@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     public Vector2 dir;
     public float speed;
     public CircleCollider2D circleCollider;
+    public bool piercing;
 
     void FixedUpdate()
     {
@@ -20,7 +21,8 @@ public class Projectile : MonoBehaviour
             if (hit.gameObject.tag == "Enemy")
             {
                 hit.gameObject.GetComponent<Enemy>().Kill();
-                Destroy(gameObject);
+                if (!piercing)
+                    Destroy(gameObject);
             }
             else if (hit.gameObject.tag != "Projectile" && hit.gameObject.tag != "Player")
                 Destroy(gameObject);
