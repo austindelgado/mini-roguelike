@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class AbilitySlot : MonoBehaviour
 {
+    public CharacterController player;
+
     public Ability ability;
     public int level;
     public bool available;
-    
+
     float cooldownTime;
     float activeTime;
 
@@ -27,6 +29,13 @@ public class AbilitySlot : MonoBehaviour
         // Level 1 check
         if (!available)
             return;
+
+        if (level == 0 && player.enemyKillCount > 10)
+            level = 1;
+        else if (level == 1 && player.enemyKillCount > 20)
+            level = 2;
+        else if (level == 2 && player.enemyKillCount > 30)
+            level = 3;
 
         switch (state)
         {
