@@ -1820,6 +1820,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopUI: {fileID: 1345405036}
+  player: {fileID: 1522022963}
+  pistol: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
+  shotgun: {fileID: 11400000, guid: 1e0afde04abad044594e7fa2ce4ccb13, type: 2}
+  sniper: {fileID: 11400000, guid: 7808396d76ed25d4a83d90e5028e482c, type: 2}
 --- !u!114 &1345405039
 MonoBehaviour:
   m_ObjectHideFlags: 0
