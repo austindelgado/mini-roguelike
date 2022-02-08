@@ -9,18 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd933035de5fb824e8c883b08f03c1b7, type: 3}
-  m_Name: Sniper
+  m_Script: {fileID: 11500000, guid: a777a5d9b28425e42b6df7f3952a0bbc, type: 3}
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  name: Sniper
+  name: Shotgun
   cooldownTime:
-  - 1
-  - 0.8
-  - 0.7
   - 0.5
+  - 0.4
+  - 0.3
+  - 0.2
   activeTime:
   - 0
   - 0
   - 0
   - 0
-  projectilePrefab: {fileID: 1810171906407645525, guid: 2f8e78009b6cf7f4c96e17437b066898, type: 3}
+  projectilePrefab: {fileID: 1810171906407645525, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
+  maxSpread: 10
+  pellets: 04000000050000000600000008000000
