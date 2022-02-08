@@ -1321,6 +1321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ability: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
   level: 1
+  available: 1
   key: 323
 --- !u!1 &1527182265
 GameObject:
