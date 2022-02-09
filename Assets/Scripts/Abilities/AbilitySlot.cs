@@ -21,8 +21,6 @@ public class AbilitySlot : MonoBehaviour
 
     AbilityState state = AbilityState.ready;
 
-    public KeyCode key;
-
     public void Update()
     {
         if (state == AbilityState.active)
