@@ -12,8 +12,10 @@ public class Player : Entity
 
     public int enemyKillCount;
 
-    public KeyCode key;
+    public KeyCode key1;
     public AbilitySlot ability1;
+    public KeyCode key2;
+    public AbilitySlot ability2;
 
     // Update is called once per frame
     void Update()
@@ -22,9 +24,13 @@ public class Player : Entity
         mouseInput = cam.ScreenToWorldPoint(Input.mousePosition);
 
         // Ability inputs
-        if (Input.GetKey(key))
+        if (Input.GetKey(key1))
         {
             ability1.Trigger();
+        }
+        if (Input.GetKey(key2))
+        {
+            ability2.Trigger();
         }
     }
 

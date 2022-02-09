@@ -2097,6 +2097,7 @@ GameObject:
   - component: {fileID: 1522022964}
   - component: {fileID: 1522022967}
   - component: {fileID: 1522022968}
+  - component: {fileID: 1522022969}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2127,8 +2128,10 @@ MonoBehaviour:
   cam: {fileID: 519420031}
   circleCollider: {fileID: 1522022967}
   enemyKillCount: 0
-  key: 323
+  key1: 0
   ability1: {fileID: 1522022968}
+  key2: 0
+  ability2: {fileID: 0}
 --- !u!212 &1522022965
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2226,7 +2229,22 @@ MonoBehaviour:
   ability: {fileID: 11400000, guid: 1e0afde04abad044594e7fa2ce4ccb13, type: 2}
   level: 0
   available: 1
-  key: 323
+--- !u!114 &1522022969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522022963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c38900198c1c29042bd7a677637f809a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1522022964}
+  ability: {fileID: 0}
+  level: 0
+  available: 0
 --- !u!1 &1527182265
 GameObject:
   m_ObjectHideFlags: 0
