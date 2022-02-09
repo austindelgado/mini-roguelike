@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ability : ScriptableObject
 {
     public new string name;
+    public Sprite icon;
     public float[] cooldownTime;
     public float[] activeTime;
 
