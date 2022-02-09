@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Sniper
   m_EditorClassIdentifier: 
   name: Sniper
+  icon: {fileID: 0}
   cooldownTime:
   - 1
   - 0.8
@@ -23,4 +24,5 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  maxLevel: 3
   projectilePrefab: {fileID: 1810171906407645525, guid: 2f8e78009b6cf7f4c96e17437b066898, type: 3}

@@ -2127,6 +2127,8 @@ MonoBehaviour:
   cam: {fileID: 519420031}
   circleCollider: {fileID: 1522022967}
   enemyKillCount: 0
+  key: 323
+  ability1: {fileID: 1522022968}
 --- !u!212 &1522022965
 SpriteRenderer:
   m_ObjectHideFlags: 0

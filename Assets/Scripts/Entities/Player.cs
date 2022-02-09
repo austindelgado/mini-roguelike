@@ -12,11 +12,20 @@ public class Player : Entity
 
     public int enemyKillCount;
 
+    public KeyCode key;
+    public AbilitySlot ability1;
+
     // Update is called once per frame
     void Update()
     {
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         mouseInput = cam.ScreenToWorldPoint(Input.mousePosition);
+
+        // Ability inputs
+        if (Input.GetKey(key))
+        {
+            ability1.Trigger();
+        }
     }
 
     void FixedUpdate()
