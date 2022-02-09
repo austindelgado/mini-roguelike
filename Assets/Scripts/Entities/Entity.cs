@@ -15,11 +15,15 @@ public class Entity : MonoBehaviour
     public Vector2 moveInput;
     public Vector2 lookDir;
 
+    public virtual void Start() 
+    {
+        currentHealth = startingHealth;
+    }
 
     public virtual void Damage(int amount)
     {
         currentHealth -= amount;
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
             Kill();
     }
 

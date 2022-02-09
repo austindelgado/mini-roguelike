@@ -14,8 +14,10 @@ public class Enemy : Entity
 
     public CircleCollider2D circleCollider;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
+
         player = GameObject.Find("Player");
         scoreText = GameObject.Find("Score").GetComponent<Text>();
 
