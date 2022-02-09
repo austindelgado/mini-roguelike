@@ -8,6 +8,7 @@ public class Ability : ScriptableObject
     public Sprite icon;
     public float[] cooldownTime;
     public float[] activeTime;
+    public int maxLevel;
 
     public virtual void Activate(GameObject parent, int level) {}
 
