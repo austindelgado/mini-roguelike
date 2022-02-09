@@ -96,12 +96,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa65dc90f015ba347b47812bfd26ce8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
+  acceleration: 2
+  deceleration: 2
+  velocity: {x: 0, y: 0}
+  moveInput: {x: 0, y: 0}
+  lookDir: {x: 0, y: 0}
   scoreText: {fileID: 0}
-  baseSpeed: 1
   currSpeed: 0
-  baseAcceleration: 2
   currAcceleration: 0
-  baseDeceleration: 2
   currDeceleration: 0
   circleCollider: {fileID: 7121922833392969349}
 --- !u!58 &7121922833392969349

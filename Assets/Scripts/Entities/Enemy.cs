@@ -3,22 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
     private GameObject player;
     public Text scoreText;
 
-    public float baseSpeed;
     public float currSpeed;
-
-    public float baseAcceleration;
     public float currAcceleration;
-    
-    public float baseDeceleration;
     public float currDeceleration;
-
-    private Vector2 velocity;
-    private Vector2 moveInput;
 
     public CircleCollider2D circleCollider;
 
@@ -27,9 +19,9 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
         scoreText = GameObject.Find("Score").GetComponent<Text>();
 
-        currSpeed = baseSpeed;
-        currAcceleration = baseAcceleration;
-        currDeceleration = baseDeceleration;
+        currSpeed = speed;
+        currAcceleration = acceleration;
+        currDeceleration = deceleration;
     }
 
     // Update is called once per frame
@@ -37,9 +29,9 @@ public class Enemy : MonoBehaviour
     {
         // Get Player Position
         moveInput = (player.transform.position - transform.position).normalized;
-        currSpeed = baseSpeed + player.GetComponent<CharacterController>().enemyKillCount * .1f;
-        currAcceleration = baseAcceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
-        currDeceleration = baseDeceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
+        currSpeed = speed + player.GetComponent<CharacterController>().enemyKillCount * .1f;
+        currAcceleration = acceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
+        currDeceleration = deceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
 
         if (currSpeed > 3)
             currSpeed = 3;
@@ -82,7 +74,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Kill()
+    public override void Kill()
     {
         Debug.Log("Enemy killed");
         player.GetComponent<CharacterController>().enemyKillCount++;

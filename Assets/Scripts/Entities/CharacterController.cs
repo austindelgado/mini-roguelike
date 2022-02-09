@@ -3,21 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterController : MonoBehaviour
+public class CharacterController : Entity
 {
-    public float speed;
-    public float acceleration;
-    public float deceleration;
-
-    private Vector2 velocity;
-    private Vector2 moveInput;
     private Vector2 mouseInput;
-    public Vector2 lookDir;
 
     public Camera cam;
     public CircleCollider2D circleCollider;
-
-    public GameObject projectilePrefab;
 
     public int enemyKillCount;
 
@@ -66,7 +57,7 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void Kill()
+    public override void Kill()
     {
         SceneManager.LoadScene(0);
     }
