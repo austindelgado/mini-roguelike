@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
 {
     public Vector2 dir;
     public float speed;
+    public int damage;
     public CircleCollider2D circleCollider;
     public bool piercing;
 
@@ -20,7 +21,7 @@ public class Projectile : MonoBehaviour
             // Ignore our own collider and player
             if (hit.gameObject.tag == "Enemy")
             {
-                hit.gameObject.GetComponent<Enemy>().Kill();
+                hit.gameObject.GetComponent<Enemy>().Damage(damage);
                 if (!piercing)
                     Destroy(gameObject);
             }
