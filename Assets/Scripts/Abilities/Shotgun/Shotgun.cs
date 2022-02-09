@@ -12,7 +12,7 @@ public class Shotgun : Ability
 
     public override void Activate(GameObject parent, int level)
     {
-        Vector2 shotDir = parent.GetComponent<CharacterController>().lookDir;
+        Vector2 shotDir = parent.GetComponent<Entity>().lookDir;
         for (int i = 0; i < pellets[level]; i++)
         {
             float shotAngle = Random.Range(-maxSpread, maxSpread);

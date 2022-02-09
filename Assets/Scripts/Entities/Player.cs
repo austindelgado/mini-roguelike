@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterController : Entity
+public class Player : Entity
 {
     private Vector2 mouseInput;
 

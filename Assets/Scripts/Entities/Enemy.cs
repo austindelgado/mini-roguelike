@@ -29,9 +29,9 @@ public class Enemy : Entity
     {
         // Get Player Position
         moveInput = (player.transform.position - transform.position).normalized;
-        currSpeed = speed + player.GetComponent<CharacterController>().enemyKillCount * .1f;
-        currAcceleration = acceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
-        currDeceleration = deceleration + player.GetComponent<CharacterController>().enemyKillCount * .075f;
+        currSpeed = speed + player.GetComponent<Player>().enemyKillCount * .1f;
+        currAcceleration = acceleration + player.GetComponent<Player>().enemyKillCount * .075f;
+        currDeceleration = deceleration + player.GetComponent<Player>().enemyKillCount * .075f;
 
         if (currSpeed > 3)
             currSpeed = 3;
@@ -60,7 +60,7 @@ public class Enemy : Entity
             if (hit.gameObject.tag != "Player")
                 continue;
             else if (hit.gameObject.tag == "Player")
-                hit.gameObject.GetComponent<CharacterController>().Kill();
+                hit.gameObject.GetComponent<Player>().Kill();
 
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
 
@@ -77,8 +77,8 @@ public class Enemy : Entity
     public override void Kill()
     {
         Debug.Log("Enemy killed");
-        player.GetComponent<CharacterController>().enemyKillCount++;
-        scoreText.text = player.GetComponent<CharacterController>().enemyKillCount.ToString();
+        player.GetComponent<Player>().enemyKillCount++;
+        scoreText.text = player.GetComponent<Player>().enemyKillCount.ToString();
         Destroy(gameObject);
     }
 }

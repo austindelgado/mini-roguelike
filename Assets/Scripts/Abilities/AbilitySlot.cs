@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AbilitySlot : MonoBehaviour
 {
-    public CharacterController player;
+    public Player player;
 
     public Ability ability;
     public int level;
