@@ -16,6 +16,10 @@ public class Player : Entity
     public AbilitySlot ability1;
     public KeyCode key2;
     public AbilitySlot ability2;
+    public KeyCode key3;
+    public AbilitySlot ability3;
+    public KeyCode key4;
+    public AbilitySlot ability4;
 
     // Update is called once per frame
     void Update()
@@ -31,6 +35,14 @@ public class Player : Entity
         if (Input.GetKey(key2))
         {
             ability2.Trigger();
+        }
+        if (Input.GetKey(key3))
+        {
+            ability3.Trigger();
+        }
+        if (Input.GetKey(key4))
+        {
+            ability4.Trigger();
         }
     }
 
