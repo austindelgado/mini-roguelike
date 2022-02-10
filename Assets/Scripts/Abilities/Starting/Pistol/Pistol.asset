@@ -26,3 +26,4 @@ MonoBehaviour:
   - 0
   maxLevel: 3
   projectilePrefab: {fileID: 1810171906407645525, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
+  damage: 02000000020000000200000002000000
