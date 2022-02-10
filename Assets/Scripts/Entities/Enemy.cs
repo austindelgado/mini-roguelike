@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Enemy : Entity
 {
     private GameObject player;
-    public Text scoreText;
 
     public float currSpeed;
     public float currAcceleration;
@@ -19,7 +17,6 @@ public class Enemy : Entity
         base.Start();
 
         player = GameObject.Find("Player");
-        scoreText = GameObject.Find("Score").GetComponent<Text>();
 
         currSpeed = speed;
         currAcceleration = acceleration;
@@ -80,7 +77,10 @@ public class Enemy : Entity
     {
         Debug.Log("Enemy killed");
         player.GetComponent<Player>().enemyKillCount++;
-        scoreText.text = player.GetComponent<Player>().enemyKillCount.ToString();
+
+        // Let spawner know
+        GameObject.Find("EnemySpawner").GetComponent<Spawner>().EnemyRemoved();
+
         Destroy(gameObject);
     }
 }
