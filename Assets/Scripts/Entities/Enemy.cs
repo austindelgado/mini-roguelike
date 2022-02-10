@@ -38,7 +38,6 @@ public class Enemy : Entity
         // Get player direction
         lookDir = moveInput;
         float distance = Vector2.Distance(player.transform.position, transform.position);
-        Debug.Log(distance);
 
         if (ability1.available && distance < attackRadius)
             ability1.Trigger();

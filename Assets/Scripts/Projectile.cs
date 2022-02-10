@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
         foreach (Collider2D hit in hits)
         {
-            if (hit.gameObject == gameObject || gameObject.tag == hit.gameObject.tag)
+            if (hit.gameObject == gameObject || parent.tag == hit.gameObject.tag)
                 continue;
 
             // Hitting something not a wall and not yourself
