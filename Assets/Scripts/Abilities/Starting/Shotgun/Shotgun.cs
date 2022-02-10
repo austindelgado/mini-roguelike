@@ -9,6 +9,7 @@ public class Shotgun : Ability
 
     public float maxSpread;
     public int[] pellets;
+    public int[] damage;
 
     public override void Activate(GameObject parent, int level)
     {
@@ -18,6 +19,7 @@ public class Shotgun : Ability
             float shotAngle = Random.Range(-maxSpread, maxSpread);
             GameObject projectile = Instantiate(projectilePrefab, parent.transform.position, parent.transform.rotation);
             projectile.GetComponent<Projectile>().dir = new Vector2(shotDir.x * Mathf.Cos(shotAngle * Mathf.Deg2Rad) - shotDir.y * Mathf.Sin(shotAngle * Mathf.Deg2Rad), shotDir.x * Mathf.Sin(shotAngle * Mathf.Deg2Rad) + shotDir.y * Mathf.Cos(shotAngle * Mathf.Deg2Rad));
+            projectile.GetComponent<Projectile>().damage = damage[level];
         }
     }
 }

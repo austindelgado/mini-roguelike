@@ -6,10 +6,12 @@ using UnityEngine;
 public class Sniper : Ability
 {
     public GameObject projectilePrefab;
+    public int[] damage;
 
     public override void Activate(GameObject parent, int level)
     {
         GameObject projectile = Instantiate(projectilePrefab, parent.transform.position, parent.transform.rotation);
         projectile.GetComponent<Projectile>().dir = parent.GetComponent<Entity>().lookDir;
+        projectile.GetComponent<Projectile>().damage = damage[level];
     }
 }
