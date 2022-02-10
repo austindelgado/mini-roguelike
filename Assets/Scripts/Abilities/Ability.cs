@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Ability : ScriptableObject
 {
+    public enum AbilityType {
+        passive,
+        active,
+        primary,
+    }
+
     public new string name;
+    public AbilityType type;
     public Sprite icon;
     public float[] cooldownTime;
     public float[] activeTime;
