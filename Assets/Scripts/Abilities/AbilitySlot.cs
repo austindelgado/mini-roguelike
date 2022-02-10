@@ -56,7 +56,7 @@ public class AbilitySlot : MonoBehaviour
         if (!available)
             return;
 
-        if (state == AbilityState.ready)
+        if (state == AbilityState.ready && ability.type != Ability.AbilityType.passive)
         {
             ability.Activate(gameObject, level);
             state = AbilityState.active;
@@ -64,9 +64,16 @@ public class AbilitySlot : MonoBehaviour
         }
     }
 
+    // This will only happen on player click in the future
     public void LevelUp()
     {
-        // This will only happen on player click in the future
+        // Don't change level value on initial skill
+        if (!available)
+        {
+            available = true;
+            return;
+        }
+
         if (level < ability.maxLevel)
         {
             level++;
