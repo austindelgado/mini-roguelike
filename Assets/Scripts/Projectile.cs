@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public GameObject parent;
+
     public Vector2 dir;
     public float speed;
     public int damage;
@@ -18,14 +20,17 @@ public class Projectile : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
         foreach (Collider2D hit in hits)
         {
-            // Ignore our own collider and player
-            if (hit.gameObject.tag == "Enemy")
+            if (hit.gameObject == gameObject || gameObject.tag == hit.gameObject.tag)
+                continue;
+
+            // Hitting something not a wall and not yourself
+            if (hit.gameObject.tag != "Wall" && hit.gameObject != parent)
             {
-                hit.gameObject.GetComponent<Enemy>().Damage(damage);
+                hit.gameObject.GetComponent<Entity>().Damage(damage);
                 if (!piercing)
                     Destroy(gameObject);
             }
-            else if (hit.gameObject.tag != "Projectile" && hit.gameObject.tag != "Player")
+            else if (hit.gameObject != parent)
                 Destroy(gameObject);
         }
     }

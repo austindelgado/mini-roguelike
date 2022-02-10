@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AbilitySlot : MonoBehaviour
 {
-    public Player player;
+    public Entity entity;
 
     public Ability ability;
     public int level;
@@ -20,6 +20,12 @@ public class AbilitySlot : MonoBehaviour
     }
 
     AbilityState state = AbilityState.ready;
+
+    void Start()
+    {
+        // Grab entity
+        entity = gameObject.GetComponent<Entity>();
+    }
 
     public void Update()
     {

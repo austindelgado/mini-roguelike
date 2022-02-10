@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 7121922833392969355}
   - component: {fileID: 7121922833392969354}
   - component: {fileID: 7121922833392969349}
+  - component: {fileID: -4349772025511953398}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -201,10 +202,11 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   moveInput: {x: 0, y: 0}
   lookDir: {x: 0, y: 0}
-  scoreText: {fileID: 0}
   currSpeed: 0
   currAcceleration: 0
   currDeceleration: 0
+  ability1: {fileID: -4349772025511953398}
+  attackRadius: 0
   circleCollider: {fileID: 7121922833392969349}
 --- !u!58 &7121922833392969349
 CircleCollider2D:
@@ -222,3 +224,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
+--- !u!114 &-4349772025511953398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7121922833392969348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c38900198c1c29042bd7a677637f809a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 0}
+  ability: {fileID: 0}
+  level: 0
+  available: 0

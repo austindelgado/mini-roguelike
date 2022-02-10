@@ -10,6 +10,9 @@ public class Enemy : Entity
     public float currAcceleration;
     public float currDeceleration;
 
+    public AbilitySlot ability1;
+    public float attackRadius;
+
     public CircleCollider2D circleCollider;
 
     public override void Start()
@@ -31,6 +34,14 @@ public class Enemy : Entity
         currSpeed = speed + player.GetComponent<Player>().enemyKillCount * .1f;
         currAcceleration = acceleration + player.GetComponent<Player>().enemyKillCount * .075f;
         currDeceleration = deceleration + player.GetComponent<Player>().enemyKillCount * .075f;
+
+        // Get player direction
+        lookDir = moveInput;
+        float distance = Vector2.Distance(player.transform.position, transform.position);
+        Debug.Log(distance);
+
+        if (ability1.available && distance < attackRadius)
+            ability1.Trigger();
 
         if (currSpeed > 3)
             currSpeed = 3;
