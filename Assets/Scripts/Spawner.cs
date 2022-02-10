@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Spawner : MonoBehaviour
 {
     public Player player;
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefab;
     public Transform[] spawnPoints;
         
     private Text scoreText;
@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
     public int waveNum = 0;
 
     public float scalingMult;
+    public float altChance;
     public int enemiesToSpawn;
     private int numRemaining;
     public bool waveActive = false;
@@ -64,7 +65,6 @@ public class Spawner : MonoBehaviour
             waveNum++;
             scoreText.text = waveNum.ToString();
 
-
             enemiesToSpawn = Mathf.RoundToInt((enemiesToSpawn + 1) * scalingMult);
             numRemaining = enemiesToSpawn;
         }
@@ -72,7 +72,11 @@ public class Spawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoints[Random.Range(0, spawnPoints.Length)].position, transform.rotation);
+        if (Random.value < altChance)
+            Instantiate(enemyPrefab[1], spawnPoints[Random.Range(0, spawnPoints.Length)].position, transform.rotation);
+        else
+            Instantiate(enemyPrefab[0], spawnPoints[Random.Range(0, spawnPoints.Length)].position, transform.rotation);
+        
         enemiesActive++;
 
         StartCoroutine(StartCooldown());
