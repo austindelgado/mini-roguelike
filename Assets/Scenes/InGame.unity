@@ -1234,7 +1234,7 @@ MonoBehaviour:
   spawnPoints: []
   waveNum: 0
   scalingMult: 1.1
-  altChance: 1
+  altChance: 0.1
   enemiesToSpawn: 1
   waveActive: 0
   enemiesActive: 0
