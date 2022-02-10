@@ -28,6 +28,8 @@ public class ShopMenu : MonoBehaviour
 
     public void Play()
     {
+        player.GetComponent<AbilitySlot>().available = true;
+
         shopUI.SetActive(false);
         Time.timeScale = 1.0f;
     }
