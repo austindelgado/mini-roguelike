@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour
             // Hitting something not a wall and not yourself
             if (hit.gameObject.tag != "Wall" && hit.gameObject != parent)
             {
-                hit.gameObject.GetComponent<Entity>().Damage(damage);
+                hit.gameObject.GetComponent<Entity>().Damage(damage, parent);
                 if (!piercing)
                     Destroy(gameObject);
             }

@@ -20,11 +20,13 @@ public class Entity : MonoBehaviour
         currentHealth = startingHealth;
     }
 
-    public virtual void Damage(int amount)
+    public virtual void Damage(int amount, GameObject dealer)
     {
         currentHealth -= amount;
         if (currentHealth <= 0)
             Kill();
+
+        GameEvents.current.DamageDealt(amount, dealer);
     }
 
     public virtual void Kill(){}
