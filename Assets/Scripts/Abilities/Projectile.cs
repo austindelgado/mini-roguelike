@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
         startingPos = transform.position;
     }
 
-    public virtual void  Update()
+    public virtual void Update()
     {
         Vector2 distanceVector = (Vector2)transform.position - startingPos;
         distance = distanceVector.magnitude;
@@ -35,7 +35,7 @@ public class Projectile : MonoBehaviour
         transform.Translate(dir * speed * Time.fixedDeltaTime);
 
         // Collision
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius * transform.localScale.x);
         foreach (Collider2D hit in hits)
         {
             if (hit.gameObject == gameObject || parent.tag == hit.gameObject.tag)
