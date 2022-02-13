@@ -6,11 +6,29 @@ public class Projectile : MonoBehaviour
 {
     public GameObject parent;
 
+    public Vector2 startingPos;
     public Vector2 dir;
     public float speed;
     public int damage;
     public CircleCollider2D circleCollider;
     public bool piercing;
+
+    public float distance;
+    public float maxDistance;
+
+    void Start()
+    {
+        startingPos = transform.position;
+    }
+
+    void Update()
+    {
+        Vector2 distanceVector = transform.position - startingPos;
+        distance = distanceVector.magnitude;
+
+        if (maxDistance != 0 && distance > maxDistance)
+            Destroy(gameObject);
+    }
 
     void FixedUpdate()
     {
