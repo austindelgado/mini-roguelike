@@ -16,14 +16,14 @@ public class Projectile : MonoBehaviour
     public float distance;
     public float maxDistance;
 
-    void Start()
+    public virtual void Start()
     {
         startingPos = transform.position;
     }
 
-    void Update()
+    public virtual void  Update()
     {
-        Vector2 distanceVector = transform.position - startingPos;
+        Vector2 distanceVector = (Vector2)transform.position - startingPos;
         distance = distanceVector.magnitude;
 
         if (maxDistance != 0 && distance > maxDistance)

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
-    private Vector2 mouseInput;
+    public Vector2 mouseInput;
 
     public Camera cam;
     public CircleCollider2D circleCollider;
@@ -25,7 +25,7 @@ public class Player : Entity
     void Update()
     {
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        mouseInput = cam.ScreenToWorldPoint(Input.mousePosition);
+        mouseInput = cam.ScreenToWorldPoint((Vector2)Input.mousePosition);
 
         // Ability inputs
         if (Input.GetKey(key1))
