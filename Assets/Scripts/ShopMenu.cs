@@ -1,14 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ShopMenu : MonoBehaviour
 {
+    public Transform container;
+    public Transform shopAbilityTemplate;
+
     public GameObject shopUI;
     public GameObject player;
     public Ability pistol;
     public Ability shotgun;
     public Ability sniper;
+
+    private int numAbilties;
 
     // Start is called before the first frame update
     void Start()
@@ -16,14 +23,41 @@ public class ShopMenu : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    public void AbilitySelect(int num)
+    void OnEnable()
     {
-        if (num == 0)
-            player.GetComponent<AbilitySlot>().ability = pistol;
-        else if (num == 1)
-            player.GetComponent<AbilitySlot>().ability = shotgun;
-        else if (num == 2)
-            player.GetComponent<AbilitySlot>().ability = sniper;
+        CreateAbilityShopButton(pistol);
+        CreateAbilityShopButton(shotgun);
+        CreateAbilityShopButton(sniper);
+    }
+
+    void GenerateChoices(int num)
+    {
+
+    }
+
+    private void CreateAbilityShopButton(Ability ability)
+    {
+        // Place in right position
+        Transform shopAbilityTransform = Instantiate(shopAbilityTemplate, container);
+        RectTransform shopAbilityRectTransform = shopAbilityTransform.GetComponent<RectTransform>();
+
+        // Fill out with ability data
+        shopAbilityTransform.Find("abilityButton").GetComponent<Image>().sprite = ability.icon;
+        shopAbilityTransform.Find("abilityButton").GetComponent<Button>().onClick.AddListener(delegate {AbilitySelect(ability);});
+        shopAbilityTransform.GetChild(0).Find("abilityText").GetComponent<TextMeshProUGUI>().text = ability.name;
+
+        numAbilties++;
+    }
+
+    private void ClearButtons()
+    {
+        foreach(Transform child in container)
+            Destroy(child.gameObject);
+    }
+
+    public void AbilitySelect(Ability ability)
+    {
+        player.GetComponent<AbilitySlot>().ability = ability;
     }
 
     public void Play()
@@ -33,4 +67,6 @@ public class ShopMenu : MonoBehaviour
         shopUI.SetActive(false);
         Time.timeScale = 1.0f;
     }
+
+
 }

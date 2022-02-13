@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sniper
   type: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6aa45d3f52a395f448adeaac9e23cf4f, type: 3}
   cooldownTime:
   - 1
   - 0.8
