@@ -1972,14 +1972,15 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   moveInput: {x: 0, y: 0}
   lookDir: {x: 0, y: 0}
+  mouseInput: {x: 0, y: 0}
   cam: {fileID: 519420031}
   circleCollider: {fileID: 1522022967}
   enemyKillCount: 0
   key1: 323
   ability1: {fileID: 1522022968}
-  key2: 0
+  key2: 32
   ability2: {fileID: 1522022969}
-  key3: 0
+  key3: 304
   ability3: {fileID: 1522022971}
   key4: 0
   ability4: {fileID: 1522022970}
@@ -2093,9 +2094,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
-  ability: {fileID: 0}
+  ability: {fileID: 11400000, guid: 7ec5a8235f789ec408abfa6373df3623, type: 2}
   level: 0
-  available: 0
+  available: 1
 --- !u!114 &1522022970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2125,9 +2126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
-  ability: {fileID: 0}
+  ability: {fileID: 11400000, guid: 90b03c4e1a25e124e9731b144fb0f822, type: 2}
   level: 0
-  available: 0
+  available: 1
 --- !u!1 &1527182265
 GameObject:
   m_ObjectHideFlags: 0
