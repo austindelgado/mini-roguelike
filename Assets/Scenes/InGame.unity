@@ -2078,7 +2078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
-  ability: {fileID: 0}
+  ability: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
   level: 0
   available: 0
 --- !u!114 &1522022969
@@ -2126,7 +2126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
-  ability: {fileID: 11400000, guid: 90b03c4e1a25e124e9731b144fb0f822, type: 2}
+  ability: {fileID: 11400000, guid: 296ea59aea9674243a66df2de7e29492, type: 2}
   level: 0
   available: 1
 --- !u!1 &1527182265

@@ -206,7 +206,7 @@ MonoBehaviour:
   currAcceleration: 0
   currDeceleration: 0
   ability1: {fileID: -4349772025511953398}
-  attackRadius: 3
+  attackRadius: 2
   circleCollider: {fileID: 7121922833392969349}
 --- !u!58 &7121922833392969349
 CircleCollider2D:

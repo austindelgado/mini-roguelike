@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour
     public CircleCollider2D circleCollider;
     public bool piercing;
 
-    public float distance;
+    public float distanceTraveled;
     public float maxDistance;
 
     public virtual void Start()
@@ -24,13 +24,13 @@ public class Projectile : MonoBehaviour
     public virtual void Update()
     {
         Vector2 distanceVector = (Vector2)transform.position - startingPos;
-        distance = distanceVector.magnitude;
+        distanceTraveled = distanceVector.magnitude;
 
-        if (maxDistance != 0 && distance > maxDistance)
+        if (maxDistance != 0 && distanceTraveled > maxDistance)
             Destroy(gameObject);
     }
 
-    void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         transform.Translate(dir * speed * Time.fixedDeltaTime);
 
@@ -38,7 +38,13 @@ public class Projectile : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius * transform.localScale.x);
         foreach (Collider2D hit in hits)
         {
+            if (hit.gameObject == null || parent.gameObject == null || hit.gameObject.tag == "Friendly")
+                continue;
+
             if (hit.gameObject == gameObject || parent.tag == hit.gameObject.tag)
+                continue;
+
+            if (parent.gameObject.tag == "Friendly" && hit.gameObject.tag == "Player")
                 continue;
 
             // Hitting something not a wall and not yourself
