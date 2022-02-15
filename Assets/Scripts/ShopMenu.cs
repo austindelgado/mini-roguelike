@@ -18,7 +18,7 @@ public class ShopMenu : MonoBehaviour
     public Ability sniper;
 
     private int numAbilties;
-    private int round;
+    public int round;
 
     // Start is called before the first frame update
     void Start()
@@ -26,19 +26,17 @@ public class ShopMenu : MonoBehaviour
         Time.timeScale = 0f;
         inGameUI.SetActive(false);
 
-        GameEvents.current.onRoundEnd += ToggleUI;
-    }
+        GameEvents.current.onRoundEnd += RoundEnd;
 
-    void OnEnable()
-    {
+        // Setup Primary options on start
         CreateAbilityShopButton(pistol);
         CreateAbilityShopButton(shotgun);
         CreateAbilityShopButton(sniper);
     }
 
-    void GenerateChoices(int num)
+    void GenerateChoices(int round)
     {
-
+        
     }
 
     private void CreateAbilityShopButton(Ability ability)
@@ -69,13 +67,21 @@ public class ShopMenu : MonoBehaviour
     public void Play()
     {
         player.GetComponent<AbilitySlot>().available = true;
-        ToggleUI(round);
+        ToggleUI();
+        ClearButtons();
         Time.timeScale = 1.0f;
     }
 
-    public void ToggleUI(int round)
+    public void ToggleUI()
     {
         shopUI.SetActive(!shopUI.activeSelf);
         inGameUI.SetActive(!inGameUI.activeSelf);
+    }
+
+    public void RoundEnd(int round)
+    {
+        this.round = round;
+        ToggleUI();
+        GenerateChoices(5);
     }
 }
