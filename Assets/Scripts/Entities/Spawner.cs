@@ -47,6 +47,8 @@ public class Spawner : MonoBehaviour
         // Wave clear
         if (waveActive && enemiesActive == 0)
         {
+            GameEvents.current.RoundEnd(waveNum);
+
             waveActive = false;
 
             // Every other wave, level up
@@ -63,6 +65,8 @@ public class Spawner : MonoBehaviour
         {
             waveActive = true;
             waveNum++;
+            GameEvents.current.RoundStart(waveNum);
+            
             scoreText.text = waveNum.ToString();
 
             enemiesToSpawn = Mathf.RoundToInt((enemiesToSpawn + 1) * scalingMult);

@@ -10,17 +10,23 @@ public class ShopMenu : MonoBehaviour
     public Transform shopAbilityTemplate;
 
     public GameObject shopUI;
+    public GameObject inGameUI;
+
     public GameObject player;
     public Ability pistol;
     public Ability shotgun;
     public Ability sniper;
 
     private int numAbilties;
+    private int round;
 
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 0f;
+        inGameUI.SetActive(false);
+
+        GameEvents.current.onRoundEnd += ToggleUI;
     }
 
     void OnEnable()
@@ -63,10 +69,13 @@ public class ShopMenu : MonoBehaviour
     public void Play()
     {
         player.GetComponent<AbilitySlot>().available = true;
-
-        shopUI.SetActive(false);
+        ToggleUI(round);
         Time.timeScale = 1.0f;
     }
 
-
+    public void ToggleUI(int round)
+    {
+        shopUI.SetActive(!shopUI.activeSelf);
+        inGameUI.SetActive(!inGameUI.activeSelf);
+    }
 }
