@@ -62,13 +62,13 @@ public class ShopMenu : MonoBehaviour
     public void AbilitySelect(Ability ability)
     {
         player.GetComponent<AbilitySlot>().ability = ability;
+        ClearButtons();
     }
 
     public void Play()
     {
         player.GetComponent<AbilitySlot>().available = true;
         ToggleUI();
-        ClearButtons();
         Time.timeScale = 1.0f;
     }
 
