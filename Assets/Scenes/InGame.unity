@@ -464,7 +464,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &255495922
 GameObject:
@@ -1383,7 +1383,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1230146805
 GameObject:
@@ -1665,6 +1665,7 @@ MonoBehaviour:
   container: {fileID: 436605358}
   shopAbilityTemplate: {fileID: 3365168644652061015, guid: f21c739d5eebea4468df342e4802a581, type: 3}
   shopUI: {fileID: 1345405036}
+  inGameUI: {fileID: 1963829119}
   player: {fileID: 1522022963}
   pistol: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
   shotgun: {fileID: 11400000, guid: 1e0afde04abad044594e7fa2ce4ccb13, type: 2}
