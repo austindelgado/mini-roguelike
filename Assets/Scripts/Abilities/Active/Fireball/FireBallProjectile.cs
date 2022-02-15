@@ -18,7 +18,6 @@ public class FireBallProjectile : Projectile
     {
         base.Update();
 
-        Debug.Log(distance);
-        transform.localScale = new Vector3(startingScale.x + distance * scaling, startingScale.y + distance * scaling, startingScale.z);
+        transform.localScale = new Vector3(startingScale.x + distanceTraveled * scaling, startingScale.y + distanceTraveled * scaling, startingScale.z);
     }
 }
