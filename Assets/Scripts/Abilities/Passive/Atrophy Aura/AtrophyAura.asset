@@ -9,17 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07cf5bb13ad1adc478a09cbd3536cc2d, type: 3}
-  m_Name: Feast
+  m_Script: {fileID: 11500000, guid: c7e49f343d8566c449136efca5d4cb9a, type: 3}
+  m_Name: AtrophyAura
   m_EditorClassIdentifier: 
-  name: Feast
+  name: Atrophy Aura
   type: 0
-  icon: {fileID: 21300000, guid: 5402ed3765e5b0b48b4ee57af0f4498c, type: 3}
+  icon: {fileID: 21300000, guid: 0da9975396268734daee6cd0ccddb79b, type: 3}
   cooldownTime: []
   activeTime: []
-  maxLevel: 4
-  percentage:
-  - 2
-  - 4
-  - 6
-  - 8
+  maxLevel: 3
+  bonus: 02000000040000000600000008000000

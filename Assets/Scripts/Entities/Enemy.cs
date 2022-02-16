@@ -91,6 +91,8 @@ public class Enemy : Entity
         // Let spawner know
         GameObject.Find("EnemySpawner").GetComponent<Spawner>().EnemyRemoved();
 
+        GameEvents.current.EnemyDeath(gameObject);
+
         Destroy(gameObject);
     }
 }
