@@ -20,6 +20,8 @@ public class ShopMenu : MonoBehaviour
     public Ability blink;
     public Ability fireball;
     public Ability feast;
+    public Ability atrophy;
+    public Ability burning;
 
     private int numAbilties;
     private int round = 1;
@@ -43,6 +45,8 @@ public class ShopMenu : MonoBehaviour
         CreateAbilityShopButton(blink);
         CreateAbilityShopButton(fireball);
         CreateAbilityShopButton(feast);
+        CreateAbilityShopButton(atrophy);
+        CreateAbilityShopButton(burning);
     }
 
     private void CreateAbilityShopButton(Ability ability)

@@ -19,6 +19,13 @@ public class GameEvents : MonoBehaviour
             onDamageDealt(damage, dealer);
     }
 
+    public event Action<GameObject> onEnemyDeath;
+    public void EnemyDeath(GameObject enemy)
+    {
+        if (onEnemyDeath != null)
+            onEnemyDeath(enemy);
+    }
+
     public event Action<int> onRoundStart;
     public void RoundStart(int round)
     {

@@ -1409,6 +1409,9 @@ MonoBehaviour:
   sniper: {fileID: 11400000, guid: 7808396d76ed25d4a83d90e5028e482c, type: 2}
   blink: {fileID: 11400000, guid: 7ec5a8235f789ec408abfa6373df3623, type: 2}
   fireball: {fileID: 11400000, guid: 90b03c4e1a25e124e9731b144fb0f822, type: 2}
+  feast: {fileID: 11400000, guid: 26c1bb97b8e506247a47188558e748e9, type: 2}
+  atrophy: {fileID: 11400000, guid: c4c89ecfe412d3c4a97b97d6248e33a9, type: 2}
+  burning: {fileID: 11400000, guid: 1209a800357db0f44ae86c239e1ae6c9, type: 2}
 --- !u!114 &1345405039
 MonoBehaviour:
   m_ObjectHideFlags: 0
