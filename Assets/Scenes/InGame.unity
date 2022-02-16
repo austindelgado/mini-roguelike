@@ -2082,7 +2082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
-  ability: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
+  ability: {fileID: 0}
   level: 0
   available: 0
 --- !u!114 &1522022969
@@ -2098,9 +2098,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
-  ability: {fileID: 11400000, guid: 7ec5a8235f789ec408abfa6373df3623, type: 2}
+  ability: {fileID: 0}
   level: 0
-  available: 1
+  available: 0
 --- !u!114 &1522022970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2130,9 +2130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
-  ability: {fileID: 11400000, guid: 296ea59aea9674243a66df2de7e29492, type: 2}
+  ability: {fileID: 0}
   level: 0
-  available: 1
+  available: 0
 --- !u!1 &1527182265
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,7 +2658,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Choose starting weapon:'
+  m_text: Select Ability 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

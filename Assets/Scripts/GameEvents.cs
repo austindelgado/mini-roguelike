@@ -34,4 +34,12 @@ public class GameEvents : MonoBehaviour
         if (onRoundEnd != null)
             onRoundEnd(round);
     }
+
+    public event Action<AbilitySlot> onAbilityAdd;
+    public void AbilityAdd(AbilitySlot slot)
+    {
+        Debug.Log(slot.ability.name + " added!");
+        if (onAbilityAdd != null)
+            onAbilityAdd(slot);
+    }
 }

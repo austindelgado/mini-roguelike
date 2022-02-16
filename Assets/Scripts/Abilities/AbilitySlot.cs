@@ -81,4 +81,13 @@ public class AbilitySlot : MonoBehaviour
         else
             level = ability.maxLevel;
     }
+
+    public void SetAbility(Ability ability)
+    {
+        this.ability = ability;
+        GameEvents.current.AbilityAdd(this);
+
+        if (ability.type == Ability.AbilityType.primary) // Primary are available by default
+            available = true;
+    }
 }
