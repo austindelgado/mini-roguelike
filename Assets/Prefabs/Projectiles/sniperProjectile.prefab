@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810171906407645525}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.28, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -96,11 +96,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ffd3157f8e677448fd9793ee82b42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  startingPos: {x: 0, y: 0}
   dir: {x: 0, y: 0}
   speed: 15
   damage: 5
   circleCollider: {fileID: 1810171906407645522}
   piercing: 1
+  distanceTraveled: 0
+  maxDistance: 0
 --- !u!58 &1810171906407645522
 CircleCollider2D:
   m_ObjectHideFlags: 0
