@@ -10,6 +10,7 @@ public class ShopMenu : MonoBehaviour
     public Transform shopAbilityTemplate;
 
     public GameObject shopUI;
+    public GameObject abilitySelectText;
     public GameObject inGameUI;
 
     public GameObject player;
@@ -18,7 +19,7 @@ public class ShopMenu : MonoBehaviour
     public Ability sniper;
 
     private int numAbilties;
-    public int round;
+    private int round = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,9 @@ public class ShopMenu : MonoBehaviour
 
     void GenerateChoices(int round)
     {
-        
+        CreateAbilityShopButton(pistol);
+        CreateAbilityShopButton(shotgun);
+        CreateAbilityShopButton(sniper);
     }
 
     private void CreateAbilityShopButton(Ability ability)
@@ -57,11 +60,21 @@ public class ShopMenu : MonoBehaviour
     {
         foreach(Transform child in container)
             Destroy(child.gameObject);
+        
+        abilitySelectText.SetActive(false);
     }
 
     public void AbilitySelect(Ability ability)
     {
-        player.GetComponent<AbilitySlot>().ability = ability;
+        Component[] components = player.GetComponents(typeof(AbilitySlot));
+        foreach(AbilitySlot component in components) {
+            if (component.ability == null)
+            {
+                component.SetAbility(ability);
+                break;
+            }
+        }
+
         ClearButtons();
     }
 
@@ -70,6 +83,7 @@ public class ShopMenu : MonoBehaviour
         player.GetComponent<AbilitySlot>().available = true;
         ToggleUI();
         Time.timeScale = 1.0f;
+        GameEvents.current.RoundStart(round);
     }
 
     public void ToggleUI()
@@ -82,6 +96,12 @@ public class ShopMenu : MonoBehaviour
     {
         this.round = round;
         ToggleUI();
-        GenerateChoices(5);
+
+        if (round == 1)
+        {
+            abilitySelectText.SetActive(true);
+            abilitySelectText.GetComponent<TextMeshProUGUI>().text = "TEST";
+            GenerateChoices(3);
+        }
     }
 }

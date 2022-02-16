@@ -35,6 +35,8 @@ public class Spawner : MonoBehaviour
 
         scoreText = GameObject.Find("Score").GetComponent<Text>();
         numRemaining = enemiesToSpawn;
+
+        GameEvents.current.onRoundStart += StartWave;
     }
 
     // Update is called once per frame
@@ -59,13 +61,12 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void StartWave()
+    public void StartWave(int round)
     {
         if (!waveActive)
         {
             waveActive = true;
             waveNum++;
-            GameEvents.current.RoundStart(waveNum);
             
             scoreText.text = waveNum.ToString();
 
