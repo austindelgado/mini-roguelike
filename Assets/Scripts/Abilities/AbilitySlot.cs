@@ -87,7 +87,7 @@ public class AbilitySlot : MonoBehaviour
         this.ability = ability;
         GameEvents.current.AbilityAdd(this);
 
-        if (ability.type == Ability.AbilityType.primary) // Primary are available by default
-            available = true;
+        // Level Up on add for now
+        LevelUp();
     }
 }

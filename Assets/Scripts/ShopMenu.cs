@@ -17,6 +17,8 @@ public class ShopMenu : MonoBehaviour
     public Ability pistol;
     public Ability shotgun;
     public Ability sniper;
+    public Ability blink;
+    public Ability fireball;
 
     private int numAbilties;
     private int round = 1;
@@ -37,9 +39,8 @@ public class ShopMenu : MonoBehaviour
 
     void GenerateChoices(int round)
     {
-        CreateAbilityShopButton(pistol);
-        CreateAbilityShopButton(shotgun);
-        CreateAbilityShopButton(sniper);
+        CreateAbilityShopButton(blink);
+        CreateAbilityShopButton(fireball);
     }
 
     private void CreateAbilityShopButton(Ability ability)
