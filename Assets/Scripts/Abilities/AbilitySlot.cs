@@ -74,12 +74,18 @@ public class AbilitySlot : MonoBehaviour
         if (!available)
         {
             available = true;
+
+            if (ability.type == Ability.AbilityType.passive)
+                ability.Activate(gameObject, level);
+
             return;
         }
 
         if (level < ability.maxLevel)
         {
             level++;
+            if (ability.type == Ability.AbilityType.passive)
+                ability.LevelUp();
         }
         else
             level = ability.maxLevel;

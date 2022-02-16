@@ -20,4 +20,6 @@ public class Ability : ScriptableObject
     public virtual void Activate(GameObject parent, int level) {}
 
     public virtual void BeginCooldown(GameObject parent, int level) {}
+    
+    public virtual void LevelUp() {} // Probbaly only used for passives
 }
