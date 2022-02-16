@@ -25,6 +25,9 @@ public class AbilitySlot : MonoBehaviour
     {
         // Grab entity
         entity = gameObject.GetComponent<Entity>();
+
+        if (ability != null) // For preassigned abilities, such as on enemies, make a copy
+            ability = Instantiate(ability);
     }
 
     public void Update()
@@ -84,7 +87,7 @@ public class AbilitySlot : MonoBehaviour
 
     public void SetAbility(Ability ability)
     {
-        this.ability = ability;
+        this.ability = Instantiate(ability);
         GameEvents.current.AbilityAdd(this);
 
         // Level Up on add for now
