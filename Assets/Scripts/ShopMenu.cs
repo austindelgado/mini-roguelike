@@ -19,6 +19,7 @@ public class ShopMenu : MonoBehaviour
     public Ability sniper;
     public Ability blink;
     public Ability fireball;
+    public Ability feast;
 
     private int numAbilties;
     private int round = 1;
@@ -41,6 +42,7 @@ public class ShopMenu : MonoBehaviour
     {
         CreateAbilityShopButton(blink);
         CreateAbilityShopButton(fireball);
+        CreateAbilityShopButton(feast);
     }
 
     private void CreateAbilityShopButton(Ability ability)
