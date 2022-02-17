@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 5402ed3765e5b0b48b4ee57af0f4498c, type: 3}
   cooldownTime: []
   activeTime: []
-  maxLevel: 4
+  maxLevel: 3
   percentage:
   - 2
   - 4

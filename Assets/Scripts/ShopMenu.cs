@@ -14,15 +14,8 @@ public class ShopMenu : MonoBehaviour
     public GameObject inGameUI;
 
     public GameObject player;
-    public Ability pistol;
-    public Ability shotgun;
-    public Ability sniper;
-    public Ability blink;
-    public Ability bedlam;
-    public Ability fireball;
-    public Ability feast;
-    public Ability atrophy;
-    public Ability burning;
+    public AbilityDB abilityDB;
+    public AbilityDB currentList;
 
     private int numAbilties;
     private int round = 1;
@@ -35,26 +28,30 @@ public class ShopMenu : MonoBehaviour
         Time.timeScale = 0f;
         inGameUI.SetActive(false);
 
+        currentList = Instantiate(abilityDB); // Probably don't do this
+
         GameEvents.current.onRoundEnd += RoundEnd;
 
-        // Setup Primary options on start
-        CreateAbilityShopButton(pistol);
-        CreateAbilityShopButton(shotgun);
-        CreateAbilityShopButton(sniper);
+        // Get x number of primary options
+        for (int i = 0; i < 3; i++)
+        {
+            CreateAbilityShopButton(currentList.GetPrimary());
+        }
     }
 
-    void GenerateChoices(int round)
+    void GenerateChoices(int choices)
     {
-        CreateAbilityShopButton(blink);
-        CreateAbilityShopButton(fireball);
-        CreateAbilityShopButton(bedlam);
-        CreateAbilityShopButton(feast);
-        CreateAbilityShopButton(atrophy);
-        CreateAbilityShopButton(burning);
+        for (int i = 0; i < choices; i++)
+        {
+            CreateAbilityShopButton(currentList.GetAbility());
+        }
     }
 
     private void CreateAbilityShopButton(Ability ability)
     {
+        if (ability == null)
+            return;
+
         // Place in right position
         Transform shopAbilityTransform = Instantiate(shopAbilityTemplate, container);
         RectTransform shopAbilityRectTransform = shopAbilityTransform.GetComponent<RectTransform>();
@@ -86,6 +83,7 @@ public class ShopMenu : MonoBehaviour
             }
         }
 
+        currentList = Instantiate(abilityDB);
         ClearButtons();
     }
 
@@ -113,8 +111,20 @@ public class ShopMenu : MonoBehaviour
         if (round == 1)
         {
             abilitySelectText.SetActive(true);
-            abilitySelectText.GetComponent<TextMeshProUGUI>().text = "TEST";
-            GenerateChoices(3);
+            abilitySelectText.GetComponent<TextMeshProUGUI>().text = "Select Slot 2 Ability";
+            GenerateChoices(4);
+        }
+        if (round == 2)
+        {
+            abilitySelectText.SetActive(true);
+            abilitySelectText.GetComponent<TextMeshProUGUI>().text = "Select Slot 3 Ability";
+            GenerateChoices(4);
+        }
+        if (round == 3)
+        {
+            abilitySelectText.SetActive(true);
+            abilitySelectText.GetComponent<TextMeshProUGUI>().text = "Select Slot 4 Ability";
+            GenerateChoices(4);
         }
     }
 }

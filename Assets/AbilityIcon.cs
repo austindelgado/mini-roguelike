@@ -61,8 +61,6 @@ public class AbilityIcon : MonoBehaviour
 
     public void LevelUp()
     {
-        Debug.Log("Level up pressed");
-
         if (shop.levelPoints > 0)
         {
             shop.levelPoints--;

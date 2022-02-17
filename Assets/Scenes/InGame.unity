@@ -1404,15 +1404,9 @@ MonoBehaviour:
   abilitySelectText: {fileID: 2085313013}
   inGameUI: {fileID: 1963829119}
   player: {fileID: 1522022963}
-  pistol: {fileID: 11400000, guid: d22f5ae99e395d042b0a8d43be333887, type: 2}
-  shotgun: {fileID: 11400000, guid: 1e0afde04abad044594e7fa2ce4ccb13, type: 2}
-  sniper: {fileID: 11400000, guid: 7808396d76ed25d4a83d90e5028e482c, type: 2}
-  blink: {fileID: 11400000, guid: 7ec5a8235f789ec408abfa6373df3623, type: 2}
-  bedlam: {fileID: 11400000, guid: 296ea59aea9674243a66df2de7e29492, type: 2}
-  fireball: {fileID: 11400000, guid: 90b03c4e1a25e124e9731b144fb0f822, type: 2}
-  feast: {fileID: 11400000, guid: 26c1bb97b8e506247a47188558e748e9, type: 2}
-  atrophy: {fileID: 11400000, guid: c4c89ecfe412d3c4a97b97d6248e33a9, type: 2}
-  burning: {fileID: 11400000, guid: 1209a800357db0f44ae86c239e1ae6c9, type: 2}
+  abilityDB: {fileID: 11400000, guid: 945bb6bfcc1edcd46bfc19eb158e678a, type: 2}
+  currentList: {fileID: 0}
+  levelPoints: 0
 --- !u!114 &1345405039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1719,14 +1713,16 @@ MonoBehaviour:
   mouseInput: {x: 0, y: 0}
   cam: {fileID: 519420031}
   circleCollider: {fileID: 1522022967}
+  canMove: 0
+  canCast: 0
   enemyKillCount: 0
   key1: 323
   ability1: {fileID: 1522022968}
-  key2: 32
+  key2: 324
   ability2: {fileID: 1522022969}
-  key3: 304
+  key3: 32
   ability3: {fileID: 1522022971}
-  key4: 0
+  key4: 304
   ability4: {fileID: 1522022970}
 --- !u!212 &1522022965
 SpriteRenderer:
