@@ -20,7 +20,7 @@ public class Shotgun : Ability
             GameObject projectile = Instantiate(projectilePrefab, parent.transform.position, parent.transform.rotation);
             projectile.GetComponent<Projectile>().parent = parent;
             projectile.GetComponent<Projectile>().dir = new Vector2(shotDir.x * Mathf.Cos(shotAngle * Mathf.Deg2Rad) - shotDir.y * Mathf.Sin(shotAngle * Mathf.Deg2Rad), shotDir.x * Mathf.Sin(shotAngle * Mathf.Deg2Rad) + shotDir.y * Mathf.Cos(shotAngle * Mathf.Deg2Rad));
-            projectile.GetComponent<Projectile>().damage = damage[level];
+            projectile.GetComponent<Projectile>().damage = damage[level] + parent.GetComponent<Player>().damageBonus;
         }
     }
 }
