@@ -27,6 +27,8 @@ public class ShopMenu : MonoBehaviour
     private int numAbilties;
     private int round = 1;
 
+    public int levelPoints = 0; // Move to player at some point
+
     // Start is called before the first frame update
     void Start()
     {
@@ -105,6 +107,8 @@ public class ShopMenu : MonoBehaviour
     {
         this.round = round;
         ToggleUI();
+
+        levelPoints++;
 
         if (round == 1)
         {

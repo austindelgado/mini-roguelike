@@ -52,12 +52,6 @@ public class Spawner : MonoBehaviour
             GameEvents.current.RoundEnd(waveNum);
 
             waveActive = false;
-
-            // Every other wave, level up
-            if (waveNum % 2 == 0)
-            {
-                player.ability1.LevelUp();
-            }
         }
     }
 

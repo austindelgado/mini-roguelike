@@ -67,7 +67,6 @@ public class AbilitySlot : MonoBehaviour
         }
     }
 
-    // This will only happen on player click in the future
     public void LevelUp()
     {
         // Don't change level value on initial skill
@@ -94,9 +93,12 @@ public class AbilitySlot : MonoBehaviour
     public void SetAbility(Ability ability)
     {
         this.ability = Instantiate(ability);
-        GameEvents.current.AbilityAdd(this);
 
-        // Level Up on add for now
-        LevelUp();
+        // Level up initial primary
+        Debug.Log("Set ability");
+        if (this.ability.type == Ability.AbilityType.primary)
+            LevelUp();
+
+        GameEvents.current.AbilityAdd(this);
     }
 }
