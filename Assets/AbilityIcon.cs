@@ -49,7 +49,7 @@ public class AbilityIcon : MonoBehaviour
 
     public void LevelButton(int round)
     {
-        if (shop.levelPoints == 0 || slot.ability == null)
+        if (shop.levelPoints == 0 || slot.ability == null || slot.level == slot.ability.maxLevel)
         {
             levelButton.SetActive(false);
         }
