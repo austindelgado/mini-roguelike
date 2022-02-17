@@ -18,6 +18,7 @@ public class ShopMenu : MonoBehaviour
     public Ability shotgun;
     public Ability sniper;
     public Ability blink;
+    public Ability bedlam;
     public Ability fireball;
     public Ability feast;
     public Ability atrophy;
@@ -44,6 +45,7 @@ public class ShopMenu : MonoBehaviour
     {
         CreateAbilityShopButton(blink);
         CreateAbilityShopButton(fireball);
+        CreateAbilityShopButton(bedlam);
         CreateAbilityShopButton(feast);
         CreateAbilityShopButton(atrophy);
         CreateAbilityShopButton(burning);
