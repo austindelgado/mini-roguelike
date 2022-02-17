@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius * transform.localScale.x);
         foreach (Collider2D hit in hits)
         {
-            if (hit.gameObject == null || parent.gameObject == null || hit.gameObject.tag == "Friendly")
+            if (hit.gameObject == null || parent.gameObject == null || hit.gameObject.tag == "Friendly" || hit.gameObject.tag == "Projectile")
                 continue;
 
             if (hit.gameObject == gameObject || parent.tag == hit.gameObject.tag)
