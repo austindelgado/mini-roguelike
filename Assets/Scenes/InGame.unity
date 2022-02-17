@@ -575,6 +575,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1345405037}
+  - {fileID: 1639978716}
   - {fileID: 1963829120}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -1031,7 +1032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -737.2001, y: 403.5}
+  m_AnchoredPosition: {x: 172, y: -89}
   m_SizeDelta: {x: 283.62354, y: 125.33598}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1088992975
@@ -1377,7 +1378,6 @@ RectTransform:
   - {fileID: 1369071048}
   - {fileID: 2085313014}
   - {fileID: 1834982976}
-  - {fileID: 1639978716}
   m_Father: {fileID: 518862069}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1420,7 +1420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.6392157}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1710,6 +1710,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   moveInput: {x: 0, y: 0}
   lookDir: {x: 0, y: 0}
+  damageBonus: 0
   mouseInput: {x: 0, y: 0}
   cam: {fileID: 519420031}
   circleCollider: {fileID: 1522022967}
@@ -2033,16 +2034,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1639978715}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1345405037}
-  m_RootOrder: 4
+  m_Father: {fileID: 518862069}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 473.99, y: 172.08}
+  m_AnchoredPosition: {x: 82, y: 89}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1639978717
@@ -2299,12 +2300,12 @@ RectTransform:
   m_Children:
   - {fileID: 1088992974}
   m_Father: {fileID: 518862069}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1975359985
 GameObject:
@@ -2393,7 +2394,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Select Ability 1
+  m_text: Select Primary Weapon
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

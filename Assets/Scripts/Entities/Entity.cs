@@ -15,6 +15,8 @@ public class Entity : MonoBehaviour
     public Vector2 moveInput;
     public Vector2 lookDir;
 
+    public int damageBonus;
+
     public virtual void Start() 
     {
         currentHealth = startingHealth;

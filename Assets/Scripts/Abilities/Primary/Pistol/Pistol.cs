@@ -13,6 +13,6 @@ public class Pistol : Ability
         GameObject projectile = Instantiate(projectilePrefab, parent.transform.position, parent.transform.rotation);
         projectile.GetComponent<Projectile>().parent = parent;
         projectile.GetComponent<Projectile>().dir = parent.GetComponent<Entity>().lookDir;
-        projectile.GetComponent<Projectile>().damage = damage[level] + parent.GetComponent<Player>().damageBonus;
+        projectile.GetComponent<Projectile>().damage = damage[level] + parent.GetComponent<Entity>().damageBonus;
     }
 }

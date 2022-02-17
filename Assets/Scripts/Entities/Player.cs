@@ -15,7 +15,6 @@ public class Player : Entity
     public bool canCast;
 
     public int enemyKillCount;
-    public int damageBonus;
 
     public KeyCode key1;
     public AbilitySlot ability1;
