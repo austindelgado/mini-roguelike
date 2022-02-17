@@ -16,10 +16,10 @@ MonoBehaviour:
   type: 1
   icon: {fileID: 21300000, guid: da35fa05a7672934aba4d9033ac187ad, type: 3}
   cooldownTime:
-  - 1
-  - 1
-  - 1
-  - 1
+  - 10
+  - 8
+  - 6
+  - 4
   activeTime:
   - 1
   - 1

@@ -16,16 +16,16 @@ MonoBehaviour:
   type: 1
   icon: {fileID: 21300000, guid: 8f5c4ccad0b86db4cb598fc7faf7238b, type: 3}
   cooldownTime:
-  - 2
-  - 2
-  - 2
-  - 2
+  - 10
+  - 8
+  - 6
+  - 4
   activeTime:
-  - 3
-  - 3
-  - 3
-  - 3
+  - 5
+  - 5
+  - 5
+  - 5
   maxLevel: 3
   skeletonPrefab: {fileID: 1810171906407645525, guid: 8eb62b9667705e24182c78ae97c64362, type: 3}
   numSpawn: 01000000020000000300000004000000
-  damage: 02000000020000000200000002000000
+  damage: 02000000020000000300000004000000

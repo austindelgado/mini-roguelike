@@ -16,14 +16,18 @@ MonoBehaviour:
   type: 1
   icon: {fileID: 21300000, guid: 18cd595ebb8433d48b1c1b2b86494dc3, type: 3}
   cooldownTime:
-  - 1
-  - 1
-  - 1
-  - 1
+  - 10
+  - 8
+  - 6
+  - 4
   activeTime:
   - 1
   - 1
   - 1
   - 1
   maxLevel: 3
-  distance: 5
+  distance:
+  - 8
+  - 9
+  - 10
+  - 12
