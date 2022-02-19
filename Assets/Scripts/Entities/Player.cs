@@ -29,6 +29,9 @@ public class Player : Entity
     {
         base.Start();
 
+        // Get the camera
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
         GameEvents.current.onRoundStart += RoundStart;
         GameEvents.current.onRoundEnd += RoundEnd;
     }
@@ -36,6 +39,9 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
+        if (!hasAuthority)
+            return;
+
         if (canMove)
         {
             moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
