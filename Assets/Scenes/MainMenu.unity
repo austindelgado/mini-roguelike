@@ -3698,6 +3698,7 @@ MonoBehaviour:
   menuScene: Assets/Scenes/MainMenu.unity
   roomPlayerPrefab: {fileID: 3454567454550390912, guid: 128c2d7abff370643a10e0f57eab2e8f, type: 3}
   gamePlayerPrefab: {fileID: -9208675734049444781, guid: e02fb43257da5b442b8ea2bc7441920d, type: 3}
+  playerSpawnSystem: {fileID: 3339165967785747817, guid: 6f58fe821131b884bbdbdde3d5c1fbf6, type: 3}
 --- !u!4 &2065003579
 Transform:
   m_ObjectHideFlags: 0
