@@ -20,6 +20,9 @@ public class Player : Entity
     public bool canMove;
     public bool canCast;
 
+    [SyncVar(hook = nameof(OnColorChanged))]
+    public Color playerColor = Color.white;
+
     public int enemyKillCount;
 
     public KeyCode key1;
@@ -34,14 +37,15 @@ public class Player : Entity
     public override void OnStartAuthority()
     {
         playerUI.SetActive(true);
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+        Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        CmdSetupPlayer(color);
     }
 
     public override void Start()
     {
         base.Start();
-
-        // Get the camera
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         GameEvents.current.onRoundStart += RoundStart;
         GameEvents.current.onRoundEnd += RoundEnd;
@@ -77,6 +81,17 @@ public class Player : Entity
         }
 
         RotateWeapon();
+    }
+
+    [Command]
+    void CmdSetupPlayer(Color color)
+    {
+        playerColor = color;
+    }
+            
+    void OnColorChanged(Color _Old, Color _New)
+    {
+        GetComponent<SpriteRenderer>().color = _New;
     }
 
     void RotateWeapon()
