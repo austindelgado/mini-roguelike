@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    public Player player;
     public GameObject[] enemyPrefab;
     public Transform[] spawnPoints;
         

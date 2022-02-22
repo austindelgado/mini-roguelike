@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 
 public class Player : Entity
 {
+    public GameObject playerUI;
+    public GameObject projectilePrefab;
+
+    public Transform weapon;
+
     public Vector2 mouseInput;
 
     public Camera cam;
@@ -25,9 +31,17 @@ public class Player : Entity
     public KeyCode key4;
     public AbilitySlot ability4;
 
+    public override void OnStartAuthority()
+    {
+        playerUI.SetActive(true);
+    }
+
     public override void Start()
     {
         base.Start();
+
+        // Get the camera
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         GameEvents.current.onRoundStart += RoundStart;
         GameEvents.current.onRoundEnd += RoundEnd;
@@ -36,18 +50,17 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
-        if (canMove)
-        {
-            moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-            mouseInput = cam.ScreenToWorldPoint((Vector2)Input.mousePosition);
-        }
+        if (!hasAuthority)
+            return;
+
+        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
         if (canCast)
         {
             // Ability inputs
-            if (Input.GetKey(key1))
+            if (Input.GetKeyDown(key1))
             {
-                ability1.Trigger();
+                CmdShoot();
             }
             if (Input.GetKey(key2))
             {
@@ -62,6 +75,22 @@ public class Player : Entity
                 ability4.Trigger();
             }
         }
+
+        RotateWeapon();
+    }
+
+    void RotateWeapon()
+    {
+        mouseInput = cam.ScreenToWorldPoint((Vector2)Input.mousePosition);
+        lookDir = mouseInput - (Vector2)transform.position;
+        weapon.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg, Vector3.forward);
+    }
+
+    [Command]
+    void CmdShoot()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, weapon.transform.position, weapon.transform.rotation);
+        NetworkServer.Spawn(projectile);
     }
 
     void FixedUpdate()
@@ -78,9 +107,6 @@ public class Player : Entity
             velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.fixedDeltaTime);
         }
         transform.Translate(velocity * Time.fixedDeltaTime);
-
-        // Aiming
-        lookDir = (mouseInput - (Vector2)transform.position).normalized;
 
         // Collision
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
