@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
+    public GameObject playerUI;
+
     public Vector2 mouseInput;
 
     public Camera cam;
@@ -24,6 +26,11 @@ public class Player : Entity
     public AbilitySlot ability3;
     public KeyCode key4;
     public AbilitySlot ability4;
+
+    public override void OnStartAuthority()
+    {
+        playerUI.SetActive(true);
+    }
 
     public override void Start()
     {
