@@ -156,9 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
-  ability: {fileID: 11400000, guid: 7ec5a8235f789ec408abfa6373df3623, type: 2}
-  level: 1
-  available: 1
+  ability: {fileID: 0}
+  level: 0
+  available: 0
 --- !u!114 &5550480650641973887
 MonoBehaviour:
   m_ObjectHideFlags: 0
