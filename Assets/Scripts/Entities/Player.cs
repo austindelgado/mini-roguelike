@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
+using UnityEngine.UI;
 
 public class Player : Entity
 {
@@ -23,6 +24,8 @@ public class Player : Entity
     [SyncVar(hook = nameof(OnColorChanged))]
     public Color playerColor = Color.white;
 
+    public Image healthUI;
+
     public int enemyKillCount;
 
     public KeyCode key1;
@@ -41,6 +44,12 @@ public class Player : Entity
 
         Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         CmdSetupPlayer(color);
+    }
+
+    public override void OnStartClient()
+    {
+        if (hasAuthority)
+            healthUI.color = Color.green;
     }
 
     public override void Start()
@@ -105,6 +114,7 @@ public class Player : Entity
     void CmdShoot()
     {
         GameObject projectile = Instantiate(projectilePrefab, weapon.transform.position, weapon.transform.rotation);
+        projectile.GetComponent<Projectile>().parent = gameObject;
         NetworkServer.Spawn(projectile);
     }
 
