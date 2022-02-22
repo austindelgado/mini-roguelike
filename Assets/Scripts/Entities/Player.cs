@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 
 public class Player : Entity
 {
     public GameObject playerUI;
+    public GameObject projectilePrefab;
+
+    public Transform weapon;
 
     public Vector2 mouseInput;
 
@@ -49,18 +53,14 @@ public class Player : Entity
         if (!hasAuthority)
             return;
 
-        if (canMove)
-        {
-            moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-            mouseInput = cam.ScreenToWorldPoint((Vector2)Input.mousePosition);
-        }
+        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
         if (canCast)
         {
             // Ability inputs
-            if (Input.GetKey(key1))
+            if (Input.GetKeyDown(key1))
             {
-                ability1.Trigger();
+                CmdShoot();
             }
             if (Input.GetKey(key2))
             {
@@ -75,6 +75,22 @@ public class Player : Entity
                 ability4.Trigger();
             }
         }
+
+        RotateWeapon();
+    }
+
+    void RotateWeapon()
+    {
+        mouseInput = cam.ScreenToWorldPoint((Vector2)Input.mousePosition);
+        lookDir = mouseInput - (Vector2)transform.position;
+        weapon.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg, Vector3.forward);
+    }
+
+    [Command]
+    void CmdShoot()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, weapon.transform.position, weapon.transform.rotation);
+        NetworkServer.Spawn(projectile);
     }
 
     void FixedUpdate()
@@ -91,9 +107,6 @@ public class Player : Entity
             velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.fixedDeltaTime);
         }
         transform.Translate(velocity * Time.fixedDeltaTime);
-
-        // Aiming
-        lookDir = (mouseInput - (Vector2)transform.position).normalized;
 
         // Collision
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);

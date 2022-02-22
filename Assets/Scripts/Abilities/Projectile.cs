@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class Projectile : MonoBehaviour
+public class Projectile : NetworkBehaviour
 {
     public GameObject parent;
 
@@ -27,24 +28,21 @@ public class Projectile : MonoBehaviour
         distanceTraveled = distanceVector.magnitude;
 
         if (maxDistance != 0 && distanceTraveled > maxDistance)
-            Destroy(gameObject);
+            NetworkServer.Destroy(gameObject);
     }
 
     public virtual void FixedUpdate()
     {
-        transform.Translate(dir * speed * Time.fixedDeltaTime);
+        transform.Translate(Vector2.right * speed * Time.fixedDeltaTime);
 
         // Collision
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius * transform.localScale.x);
         foreach (Collider2D hit in hits)
         {
-            if (hit.gameObject == null || parent.gameObject == null || hit.gameObject.tag == "Friendly" || hit.gameObject.tag == "Projectile")
+            if (hit.gameObject == null || hit.gameObject.tag == "Friendly" || hit.gameObject.tag == "Player")
                 continue;
 
-            if (hit.gameObject == gameObject || parent.tag == hit.gameObject.tag)
-                continue;
-
-            if (parent.gameObject.tag == "Friendly" && hit.gameObject.tag == "Player")
+            if (hit.gameObject == gameObject)
                 continue;
 
             // Hitting something not a wall and not yourself
@@ -52,10 +50,10 @@ public class Projectile : MonoBehaviour
             {
                 hit.gameObject.GetComponent<Entity>().Damage(damage, parent);
                 if (!piercing)
-                    Destroy(gameObject);
+                    NetworkServer.Destroy(gameObject);
             }
-            else if (hit.gameObject != parent)
-                Destroy(gameObject);
+            else
+                NetworkServer.Destroy(gameObject);
         }
     }
 }
