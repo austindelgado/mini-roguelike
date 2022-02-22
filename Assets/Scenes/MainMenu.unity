@@ -3688,7 +3688,7 @@ MonoBehaviour:
   onlineScene: Assets/Scenes/MainMenu.unity
   transport: {fileID: 2065003577}
   networkAddress: localhost
-  maxConnections: 100
+  maxConnections: 8
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 8907349605778590913, guid: 128c2d7abff370643a10e0f57eab2e8f, type: 3}
   autoCreatePlayer: 1
