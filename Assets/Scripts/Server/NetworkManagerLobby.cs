@@ -158,6 +158,9 @@ public class NetworkManagerLobby : NetworkManager
     {
         GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
         NetworkServer.Spawn(playerSpawnSystemInstance);
+
+        GameObject roundSystemInstance = Instantiate(roundSystem);
+        NetworkServer.Spawn(roundSystemInstance);
     }
 
     public override void OnServerReady(NetworkConnection conn)
