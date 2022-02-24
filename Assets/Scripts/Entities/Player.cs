@@ -175,4 +175,15 @@ public class Player : Entity
     {
         SceneManager.LoadScene(0);
     }
+
+    [ClientRpc]
+    public void Teleport(Vector3 position)
+    {
+        if (hasAuthority)
+        {
+            this.transform.position = position;
+            // Move Camera too
+            cam.gameObject.transform.position = new Vector3(position.x, position.y, -10);
+        }
+    }
 }

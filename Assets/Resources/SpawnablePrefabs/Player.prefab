@@ -608,6 +608,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1853037973938632480, guid: 666795b746817ba4e9c507dbe5c1dcab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1853037973938632482, guid: 666795b746817ba4e9c507dbe5c1dcab, type: 3}
       propertyPath: m_UiScaleMode
       value: 1

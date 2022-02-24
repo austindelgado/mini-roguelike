@@ -26,6 +26,7 @@ public class NetworkManagerLobby : NetworkManager
 
     public List<NetworkRoomPlayerLobby> RoomPlayers { get;} = new List<NetworkRoomPlayerLobby>();
     public List<NetworkGamePlayerLobby> GamePlayers { get;} = new List<NetworkGamePlayerLobby>();
+    public List<Player> InGamePlayers { get;} = new List<Player>();
 
     public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
 

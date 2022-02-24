@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class NetworkGamePlayerLobby : NetworkBehaviour
 {
     [SyncVar] private string displayName = "Loading...";
+    [SyncVar] public GameObject player = null;
 
     private NetworkManagerLobby room;
 
@@ -38,5 +39,11 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     public void SetDisplayName(string displayName)
     {
         this.displayName = displayName;
+    }
+
+    [Server]
+    public void SetPlayer(GameObject player)
+    {
+        this.player = player;
     }
 }

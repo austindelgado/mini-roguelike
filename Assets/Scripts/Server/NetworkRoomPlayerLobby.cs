@@ -13,8 +13,8 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[4];
     [SerializeField] private Button startGameButton = null;
 
-    [SyncVar(hook = nameof(HandleDisplayNameChanged))] public string DisplayName = "Loading...";
     [SyncVar(hook = nameof(HandleReadyStatusChanged))] public bool IsReady = false;
+    [SyncVar(hook = nameof(HandleDisplayNameChanged))] public string DisplayName = "Loading...";
 
     private bool isLeader;
 

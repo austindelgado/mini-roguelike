@@ -12,12 +12,26 @@ public class PlayerSpawnSystem : NetworkBehaviour
 
     private int nextIndex = 0;
 
+    private NetworkManagerLobby room;
+
+    private NetworkManagerLobby Room
+    {
+        get
+        {
+            if (room != null)
+                return room;
+
+            return room = NetworkManager.singleton as NetworkManagerLobby;
+        }
+    }
+
     public static void AddSpawnPoint(Transform transform)
     {
         spawnPoints.Add(transform);
 
         spawnPoints = spawnPoints.OrderBy(x => x.GetSiblingIndex()).ToList();
     }
+
 
     public static void RemoveSpawnPoint(Transform transform) => spawnPoints.Remove(transform);
 
@@ -38,6 +52,8 @@ public class PlayerSpawnSystem : NetworkBehaviour
 
         GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation);
         NetworkServer.Spawn(playerInstance, conn);
+        conn.clientOwnedObjects.First().gameObject.GetComponent<NetworkGamePlayerLobby>().SetPlayer(playerInstance);
+        //Room.InGamePlayers.Add(playerInstance.GetComponent<Player>());
 
         nextIndex++;
     }
