@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
+using UnityEngine.UI;
 
 public class Player : Entity
 {
     public GameObject playerUI;
     public GameObject projectilePrefab;
+
+    public Vector3 spawnPoint;
 
     public Transform weapon;
 
@@ -19,6 +22,11 @@ public class Player : Entity
     // Move to Entity class in future
     public bool canMove;
     public bool canCast;
+
+    [SyncVar(hook = nameof(OnColorChanged))]
+    public Color playerColor = Color.white;
+
+    public Image healthUI;
 
     public int enemyKillCount;
 
@@ -34,14 +42,21 @@ public class Player : Entity
     public override void OnStartAuthority()
     {
         playerUI.SetActive(true);
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+        Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        CmdSetupPlayer(color);
+    }
+
+    public override void OnStartClient()
+    {
+        if (hasAuthority)
+            healthUI.color = Color.green;
     }
 
     public override void Start()
     {
         base.Start();
-
-        // Get the camera
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         GameEvents.current.onRoundStart += RoundStart;
         GameEvents.current.onRoundEnd += RoundEnd;
@@ -79,6 +94,17 @@ public class Player : Entity
         RotateWeapon();
     }
 
+    [Command]
+    void CmdSetupPlayer(Color color)
+    {
+        playerColor = color;
+    }
+            
+    void OnColorChanged(Color _Old, Color _New)
+    {
+        GetComponent<SpriteRenderer>().color = _New;
+    }
+
     void RotateWeapon()
     {
         mouseInput = cam.ScreenToWorldPoint((Vector2)Input.mousePosition);
@@ -90,6 +116,7 @@ public class Player : Entity
     void CmdShoot()
     {
         GameObject projectile = Instantiate(projectilePrefab, weapon.transform.position, weapon.transform.rotation);
+        projectile.GetComponent<Projectile>().parent = gameObject;
         NetworkServer.Spawn(projectile);
     }
 
@@ -146,8 +173,34 @@ public class Player : Entity
         transform.position = new Vector3(0,0,0);
     }
 
+    [TargetRpc]
+    public void SetSpawn(Vector3 spawnPoint)
+    {
+        this.spawnPoint = spawnPoint;
+    }
+
     public override void Kill()
     {
-        SceneManager.LoadScene(0);
+        TeleportSpawn();
+    }
+
+    [TargetRpc]
+    public void TeleportSpawn()
+    {
+        this.transform.position = spawnPoint;
+        
+        // Move Camera too
+        cam.gameObject.transform.position = new Vector3(0, 0, -10);
+    }
+
+    [ClientRpc]
+    public void Teleport(Vector3 position)
+    {
+        if (hasAuthority)
+        {
+            this.transform.position = position;
+            // Move Camera too
+            cam.gameObject.transform.position = new Vector3(position.x, position.y, -10);
+        }
     }
 }
