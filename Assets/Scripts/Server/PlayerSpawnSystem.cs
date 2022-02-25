@@ -55,7 +55,6 @@ public class PlayerSpawnSystem : NetworkBehaviour
         NetworkServer.Spawn(playerInstance, conn);
         playerInstance.GetComponent<Player>().SetSpawn(spawnPoint.position);
         conn.clientOwnedObjects.First().gameObject.GetComponent<NetworkGamePlayerLobby>().SetPlayer(playerInstance);
-        //Room.InGamePlayers.Add(playerInstance.GetComponent<Player>());
 
         nextIndex++;
     }
