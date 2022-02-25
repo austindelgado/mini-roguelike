@@ -53,8 +53,8 @@ public class PlayerSpawnSystem : NetworkBehaviour
         Debug.Log(spawnPoint.position);
         GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation);
         NetworkServer.Spawn(playerInstance, conn);
-        playerInstance.GetComponent<Player>().SetSpawn(spawnPoint.position);
         conn.clientOwnedObjects.First().gameObject.GetComponent<NetworkGamePlayerLobby>().SetPlayer(playerInstance);
+        playerInstance.GetComponent<Player>().SetSpawn(spawnPoint.position);
 
         nextIndex++;
     }

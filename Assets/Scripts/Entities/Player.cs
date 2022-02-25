@@ -179,8 +179,13 @@ public class Player : Entity
         this.spawnPoint = spawnPoint;
     }
 
-    [TargetRpc]
     public override void Kill()
+    {
+        TeleportSpawn();
+    }
+
+    [TargetRpc]
+    public void TeleportSpawn()
     {
         this.transform.position = spawnPoint;
         

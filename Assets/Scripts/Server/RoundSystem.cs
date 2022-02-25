@@ -101,4 +101,19 @@ public class RoundSystem : NetworkBehaviour
     {
         Debug.Log("Start");
     }
+
+    [Server]
+    public void EndRound()
+    {
+        for (int i = Room.GamePlayers.Count - 1; i >= 0; i--)
+        {
+            Room.GamePlayers[i].player.GetComponent<Player>().TeleportSpawn();
+
+            nextIndex++;
+        }
+        
+        nextIndex = 0;
+
+        RpcStartRound();
+    }
 }
