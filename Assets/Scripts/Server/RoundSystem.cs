@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using System.Linq;
+using UnityEngine.UI;
+using TMPro;
 
 public class RoundSystem : NetworkBehaviour
 {
-    [SerializeField] private Animator animator = null;
+    [SerializeField] private double timeBtwRound = 0;
+
+    [SerializeField] private TMP_Text timerText = null;
+    
+    private double startTime;
+    private bool timerActive = false;
 
     private static List<Transform> gridPoints = new List<Transform>();
 
@@ -34,9 +41,20 @@ public class RoundSystem : NetworkBehaviour
         }
     }
 
+    void Update()
+    {
+        if (timerActive)
+        {
+            timerText.text = ((int)(timeBtwRound - (NetworkTime.time - startTime))).ToString();
+            
+            if (isServer && timeBtwRound - (NetworkTime.time - startTime) < 0)
+                StartRound();
+        }
+    }
+
     public void CountdownEnded()
     {
-        animator.enabled = false;
+
     }
 
     public override void OnStartServer()
@@ -83,22 +101,21 @@ public class RoundSystem : NetworkBehaviour
     {
         if (Room.GamePlayers.Count(x => x.connectionToClient.isReady) != Room.GamePlayers.Count)
             return;
-
-        animator.enabled = true;
         
-        //RpcStartCountdown();
-        //StartRound();
+        RpcStartCountdown(NetworkTime.time);
     }
 
     [ClientRpc]
-    private void RpcStartCountdown()
+    private void RpcStartCountdown(double time)
     {
-        animator.enabled = true;
+        startTime = time;
+        timerActive = true;
     }
 
     [ClientRpc]
     private void RpcStartRound()
     {
+        timerActive = false;
         Debug.Log("Start");
     }
 
