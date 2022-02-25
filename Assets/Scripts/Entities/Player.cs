@@ -10,6 +10,8 @@ public class Player : Entity
     public GameObject playerUI;
     public GameObject projectilePrefab;
 
+    public Vector3 spawnPoint;
+
     public Transform weapon;
 
     public Vector2 mouseInput;
@@ -171,9 +173,19 @@ public class Player : Entity
         transform.position = new Vector3(0,0,0);
     }
 
+    [TargetRpc]
+    public void SetSpawn(Vector3 spawnPoint)
+    {
+        this.spawnPoint = spawnPoint;
+    }
+
+    [TargetRpc]
     public override void Kill()
     {
-        SceneManager.LoadScene(0);
+        this.transform.position = spawnPoint;
+        
+        // Move Camera too
+        cam.gameObject.transform.position = new Vector3(0, 0, -10);
     }
 
     [ClientRpc]

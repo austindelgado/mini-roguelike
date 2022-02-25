@@ -6,7 +6,7 @@ using Mirror;
 public class Health : NetworkBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int maxHealth = 20;
     
     [SyncVar] private int currentHealth;
 
@@ -33,5 +33,14 @@ public class Health : NetworkBehaviour
     public void DealDamage(int value)
     {
         SetHealth(Mathf.Max(currentHealth - value, 0));
+
+        if (currentHealth == 0)
+        {
+            if(gameObject.TryGetComponent<Entity>(out var entity))
+                entity.Kill();
+
+            // Reset Health
+            SetHealth(maxHealth);
+        }
     }
 }
