@@ -41,7 +41,6 @@ public class Player : Entity
 
     public override void OnStartAuthority()
     {
-        playerUI.SetActive(true);
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));

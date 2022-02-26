@@ -116,7 +116,7 @@ MonoBehaviour:
   damageBonus: 0
   playerUI: {fileID: 5490726447343116273}
   projectilePrefab: {fileID: 1810171906407645525, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
-  spawnPoint: {fileID: 0}
+  spawnPoint: {x: 0, y: 0, z: 0}
   weapon: {fileID: 7282578199945752149}
   mouseInput: {x: 0, y: 0}
   cam: {fileID: 0}

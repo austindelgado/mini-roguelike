@@ -11,8 +11,11 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private double timeBtwRound = 0;
 
     [SerializeField] private TMP_Text timerText = null;
+    [SerializeField] private Image timerImage = null;
     
-    private double startTime;
+    private double countdownStartTime;
+    private bool countdownActive = false;
+    private double timerStartTime;
     private bool timerActive = false;
 
     private static List<Transform> gridPoints = new List<Transform>();
@@ -43,12 +46,17 @@ public class RoundSystem : NetworkBehaviour
 
     void Update()
     {
-        if (timerActive)
+        if (countdownActive)
         {
-            timerText.text = ((int)(timeBtwRound - (NetworkTime.time - startTime))).ToString();
+            timerText.text = ((int)(timeBtwRound - (NetworkTime.time - countdownStartTime))).ToString();
+            timerImage.fillAmount = (float)((timeBtwRound - (NetworkTime.time - countdownStartTime)) / timeBtwRound);
             
-            if (isServer && timeBtwRound - (NetworkTime.time - startTime) < 0)
+            if (isServer && timeBtwRound - (NetworkTime.time - countdownStartTime) < 0)
                 StartRound();
+        }
+        else if (timerActive)
+        {
+            timerText.text = ((int)(NetworkTime.time - timerStartTime)).ToString();
         }
     }
 
@@ -93,7 +101,7 @@ public class RoundSystem : NetworkBehaviour
         
         nextIndex = 0;
 
-        RpcStartRound();
+        RpcStartRound(NetworkTime.time);
     }
 
     [Server]
@@ -108,14 +116,18 @@ public class RoundSystem : NetworkBehaviour
     [ClientRpc]
     private void RpcStartCountdown(double time)
     {
-        startTime = time;
-        timerActive = true;
+        countdownStartTime = time;
+        countdownActive = true;
     }
 
     [ClientRpc]
-    private void RpcStartRound()
+    private void RpcStartRound(double time)
     {
-        timerActive = false;
+        countdownActive = false;
+
+        timerActive = true;
+        timerStartTime = time;
+
         Debug.Log("Start");
     }
 
@@ -130,7 +142,5 @@ public class RoundSystem : NetworkBehaviour
         }
         
         nextIndex = 0;
-
-        RpcStartRound();
     }
 }
