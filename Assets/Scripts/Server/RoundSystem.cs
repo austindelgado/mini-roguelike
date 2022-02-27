@@ -69,6 +69,8 @@ public class RoundSystem : NetworkBehaviour
     {
         NetworkManagerLobby.OnServerStopped += CleanUpServer;
         NetworkManagerLobby.OnServerReadied += CheckToStartRound;
+
+        GameEvents.current.onPlayerRoundEnd += PlayerRoundEnd;
     }
 
     [ServerCallback]
@@ -104,6 +106,7 @@ public class RoundSystem : NetworkBehaviour
     [Server]
     public void StartRound()
     {
+        GameEvents.current.RoundStart(0);
         RpcStartRound(NetworkTime.time);
     }
 
@@ -135,16 +138,16 @@ public class RoundSystem : NetworkBehaviour
         Debug.Log("Start");
     }
 
-    [Server]
+    [TargetRpc]
     public void EndRound()
     {
-        // for (int i = Room.GamePlayers.Count - 1; i >= 0; i--)
-        // {
-        //     Room.GamePlayers[i].player.GetComponent<Player>().TeleportSpawn();
+        timerActive = false;
+    }
 
-        //     nextIndex++;
-        // }
-        
-        // nextIndex = 0;
+    [TargetRpc]
+    public void PlayerRoundEnd(NetworkConnection target)
+    {
+        Debug.Log("Player finished round");
+        timerActive = false;
     }
 }

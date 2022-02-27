@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class GameEvents : MonoBehaviour
 {
@@ -40,6 +41,14 @@ public class GameEvents : MonoBehaviour
         Debug.Log("Round " + round + " end!");
         if (onRoundEnd != null)
             onRoundEnd(round);
+    }
+
+    public event Action<NetworkConnection> onPlayerRoundEnd;
+    public void PlayerRoundEnd(NetworkConnection connection)
+    {
+        Debug.Log(connection + " endeded round!");
+        if (onPlayerRoundEnd != null)
+            onPlayerRoundEnd(connection);
     }
 
     public event Action<AbilitySlot> onAbilityAdd;
