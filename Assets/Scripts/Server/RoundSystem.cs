@@ -12,6 +12,7 @@ public class RoundSystem : NetworkBehaviour
 
     [SerializeField] private TMP_Text timerText = null;
     [SerializeField] private Image timerImage = null;
+    [SerializeField] private GameObject timerObject = null;
     
     private double countdownStartTime;
     private bool countdownActive = false;
@@ -56,6 +57,7 @@ public class RoundSystem : NetworkBehaviour
         }
         else if (timerActive)
         {
+            timerObject.SetActive(false);
             timerText.text = ((int)(NetworkTime.time - timerStartTime)).ToString();
         }
     }

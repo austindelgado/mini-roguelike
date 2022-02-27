@@ -378,6 +378,7 @@ MonoBehaviour:
   timeBtwRound: 20
   timerText: {fileID: 4494417831244957752}
   timerImage: {fileID: 7324628765332847661}
+  timerObject: {fileID: 6507140035900692023}
 --- !u!95 &3795484097132738823
 Animator:
   serializedVersion: 3

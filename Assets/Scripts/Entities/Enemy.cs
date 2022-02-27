@@ -19,7 +19,7 @@ public class Enemy : Entity
     {
         base.Start();
 
-        player = GameObject.Find("Player");
+        // player = GameObject.Find("Player");
 
         currSpeed = speed;
         currAcceleration = acceleration;
@@ -29,21 +29,21 @@ public class Enemy : Entity
     // Update is called once per frame
     void Update()
     {
-        // Get Player Position
-        moveInput = (player.transform.position - transform.position).normalized;
-        currSpeed = speed + player.GetComponent<Player>().enemyKillCount * .1f;
-        currAcceleration = acceleration + player.GetComponent<Player>().enemyKillCount * .075f;
-        currDeceleration = deceleration + player.GetComponent<Player>().enemyKillCount * .075f;
+        // // Get Player Position
+        // //moveInput = (player.transform.position - transform.position).normalized;
+        // currSpeed = speed + player.GetComponent<Player>().enemyKillCount * .1f;
+        // currAcceleration = acceleration + player.GetComponent<Player>().enemyKillCount * .075f;
+        // currDeceleration = deceleration + player.GetComponent<Player>().enemyKillCount * .075f;
 
-        // Get player direction
-        lookDir = moveInput;
-        float distance = Vector2.Distance(player.transform.position, transform.position);
+        // // Get player direction
+        // lookDir = moveInput;
+        // float distance = Vector2.Distance(player.transform.position, transform.position);
 
-        if (ability1.available && distance < attackRadius)
-            ability1.Trigger();
+        // if (ability1.available && distance < attackRadius)
+        //     ability1.Trigger();
 
-        if (currSpeed > 3)
-            currSpeed = 3;
+        // if (currSpeed > 3)
+        //     currSpeed = 3;
     }
 
     void FixedUpdate()
@@ -86,12 +86,12 @@ public class Enemy : Entity
     public override void Kill()
     {
         Debug.Log("Enemy killed");
-        player.GetComponent<Player>().enemyKillCount++;
+        // player.GetComponent<Player>().enemyKillCount++;
 
-        // Let spawner know
-        GameObject.Find("EnemySpawner").GetComponent<Spawner>().EnemyRemoved();
+        // // Let spawner know
+        // GameObject.Find("EnemySpawner").GetComponent<Spawner>().EnemyRemoved();
 
-        GameEvents.current.EnemyDeath(gameObject);
+        // GameEvents.current.EnemyDeath(gameObject);
 
         Destroy(gameObject);
     }
