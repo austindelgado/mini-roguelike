@@ -19,18 +19,16 @@ public class RoundSystem : NetworkBehaviour
     private double timerStartTime;
     private bool timerActive = false;
 
-    private static List<Transform> gridPoints = new List<Transform>();
+    private static List<GridCell> gridCells = new List<GridCell>();
 
-    private int nextIndex = 0;
-
-    public static void AddGridPoint(Transform transform)
+    public static void AddGridCell(GridCell gridCell)
     {
-        gridPoints.Add(transform);
+        gridCells.Add(gridCell);
 
-        gridPoints = gridPoints.OrderBy(x => x.GetSiblingIndex()).ToList();
+        gridCells = gridCells.OrderBy(x => x.transform.GetSiblingIndex()).ToList();
     }
 
-    public static void RemoveGridPoint(Transform transform) => gridPoints.Remove(transform);
+    public static void RemoveGridCell(GridCell gridCell) => gridCells.Remove(gridCell);
 
     private NetworkManagerLobby room;
 
@@ -84,25 +82,28 @@ public class RoundSystem : NetworkBehaviour
     }
 
     [Server]
-    public void StartRound()
+    public void AssignPlayers()
     {
+        int nextIndex = 0;
         for (int i = Room.GamePlayers.Count - 1; i >= 0; i--)
         {
-            Transform gridPoint = gridPoints.ElementAtOrDefault(nextIndex);
+            GridCell gridCell = gridCells.ElementAtOrDefault(nextIndex);
 
-            if (gridPoint == null)
+            if (gridCell == null)
             {
-                Debug.LogError($"Missing spawn point for player {nextIndex}");
+                Debug.LogError($"Missing grid cell for player {nextIndex}");
                 return;
             }
 
-            Room.GamePlayers[i].player.GetComponent<Player>().Teleport(gridPoint.position);
+            gridCell.AssignPlayer(Room.GamePlayers[i].player);
 
             nextIndex++;
         }
-        
-        nextIndex = 0;
+    }
 
+    [Server]
+    public void StartRound()
+    {
         RpcStartRound(NetworkTime.time);
     }
 
@@ -112,6 +113,7 @@ public class RoundSystem : NetworkBehaviour
         if (Room.GamePlayers.Count(x => x.connectionToClient.isReady) != Room.GamePlayers.Count)
             return;
         
+        AssignPlayers();
         RpcStartCountdown(NetworkTime.time);
     }
 
@@ -136,13 +138,13 @@ public class RoundSystem : NetworkBehaviour
     [Server]
     public void EndRound()
     {
-        for (int i = Room.GamePlayers.Count - 1; i >= 0; i--)
-        {
-            Room.GamePlayers[i].player.GetComponent<Player>().TeleportSpawn();
+        // for (int i = Room.GamePlayers.Count - 1; i >= 0; i--)
+        // {
+        //     Room.GamePlayers[i].player.GetComponent<Player>().TeleportSpawn();
 
-            nextIndex++;
-        }
+        //     nextIndex++;
+        // }
         
-        nextIndex = 0;
+        // nextIndex = 0;
     }
 }

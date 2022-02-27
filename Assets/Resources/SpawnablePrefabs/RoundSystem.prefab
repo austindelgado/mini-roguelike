@@ -375,7 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  timeBtwRound: 20
+  timeBtwRound: 10
   timerText: {fileID: 4494417831244957752}
   timerImage: {fileID: 7324628765332847661}
   timerObject: {fileID: 6507140035900692023}
