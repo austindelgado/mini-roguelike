@@ -63,7 +63,7 @@ public class GridCell : MonoBehaviour
 
     public void PlayerDeath(GameObject player)
     {
-        if (this.player = player)
+        if (this.player == player && roundActive)
             RoundEnd();
     }
 }
