@@ -20,6 +20,13 @@ public class GameEvents : MonoBehaviour
             onDamageDealt(damage, dealer);
     }
 
+    public event Action<GameObject> onPlayerDeath;
+    public void PlayerDeath(GameObject player)
+    {
+        if (onPlayerDeath != null)
+            onPlayerDeath(player);
+    }
+
     public event Action<GameObject> onEnemyDeath;
     public void EnemyDeath(GameObject enemy)
     {
@@ -46,7 +53,6 @@ public class GameEvents : MonoBehaviour
     public event Action<NetworkConnection> onPlayerRoundEnd;
     public void PlayerRoundEnd(NetworkConnection connection)
     {
-        Debug.Log(connection + " endeded round!");
         if (onPlayerRoundEnd != null)
             onPlayerRoundEnd(connection);
     }

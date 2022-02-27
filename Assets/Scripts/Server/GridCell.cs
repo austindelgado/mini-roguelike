@@ -30,6 +30,7 @@ public class GridCell : MonoBehaviour
 
         // With a player assigned, we want to subscribe to RoundStart event
         GameEvents.current.onRoundStart += RoundStart;
+        GameEvents.current.onPlayerDeath += PlayerDeath;
     }
 
     public void RoundStart(int round)
@@ -48,7 +49,7 @@ public class GridCell : MonoBehaviour
     public void RoundEnd()
     {
         roundActive = false;
-        
+
         player.GetComponent<Player>().TeleportSpawn();
         GameEvents.current.PlayerRoundEnd(player.GetComponent<NetworkIdentity>().connectionToClient);
     }
@@ -58,5 +59,11 @@ public class GridCell : MonoBehaviour
     {
         enemyInstance = Instantiate(enemyPrefab, transform.position + new Vector3(0f, 2f, 0f), transform.rotation);
         NetworkServer.Spawn(enemyInstance);
+    }
+
+    public void PlayerDeath(GameObject player)
+    {
+        if (this.player = player)
+            RoundEnd();
     }
 }

@@ -14,6 +14,8 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private Image timerImage = null;
     [SerializeField] private GameObject timerObject = null;
     
+    private int activeRounds;
+
     private double countdownStartTime;
     private bool countdownActive = false;
     private double timerStartTime;
@@ -47,6 +49,7 @@ public class RoundSystem : NetworkBehaviour
     {
         if (countdownActive)
         {
+            timerObject.SetActive(true);
             timerText.text = ((int)(timeBtwRound - (NetworkTime.time - countdownStartTime))).ToString();
             timerImage.fillAmount = (float)((timeBtwRound - (NetworkTime.time - countdownStartTime)) / timeBtwRound);
             
@@ -70,7 +73,7 @@ public class RoundSystem : NetworkBehaviour
         NetworkManagerLobby.OnServerStopped += CleanUpServer;
         NetworkManagerLobby.OnServerReadied += CheckToStartRound;
 
-        GameEvents.current.onPlayerRoundEnd += PlayerRoundEnd;
+        GameEvents.current.onPlayerRoundEnd += PlayerEndRound;
     }
 
     [ServerCallback]
@@ -135,6 +138,8 @@ public class RoundSystem : NetworkBehaviour
         timerActive = true;
         timerStartTime = time;
 
+        activeRounds = Room.GamePlayers.Count;
+
         Debug.Log("Start");
     }
 
@@ -144,8 +149,17 @@ public class RoundSystem : NetworkBehaviour
         timerActive = false;
     }
 
+    [Server]
+    public void PlayerEndRound(NetworkConnection target)
+    {
+        activeRounds--;
+
+        if (activeRounds == 0)
+            RpcStartCountdown(NetworkTime.time);
+    }
+
     [TargetRpc]
-    public void PlayerRoundEnd(NetworkConnection target)
+    public void RpcPlayerRoundEnd(NetworkConnection target)
     {
         Debug.Log("Player finished round");
         timerActive = false;

@@ -152,6 +152,7 @@ public class Player : Entity
 
     public override void Kill()
     {
+        GameEvents.current.PlayerDeath(gameObject);
         TeleportSpawn();
     }
 
