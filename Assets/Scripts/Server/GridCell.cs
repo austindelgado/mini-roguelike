@@ -33,6 +33,7 @@ public class GridCell : MonoBehaviour
         GameEvents.current.onPlayerDeath += PlayerDeath;
     }
 
+    [Server]
     public void RoundStart(int round)
     {
         // Need to check if our player is getting pulled into a duel
@@ -46,11 +47,13 @@ public class GridCell : MonoBehaviour
     }
 
     // Round ends when a player dies or all enemies are killed
+    [Server]
     public void RoundEnd()
     {
         roundActive = false;
 
-        player.GetComponent<Player>().TeleportSpawn();
+        Debug.Log(player.name + " ended round!");
+        player.GetComponent<Player>().RpcTeleportSpawn();
         GameEvents.current.PlayerRoundEnd(player.GetComponent<NetworkIdentity>().connectionToClient);
     }
 
@@ -61,6 +64,7 @@ public class GridCell : MonoBehaviour
         NetworkServer.Spawn(enemyInstance);
     }
 
+    [Server]
     public void PlayerDeath(GameObject player)
     {
         if (this.player == player && roundActive)

@@ -157,6 +157,17 @@ public class Player : Entity
     }
 
     [TargetRpc]
+    public void RpcTeleportSpawn()
+    {
+        if (hasAuthority)
+        {
+            this.transform.position = spawnPoint;
+        
+            // Move Camera too
+            cam.gameObject.transform.position = new Vector3(0, 0, -10);
+        }
+    }
+
     public void TeleportSpawn()
     {
         if (hasAuthority)

@@ -153,7 +153,8 @@ public class RoundSystem : NetworkBehaviour
     public void PlayerEndRound(NetworkConnection target)
     {
         activeRounds--;
-
+        RpcPlayerRoundEnd(target);
+        
         if (activeRounds == 0)
             RpcStartCountdown(NetworkTime.time);
     }
