@@ -128,6 +128,9 @@ public class RoundSystem : NetworkBehaviour
     {
         countdownStartTime = time;
         countdownActive = true;
+
+        if (isServer)
+            PrepDuel();
     }
 
     [ClientRpc]
@@ -164,5 +167,28 @@ public class RoundSystem : NetworkBehaviour
     {
         Debug.Log("Player finished round");
         timerActive = false;
+    }
+
+    [Server]
+    public void PrepDuel()
+    {
+        // Check round
+
+        if (Room.GamePlayers.Count > 1)
+        {
+            // Loop through and give chance to grab a player
+            int numNeeded = 2;
+            for (int i = Room.GamePlayers.Count; i > 0; i--)
+            {
+                // Chance is based of numNeeded / numberLeft
+                float chance = (float)numNeeded / (float)i;
+                
+                // Should weigh in rounds since last duel here
+                if (Random.value < chance)
+                {
+                    numNeeded--;
+                }
+            }
+        }
     }
 }
