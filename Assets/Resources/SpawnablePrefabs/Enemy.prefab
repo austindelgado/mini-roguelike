@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  startingHealth: 10
+  startingHealth: 1
   currentHealth: 0
   speed: 1
   acceleration: 2
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  maxHealth: 50
+  maxHealth: 20
 --- !u!1001 &990388752559511551
 PrefabInstance:
   m_ObjectHideFlags: 0

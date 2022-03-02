@@ -34,12 +34,13 @@ public class GameEvents : MonoBehaviour
             onEnemyDeath(enemy);
     }
 
-    public event Action<int> onRoundStart;
-    public void RoundStart(int round)
+    public event Action<int, GameObject, GameObject> onRoundStart;
+    public void RoundStart(int round, GameObject host, GameObject challenger)
     {
-        Debug.Log("Round " + round + " start!");
+        if (challenger != null && host != null)
+            Debug.Log("Round " + round + " start! " + challenger.name + " is challenging " + host.name);
         if (onRoundStart != null)
-            onRoundStart(round);
+            onRoundStart(round, host, challenger);
     }
 
     public event Action<int> onRoundEnd;

@@ -34,13 +34,33 @@ public class GridCell : MonoBehaviour
     }
 
     [Server]
-    public void RoundStart(int round)
+    public void RoundStart(int round, GameObject host, GameObject challenger)
     {
-        // Need to check if our player is getting pulled into a duel
         roundActive = true;
 
+        // If we're challenging, don't tp player or spawn enemies
+        if(challenger == player)
+        {
+            enemyInstance = host;
+            return;
+        }
+
+        // If hosting adjust teleport and teleport in other player
+        if (host == player)
+        {
+            // Teleport our player on the left
+            player.GetComponent<Player>().Teleport(transform.position + new Vector3(-3f, 0f, 0f), transform.position);
+            
+            // Teleport challenger on the right
+            challenger.GetComponent<Player>().Teleport(transform.position + new Vector3(3f, 0f, 0f), transform.position);
+
+            enemyInstance = challenger;
+
+            return;
+        }
+
         // Teleport player in
-        player.GetComponent<Player>().Teleport(transform.position);
+        player.GetComponent<Player>().Teleport(transform.position, transform.position);
 
         // Start spawning enemies
         SpawnEnemy();
@@ -67,7 +87,7 @@ public class GridCell : MonoBehaviour
     [Server]
     public void PlayerDeath(GameObject player)
     {
-        if (this.player == player && roundActive)
+        if (this.player == player && roundActive || enemyInstance == player)
             RoundEnd();
     }
 }

@@ -21,6 +21,9 @@ public class RoundSystem : NetworkBehaviour
     private double timerStartTime;
     private bool timerActive = false;
 
+    private GameObject host;
+    private GameObject challenger;
+
     private static List<GridCell> gridCells = new List<GridCell>();
 
     public static void AddGridCell(GridCell gridCell)
@@ -109,7 +112,7 @@ public class RoundSystem : NetworkBehaviour
     [Server]
     public void StartRound()
     {
-        GameEvents.current.RoundStart(0);
+        GameEvents.current.RoundStart(0, host, challenger);
         RpcStartRound(NetworkTime.time);
     }
 
@@ -186,6 +189,11 @@ public class RoundSystem : NetworkBehaviour
                 // Should weigh in rounds since last duel here
                 if (Random.value < chance)
                 {
+                    if (numNeeded == 2)
+                        host = Room.GamePlayers[i-1].player;
+                    else 
+                        challenger = Room.GamePlayers[i-1].player;
+
                     numNeeded--;
                 }
             }

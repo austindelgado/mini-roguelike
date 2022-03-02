@@ -180,13 +180,13 @@ public class Player : Entity
     }
 
     [ClientRpc]
-    public void Teleport(Vector3 position)
+    public void Teleport(Vector3 playerPosition, Vector3 cameraPosition)
     {
         if (hasAuthority)
         {
-            this.transform.position = position;
+            this.transform.position = playerPosition;
             // Move Camera too
-            cam.gameObject.transform.position = new Vector3(position.x, position.y, -10);
+            cam.gameObject.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, -10);
         }
     }
 }
