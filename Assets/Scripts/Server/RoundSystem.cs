@@ -13,6 +13,10 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private TMP_Text timerText = null;
     [SerializeField] private Image timerImage = null;
     [SerializeField] private GameObject timerObject = null;
+
+    [SerializeField] private GameObject duelUI = null;
+    [SerializeField] private TMP_Text hostUIText = null;
+    [SerializeField] private TMP_Text challengerUIText = null;
     
     private int activeRounds;
 
@@ -21,8 +25,8 @@ public class RoundSystem : NetworkBehaviour
     private double timerStartTime;
     private bool timerActive = false;
 
-    private GameObject host;
-    private GameObject challenger;
+    private NetworkGamePlayerLobby host;
+    private NetworkGamePlayerLobby challenger;
 
     private static List<GridCell> gridCells = new List<GridCell>();
 
@@ -112,7 +116,7 @@ public class RoundSystem : NetworkBehaviour
     [Server]
     public void StartRound()
     {
-        GameEvents.current.RoundStart(0, host, challenger);
+        GameEvents.current.RoundStart(0, host.player, challenger.player);
         RpcStartRound(NetworkTime.time);
     }
 
@@ -123,17 +127,21 @@ public class RoundSystem : NetworkBehaviour
             return;
         
         AssignPlayers();
-        RpcStartCountdown(NetworkTime.time);
+
+        if (isServer)
+            PrepDuel();
+
+        RpcStartCountdown(NetworkTime.time, 0, host, challenger);
     }
 
     [ClientRpc]
-    private void RpcStartCountdown(double time)
+    private void RpcStartCountdown(double time, int round, NetworkGamePlayerLobby host, NetworkGamePlayerLobby challenger)
     {
         countdownStartTime = time;
         countdownActive = true;
 
-        if (isServer)
-            PrepDuel();
+        if (host != null && challenger != null)
+            SetDuelIU(host, challenger);
     }
 
     [ClientRpc]
@@ -145,6 +153,8 @@ public class RoundSystem : NetworkBehaviour
         timerStartTime = time;
 
         activeRounds = Room.GamePlayers.Count;
+
+        duelUI.SetActive(false);
 
         Debug.Log("Start");
     }
@@ -162,7 +172,12 @@ public class RoundSystem : NetworkBehaviour
         RpcPlayerRoundEnd(target);
         
         if (activeRounds == 0)
-            RpcStartCountdown(NetworkTime.time);
+        {
+            if (isServer)
+                PrepDuel();
+
+            RpcStartCountdown(NetworkTime.time, 0, host, challenger);
+        }
     }
 
     [TargetRpc]
@@ -190,13 +205,20 @@ public class RoundSystem : NetworkBehaviour
                 if (Random.value < chance)
                 {
                     if (numNeeded == 2)
-                        host = Room.GamePlayers[i-1].player;
+                        host = Room.GamePlayers[i-1];
                     else 
-                        challenger = Room.GamePlayers[i-1].player;
+                        challenger = Room.GamePlayers[i-1];
 
                     numNeeded--;
                 }
             }
         }
+    }
+
+    private void SetDuelIU(NetworkGamePlayerLobby host, NetworkGamePlayerLobby challenger)
+    {
+        duelUI.SetActive(true);
+        hostUIText.text = host.displayName;
+        challengerUIText.text = challenger.displayName;
     }
 }
