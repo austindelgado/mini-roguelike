@@ -87,7 +87,7 @@ public class GridCell : MonoBehaviour
     [Server]
     public void PlayerDeath(GameObject player)
     {
-        if (this.player == player && roundActive || enemyInstance == player)
+        if (this.player == player && roundActive || enemyInstance == player && roundActive)
             RoundEnd();
     }
 }
