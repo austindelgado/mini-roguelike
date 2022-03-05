@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class NetworkGamePlayerLobby : NetworkBehaviour
 {
-    [SyncVar] private string displayName = "Loading...";
+    [SyncVar] public string displayName = "Loading...";
     [SyncVar] public GameObject player = null;
 
     private NetworkManagerLobby room;

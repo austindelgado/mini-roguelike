@@ -35,7 +35,7 @@ public class Spawner : MonoBehaviour
         scoreText = GameObject.Find("Score").GetComponent<Text>();
         numRemaining = enemiesToSpawn;
 
-        GameEvents.current.onRoundStart += StartWave;
+        //GameEvents.current.onRoundStart += StartWave;
     }
 
     // Update is called once per frame

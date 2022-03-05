@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class GameEvents : MonoBehaviour
 {
@@ -19,6 +20,13 @@ public class GameEvents : MonoBehaviour
             onDamageDealt(damage, dealer);
     }
 
+    public event Action<GameObject> onPlayerDeath;
+    public void PlayerDeath(GameObject player)
+    {
+        if (onPlayerDeath != null)
+            onPlayerDeath(player);
+    }
+
     public event Action<GameObject> onEnemyDeath;
     public void EnemyDeath(GameObject enemy)
     {
@@ -26,12 +34,13 @@ public class GameEvents : MonoBehaviour
             onEnemyDeath(enemy);
     }
 
-    public event Action<int> onRoundStart;
-    public void RoundStart(int round)
+    public event Action<int, GameObject, GameObject> onRoundStart;
+    public void RoundStart(int round, GameObject host, GameObject challenger)
     {
-        Debug.Log("Round " + round + " start!");
+        if (challenger != null && host != null)
+            Debug.Log("Round " + round + " start! " + challenger.name + " is challenging " + host.name);
         if (onRoundStart != null)
-            onRoundStart(round);
+            onRoundStart(round, host, challenger);
     }
 
     public event Action<int> onRoundEnd;
@@ -40,6 +49,13 @@ public class GameEvents : MonoBehaviour
         Debug.Log("Round " + round + " end!");
         if (onRoundEnd != null)
             onRoundEnd(round);
+    }
+
+    public event Action<NetworkConnection> onPlayerRoundEnd;
+    public void PlayerRoundEnd(NetworkConnection connection)
+    {
+        if (onPlayerRoundEnd != null)
+            onPlayerRoundEnd(connection);
     }
 
     public event Action<AbilitySlot> onAbilityAdd;

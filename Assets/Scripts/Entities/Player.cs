@@ -19,10 +19,6 @@ public class Player : Entity
     public Camera cam;
     public CircleCollider2D circleCollider;
 
-    // Move to Entity class in future
-    public bool canMove;
-    public bool canCast;
-
     [SyncVar(hook = nameof(OnColorChanged))]
     public Color playerColor = Color.white;
 
@@ -41,7 +37,6 @@ public class Player : Entity
 
     public override void OnStartAuthority()
     {
-        playerUI.SetActive(true);
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
@@ -57,9 +52,6 @@ public class Player : Entity
     public override void Start()
     {
         base.Start();
-
-        GameEvents.current.onRoundStart += RoundStart;
-        GameEvents.current.onRoundEnd += RoundEnd;
     }
 
     // Update is called once per frame
@@ -70,25 +62,22 @@ public class Player : Entity
 
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        if (canCast)
+        // Ability inputs
+        if (Input.GetKeyDown(key1))
         {
-            // Ability inputs
-            if (Input.GetKeyDown(key1))
-            {
-                CmdShoot();
-            }
-            if (Input.GetKey(key2))
-            {
-                ability2.Trigger();
-            }
-            if (Input.GetKey(key3))
-            {
-                ability3.Trigger();
-            }
-            if (Input.GetKey(key4))
-            {
-                ability4.Trigger();
-            }
+            CmdShoot();
+        }
+        if (Input.GetKey(key2))
+        {
+            ability2.Trigger();
+        }
+        if (Input.GetKey(key3))
+        {
+            ability3.Trigger();
+        }
+        if (Input.GetKey(key4))
+        {
+            ability4.Trigger();
         }
 
         RotateWeapon();
@@ -155,24 +144,6 @@ public class Player : Entity
         }
     }
 
-    public void RoundStart(int round)
-    {
-        canMove = true;
-        canCast = true;
-    }
-
-    public void RoundEnd(int round)
-    {
-        canMove = false;
-        canCast = false;
-
-        // Clear input
-        moveInput = Vector2.zero;
-
-        // Reset position
-        transform.position = new Vector3(0,0,0);
-    }
-
     [TargetRpc]
     public void SetSpawn(Vector3 spawnPoint)
     {
@@ -181,26 +152,41 @@ public class Player : Entity
 
     public override void Kill()
     {
+        GameEvents.current.PlayerDeath(gameObject);
         TeleportSpawn();
     }
 
     [TargetRpc]
-    public void TeleportSpawn()
-    {
-        this.transform.position = spawnPoint;
-        
-        // Move Camera too
-        cam.gameObject.transform.position = new Vector3(0, 0, -10);
-    }
-
-    [ClientRpc]
-    public void Teleport(Vector3 position)
+    public void RpcTeleportSpawn()
     {
         if (hasAuthority)
         {
-            this.transform.position = position;
+            this.transform.position = spawnPoint;
+        
             // Move Camera too
-            cam.gameObject.transform.position = new Vector3(position.x, position.y, -10);
+            cam.gameObject.transform.position = new Vector3(0, 0, -10);
+        }
+    }
+
+    public void TeleportSpawn()
+    {
+        if (hasAuthority)
+        {
+            this.transform.position = spawnPoint;
+        
+            // Move Camera too
+            cam.gameObject.transform.position = new Vector3(0, 0, -10);
+        }
+    }
+
+    [ClientRpc]
+    public void Teleport(Vector3 playerPosition, Vector3 cameraPosition)
+    {
+        if (hasAuthority)
+        {
+            this.transform.position = playerPosition;
+            // Move Camera too
+            cam.gameObject.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, -10);
         }
     }
 }

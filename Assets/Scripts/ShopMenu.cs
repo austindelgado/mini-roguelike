@@ -92,7 +92,7 @@ public class ShopMenu : MonoBehaviour
         player.GetComponent<AbilitySlot>().available = true;
         ToggleUI();
         Time.timeScale = 1.0f;
-        GameEvents.current.RoundStart(round);
+        //GameEvents.current.RoundStart(round);
     }
 
     public void ToggleUI()
