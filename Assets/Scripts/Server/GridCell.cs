@@ -75,6 +75,8 @@ public class GridCell : MonoBehaviour
         Debug.Log(player.name + " ended round!");
         player.GetComponent<Player>().RpcTeleportSpawn();
         GameEvents.current.PlayerRoundEnd(player.GetComponent<NetworkIdentity>().connectionToClient);
+
+        // Clear enemy if it's still there
     }
 
     [Server]
