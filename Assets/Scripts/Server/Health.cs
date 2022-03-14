@@ -43,10 +43,4 @@ public class Health : NetworkBehaviour
             SetHealth(maxHealth);
         }
     }
-
-    [Server]
-    public void ResetHealth()
-    {
-        SetHealth(maxHealth);
-    }
 }

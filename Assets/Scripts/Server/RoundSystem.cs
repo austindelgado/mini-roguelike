@@ -156,12 +156,6 @@ public class RoundSystem : NetworkBehaviour
 
         duelUI.SetActive(false);
 
-        // Reset health
-        for (int i = 0; i < Room.GamePlayers.Count; i++)
-        {
-            Room.GamePlayers[i].player.GetComponent<Health>().ResetHealth();
-        }
-
         Debug.Log("Start");
     }
 
