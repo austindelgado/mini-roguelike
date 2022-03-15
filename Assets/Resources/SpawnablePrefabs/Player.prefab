@@ -1047,14 +1047,12 @@ MonoBehaviour:
   lookDir: {x: 0, y: 0}
   damageBonus: 0
   playerUI: {fileID: 5490726447343116273}
-  projectilePrefab: {fileID: 1810171906407645525, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
+  projectilePrefab: {fileID: 1810171906407645521, guid: e8a6606038ad85f44a8e0759ecad2375, type: 3}
   spawnPoint: {x: 0, y: 0, z: 0}
   weapon: {fileID: 7282578199945752149}
   mouseInput: {x: 0, y: 0}
   cam: {fileID: 0}
   circleCollider: {fileID: 5550480650641973873}
-  canMove: 1
-  canCast: 1
   playerColor: {r: 1, g: 1, b: 1, a: 1}
   healthUI: {fileID: 3914022002988040449}
   enemyKillCount: 0
