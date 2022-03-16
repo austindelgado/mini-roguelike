@@ -9,13 +9,26 @@ public class Weapon : NetworkBehaviour
     public WeaponData weaponData;
     public int currentAmmo;
 
+    private bool canShoot = true;
+
     public Projectile projectilePrefab; // Here because all are shared for now
 
     // Player is currently responsible for rotating weaponTransform, maybe move that here in the future
 
     public void Fire()
     {
-        SpawnProjectile(weaponTransform.position, weaponTransform.rotation);
+        if (canShoot)
+        {
+            SpawnProjectile(weaponTransform.position, weaponTransform.rotation);
+            StartCoroutine(StartFireDelay());
+        }
+    }
+
+    public IEnumerator StartFireDelay()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(weaponData.fireDelay);
+        canShoot = true;
     }
 
     public void SpawnProjectile(Vector3 position, Quaternion rotation)
