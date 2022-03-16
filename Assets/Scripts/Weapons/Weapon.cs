@@ -15,12 +15,25 @@ public class Weapon : NetworkBehaviour
 
     // Player is currently responsible for rotating weaponTransform, maybe move that here in the future
 
+    public override void OnStartAuthority()
+    {
+        // This will need to change when we equip weapons
+        currentAmmo = weaponData.ammoAmount;
+    }
+
     public void Fire()
     {
         if (canShoot)
         {
-            SpawnProjectile(weaponTransform.position, weaponTransform.rotation);
-            StartCoroutine(StartFireDelay());
+            // Check ammo
+            if (currentAmmo - weaponData.ammoCost > 0)
+            {
+                SpawnProjectile(weaponTransform.position, weaponTransform.rotation);
+                currentAmmo -= weaponData.ammoCost;
+                StartCoroutine(StartFireDelay());
+            }
+            else
+                StartCoroutine(StartReload());
         }
     }
 
@@ -28,6 +41,14 @@ public class Weapon : NetworkBehaviour
     {
         canShoot = false;
         yield return new WaitForSeconds(weaponData.fireDelay);
+        canShoot = true;
+    }
+
+    public IEnumerator StartReload()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(weaponData.reloadTime);
+        currentAmmo = weaponData.ammoAmount;
         canShoot = true;
     }
 
