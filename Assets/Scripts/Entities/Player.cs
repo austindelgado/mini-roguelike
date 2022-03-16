@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Player : Entity
 {
     public GameObject playerUI;
-    public GameObject projectilePrefab;
+    public Projectile projectilePrefab;
 
     public Vector3 spawnPoint;
 
@@ -65,7 +65,7 @@ public class Player : Entity
         // Ability inputs
         if (Input.GetKeyDown(key1))
         {
-            CmdShoot();
+            Fire();
         }
         if (Input.GetKey(key2))
         {
@@ -81,6 +81,17 @@ public class Player : Entity
         }
 
         RotateWeapon();
+    }
+
+    private void Fire()
+    {
+        if (!isServer)
+        {
+            Projectile projectile = Instantiate(projectilePrefab, weapon.transform.position, weapon.transform.rotation);
+            projectile.Initialize(gameObject, 0f);
+        }
+
+        CmdFire(gameObject, weapon.transform.position, weapon.transform.rotation, NetworkTime.time);
     }
 
     [Command]
@@ -102,11 +113,26 @@ public class Player : Entity
     }
 
     [Command]
-    void CmdShoot()
+    void CmdFire(GameObject parent, Vector3 position, Quaternion rotation, double networkTime)
     {
-        GameObject projectile = Instantiate(projectilePrefab, weapon.transform.position, weapon.transform.rotation);
-        projectile.GetComponent<Projectile>().parent = gameObject;
-        NetworkServer.Spawn(projectile);
+        double timePassed = NetworkTime.time - networkTime;
+
+        Projectile projectile = Instantiate(projectilePrefab, position, rotation);
+        projectile.Initialize(parent, (float)timePassed); // Add passing in parent here
+
+        RpcFire(parent, position, rotation, networkTime);
+    }
+
+    [ClientRpc]
+    void RpcFire(GameObject parent, Vector3 position, Quaternion rotation, double networkTime)
+    {
+        if (hasAuthority)
+            return;
+
+        double timePassed = NetworkTime.time - networkTime;
+
+        Projectile projectile = Instantiate(projectilePrefab, position, rotation);
+        projectile.Initialize(parent, (float)timePassed); // Add passing in parent here
     }
 
     void FixedUpdate()
