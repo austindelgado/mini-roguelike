@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class Player : Entity
 {
     public GameObject playerUI;
-    public Projectile projectilePrefab;
 
     public Vector3 spawnPoint;
 
@@ -65,33 +64,10 @@ public class Player : Entity
         // Ability inputs
         if (Input.GetKeyDown(key1))
         {
-            Fire();
-        }
-        if (Input.GetKey(key2))
-        {
-            ability2.Trigger();
-        }
-        if (Input.GetKey(key3))
-        {
-            ability3.Trigger();
-        }
-        if (Input.GetKey(key4))
-        {
-            ability4.Trigger();
+            //Fire();
         }
 
         RotateWeapon();
-    }
-
-    private void Fire()
-    {
-        if (!isServer)
-        {
-            Projectile projectile = Instantiate(projectilePrefab, weapon.transform.position, weapon.transform.rotation);
-            projectile.Initialize(gameObject, 0f);
-        }
-
-        CmdFire(gameObject, weapon.transform.position, weapon.transform.rotation, NetworkTime.time);
     }
 
     [Command]
@@ -110,29 +86,6 @@ public class Player : Entity
         mouseInput = cam.ScreenToWorldPoint((Vector2)Input.mousePosition);
         lookDir = mouseInput - (Vector2)transform.position;
         weapon.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg, Vector3.forward);
-    }
-
-    [Command]
-    void CmdFire(GameObject parent, Vector3 position, Quaternion rotation, double networkTime)
-    {
-        double timePassed = NetworkTime.time - networkTime;
-
-        Projectile projectile = Instantiate(projectilePrefab, position, rotation);
-        projectile.Initialize(parent, (float)timePassed); // Add passing in parent here
-
-        RpcFire(parent, position, rotation, networkTime);
-    }
-
-    [ClientRpc]
-    void RpcFire(GameObject parent, Vector3 position, Quaternion rotation, double networkTime)
-    {
-        if (hasAuthority)
-            return;
-
-        double timePassed = NetworkTime.time - networkTime;
-
-        Projectile projectile = Instantiate(projectilePrefab, position, rotation);
-        projectile.Initialize(parent, (float)timePassed); // Add passing in parent here
     }
 
     void FixedUpdate()
