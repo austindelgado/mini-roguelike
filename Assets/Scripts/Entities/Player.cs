@@ -11,7 +11,8 @@ public class Player : Entity
 
     public Vector3 spawnPoint;
 
-    public Transform weapon;
+    public Weapon weapon;
+    public Transform weaponTransform;
 
     public Vector2 mouseInput;
 
@@ -65,6 +66,7 @@ public class Player : Entity
         if (Input.GetKeyDown(key1))
         {
             //Fire();
+            weapon.Fire();
         }
 
         RotateWeapon();
@@ -85,7 +87,7 @@ public class Player : Entity
     {
         mouseInput = cam.ScreenToWorldPoint((Vector2)Input.mousePosition);
         lookDir = mouseInput - (Vector2)transform.position;
-        weapon.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg, Vector3.forward);
+        weaponTransform.rotation = Quaternion.AngleAxis(Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg, Vector3.forward);
     }
 
     void FixedUpdate()

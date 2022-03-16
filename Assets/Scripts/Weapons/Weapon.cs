@@ -5,20 +5,23 @@ using Mirror;
 
 public class Weapon : NetworkBehaviour
 {
-    WeaponData weaponData;
+    public Transform weaponTransform;
+    public WeaponData weaponData;
     public int currentAmmo;
 
     public Projectile projectilePrefab; // Here because all are shared for now
 
-    private void Fire()
+    // Player is currently responsible for rotating weaponTransform, maybe move that here in the future
+
+    public void Fire()
     {
         if (!isServer)
         {
-            Projectile projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            Projectile projectile = Instantiate(projectilePrefab, weaponTransform.position, weaponTransform.rotation);
             projectile.Initialize(gameObject, 0f);
         }
 
-        CmdFire(gameObject, transform.position, transform.rotation, NetworkTime.time);
+        CmdFire(gameObject, weaponTransform.position, weaponTransform.rotation, NetworkTime.time);
     }
 
     [Command]
