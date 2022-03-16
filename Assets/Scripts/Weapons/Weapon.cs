@@ -15,28 +15,33 @@ public class Weapon : NetworkBehaviour
 
     public void Fire()
     {
+        SpawnProjectile(weaponTransform.position, weaponTransform.rotation);
+    }
+
+    public void SpawnProjectile(Vector3 position, Quaternion rotation)
+    {
         if (!isServer)
         {
-            Projectile projectile = Instantiate(projectilePrefab, weaponTransform.position, weaponTransform.rotation);
+            Projectile projectile = Instantiate(projectilePrefab, position, rotation);
             projectile.Initialize(gameObject, 0f);
         }
 
-        CmdFire(gameObject, weaponTransform.position, weaponTransform.rotation, NetworkTime.time);
+        CmdSpawnProjectile(gameObject, position, rotation, NetworkTime.time);
     }
 
     [Command]
-    void CmdFire(GameObject parent, Vector3 position, Quaternion rotation, double networkTime)
+    void CmdSpawnProjectile(GameObject parent, Vector3 position, Quaternion rotation, double networkTime)
     {
         double timePassed = NetworkTime.time - networkTime;
 
         Projectile projectile = Instantiate(projectilePrefab, position, rotation);
         projectile.Initialize(parent, (float)timePassed); // Add passing in parent here
 
-        RpcFire(parent, position, rotation, networkTime);
+        RpcSpawnProjectile(parent, position, rotation, networkTime);
     }
 
     [ClientRpc]
-    void RpcFire(GameObject parent, Vector3 position, Quaternion rotation, double networkTime)
+    void RpcSpawnProjectile(GameObject parent, Vector3 position, Quaternion rotation, double networkTime)
     {
         if (hasAuthority)
             return;
