@@ -78,9 +78,10 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void Initialize(GameObject parent, float duration)
+    public void Initialize(GameObject parent, int damage, float duration)
     {
         catchupDistance = duration * speed;
+        this.damage = damage;
         this.parent = parent;
     }
 }

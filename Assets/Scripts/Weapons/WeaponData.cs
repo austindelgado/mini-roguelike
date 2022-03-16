@@ -13,7 +13,7 @@ public class WeaponData : ScriptableObject
     public Sprite sprite;
 
     [Header("Shooting")]
-    public float damage; // Damage per bullet
+    public int damage; // Damage per bullet
     public int numBullet; // Number of bullets per shot
     public fireType type;
     public float speed; // base speed for projectiles
