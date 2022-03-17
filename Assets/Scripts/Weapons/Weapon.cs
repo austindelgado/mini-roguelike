@@ -48,14 +48,28 @@ public class Weapon : NetworkBehaviour
         if (canShoot)
         {
             canShoot = false;
-            // Check ammo
+
+            // Check there's enough ammo
             if (currentAmmo - weaponData.ammoCost >= 0)
             {
-                StartCoroutine(StartFireDelay());
+                StartCoroutine(StartFireDelay()); // Fire delay starts before burst delay
+
+                float fixedOffset = 0;
+                if (weaponData.fixedAngle != 0)
+                    fixedOffset = -(weaponData.fixedAngle / 2 * (weaponData.numBullet - 1)); // This spits back the -max angle
+
                 for (int i = 0; i < weaponData.numBullet; i++)
                 {
-                    SpawnProjectile(weaponTransform.position, weaponTransform.rotation);
-                    yield return new WaitForSeconds(weaponData.burstDelay);
+                    // Calculate spread
+                    Quaternion offset = Quaternion.AngleAxis(fixedOffset + Random.Range(-weaponData.spreadAngle, weaponData.spreadAngle), Vector3.forward);
+                    
+                    SpawnProjectile(weaponTransform.position, offset * weaponTransform.rotation);
+
+                    if (weaponData.type == WeaponData.FireType.burst)
+                        yield return new WaitForSeconds(weaponData.burstDelay);
+
+                    if (weaponData.fixedAngle != 0)
+                        fixedOffset += weaponData.fixedAngle;
                 }
                 currentAmmo -= weaponData.ammoCost;
             }
@@ -77,6 +91,8 @@ public class Weapon : NetworkBehaviour
         currentAmmo = weaponData.ammoAmount;
         canShoot = true;
     }
+
+    #region SpawningProjectiles
 
     public void SpawnProjectile(Vector3 position, Quaternion rotation)
     {
@@ -111,4 +127,6 @@ public class Weapon : NetworkBehaviour
         Projectile projectile = Instantiate(projectilePrefab, position, rotation);
         projectile.Initialize(parent, damage, speed, (float)timePassed); // Add passing in parent here
     }
+
+    #endregion
 }
