@@ -26,6 +26,7 @@ public class Weapon : NetworkBehaviour
     {
         this.weaponData = weaponData;
         currentAmmo = weaponData.ammoAmount;
+        weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite; // This only works locally
     }
 
     public void ToggleFire(bool firing)

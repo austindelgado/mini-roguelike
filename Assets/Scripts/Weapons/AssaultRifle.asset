@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Assault Rifle
   description: Assault rifle that fires a 3 round burst
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: dea48abec793b6b4ca6370100c76a234, type: 3}
   damage: 3
   numBullet: 3
   type: 1

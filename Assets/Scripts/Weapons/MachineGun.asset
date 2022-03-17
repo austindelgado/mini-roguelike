@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Machine Gun
   description: Accurate, slow machine gun
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 1fc7eae71cdc0ca4a9522bdb22f348cb, type: 3}
   damage: 3
   numBullet: 1
   type: 2
