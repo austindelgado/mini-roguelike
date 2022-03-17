@@ -17,6 +17,7 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private GameObject duelUI = null;
     [SerializeField] private TMP_Text hostUIText = null;
     [SerializeField] private TMP_Text challengerUIText = null;
+    [SerializeField] private GameObject weaponDebugUI = null;
     
     private int activeRounds;
 
@@ -155,6 +156,7 @@ public class RoundSystem : NetworkBehaviour
         activeRounds = Room.GamePlayers.Count;
 
         duelUI.SetActive(false);
+        weaponDebugUI.SetActive(false);
 
         // Reset health
         for (int i = 0; i < Room.GamePlayers.Count; i++)
@@ -224,6 +226,7 @@ public class RoundSystem : NetworkBehaviour
     private void SetDuelIU(NetworkGamePlayerLobby host, NetworkGamePlayerLobby challenger)
     {
         duelUI.SetActive(true);
+        weaponDebugUI.SetActive(true);
         hostUIText.text = host.displayName;
         challengerUIText.text = challenger.displayName;
     }
