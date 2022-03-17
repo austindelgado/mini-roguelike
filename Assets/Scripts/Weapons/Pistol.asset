@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06daf432cc3b0834cba112643d14a5f5, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: 
+  name: Revolver
+  description: Your standard pistol
+  sprite: {fileID: 21300000, guid: 9c2da7b7760565b44b501b8e780f63d4, type: 3}
+  damage: 2
+  numBullet: 1
+  type: 0
+  speed: 5
+  spreadAngle: 4
+  fixedAngle: 0
+  burstDelay: 0
+  fireDelay: 0.2
+  ammoAmount: 6
+  ammoCost: 1
+  reloadTime: 1
