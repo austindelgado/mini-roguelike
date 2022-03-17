@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Weapon", menuName = "WeaponData")]
 public class WeaponData : ScriptableObject
 {
-    public enum fireType {single, burst, auto};
+    public enum FireType {single, burst, auto};
 
     [Header("Info")]
     public new string name;
@@ -15,10 +15,11 @@ public class WeaponData : ScriptableObject
     [Header("Shooting")]
     public int damage; // Damage per bullet
     public int numBullet; // Number of bullets per shot
-    public fireType type;
+    public FireType type;
     public float speed; // base speed for projectiles
     public float spreadAngle; // Angle offset for each shot 
     public float fixedAngle; // Fixed offset for each shot
+    public float burstDelay; // Only use on burst weapons for delay between shots
 
     [Header("Reloading")]
     public float fireDelay; // Time between shots

@@ -10,6 +10,8 @@ public class Weapon : NetworkBehaviour
     public int currentAmmo;
 
     private bool canShoot = true;
+    private bool firing = false;
+    private bool requireLift = false; // Used to force mouse release on reload
 
     public Projectile projectilePrefab; // Here because all are shared for now
 
@@ -21,16 +23,41 @@ public class Weapon : NetworkBehaviour
         currentAmmo = weaponData.ammoAmount;
     }
 
-    public void Fire()
+    public void ToggleFire(bool firing)
+    {
+        // On key down
+        if (firing && !this.firing) // We want to shoot and we're not already
+        {
+            this.firing = true;
+            StartCoroutine(Fire());
+        }
+        else if (firing && this.firing) // We want to shoot and already are
+        {
+            if (weaponData.type == WeaponData.FireType.auto && !requireLift) // Only if it's auto
+                StartCoroutine(Fire());
+        }
+        else if (!firing) // We don't want to shoot
+        {
+            this.firing = false;
+            requireLift = false;
+        }
+    }
+
+    public IEnumerator Fire()
     {
         if (canShoot)
         {
+            canShoot = false;
             // Check ammo
             if (currentAmmo - weaponData.ammoCost >= 0)
             {
-                SpawnProjectile(weaponTransform.position, weaponTransform.rotation);
-                currentAmmo -= weaponData.ammoCost;
                 StartCoroutine(StartFireDelay());
+                for (int i = 0; i < weaponData.numBullet; i++)
+                {
+                    SpawnProjectile(weaponTransform.position, weaponTransform.rotation);
+                    yield return new WaitForSeconds(weaponData.burstDelay);
+                }
+                currentAmmo -= weaponData.ammoCost;
             }
             else
                 StartCoroutine(StartReload());
@@ -39,14 +66,13 @@ public class Weapon : NetworkBehaviour
 
     public IEnumerator StartFireDelay()
     {
-        canShoot = false;
         yield return new WaitForSeconds(weaponData.fireDelay);
         canShoot = true;
     }
 
     public IEnumerator StartReload()
     {
-        canShoot = false;
+        requireLift = true;
         yield return new WaitForSeconds(weaponData.reloadTime);
         currentAmmo = weaponData.ammoAmount;
         canShoot = true;

@@ -63,11 +63,12 @@ public class Player : Entity
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
         // Ability inputs
-        if (Input.GetKeyDown(key1))
+        if (Input.GetKey(key1))
         {
-            //Fire();
-            weapon.Fire();
+            weapon.ToggleFire(true);
         }
+        else if (Input.GetKeyUp(key1))
+            weapon.ToggleFire(false);
 
         RotateWeapon();
     }
