@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06daf432cc3b0834cba112643d14a5f5, type: 3}
-  m_Name: AssaultRifle
+  m_Name: WaveGun
   m_EditorClassIdentifier: 
-  name: Assault Rifle
-  description: Assault rifle that fires a 3 round burst
+  name: Wave Gun
+  description: 
   sprite: {fileID: 0}
-  damage: 3
-  numBullet: 3
+  damage: 2
+  numBullet: 16
   type: 1
   speed: 5
   spreadAngle: 2
-  fixedAngle: 0
-  burstDelay: 0.1
-  fireDelay: 0.37
-  ammoAmount: 20
-  ammoCost: 3
+  fixedAngle: 1
+  burstDelay: 0.01
+  fireDelay: 0.57
+  ammoAmount: 10
+  ammoCost: 2
   reloadTime: 1

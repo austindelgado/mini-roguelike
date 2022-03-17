@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06daf432cc3b0834cba112643d14a5f5, type: 3}
-  m_Name: Machine Gun
+  m_Name: MachineGun
   m_EditorClassIdentifier: 
-  name: 
-  description: 
+  name: Machine Gun
+  description: Accurate, slow machine gun
   sprite: {fileID: 0}
-  damage: 0
-  numBullet: 0
-  type: 0
-  speed: 0
-  spreadAngle: 0
+  damage: 3
+  numBullet: 1
+  type: 2
+  speed: 5
+  spreadAngle: 6
   fixedAngle: 0
-  fireDelay: 0
-  ammoAmount: 0
-  ammoCost: 0
-  reloadTime: 0
+  burstDelay: 0
+  fireDelay: 0.17
+  ammoAmount: 50
+  ammoCost: 1
+  reloadTime: 1

@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06daf432cc3b0834cba112643d14a5f5, type: 3}
-  m_Name: AssaultRifle
+  m_Name: Minigun
   m_EditorClassIdentifier: 
-  name: Assault Rifle
-  description: Assault rifle that fires a 3 round burst
+  name: Minigun
+  description: High rate of fire with high spread
   sprite: {fileID: 0}
   damage: 3
-  numBullet: 3
-  type: 1
+  numBullet: 1
+  type: 2
   speed: 5
-  spreadAngle: 2
+  spreadAngle: 13
   fixedAngle: 0
-  burstDelay: 0.1
-  fireDelay: 0.37
-  ammoAmount: 20
-  ammoCost: 3
+  burstDelay: 0
+  fireDelay: 0.03
+  ammoAmount: 50
+  ammoCost: 1
   reloadTime: 1

@@ -21,6 +21,7 @@ MonoBehaviour:
   speed: 5
   spreadAngle: 4
   fixedAngle: 0
+  burstDelay: 0
   fireDelay: 0.2
   ammoAmount: 6
   ammoCost: 1
