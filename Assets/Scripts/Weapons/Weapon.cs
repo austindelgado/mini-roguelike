@@ -19,7 +19,12 @@ public class Weapon : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
-        // This will need to change when we equip weapons
+        Equip(weaponData); // Equip pistol by default
+    }
+
+    public void Equip(WeaponData weaponData)
+    {
+        this.weaponData = weaponData;
         currentAmmo = weaponData.ammoAmount;
     }
 
@@ -65,8 +70,7 @@ public class Weapon : NetworkBehaviour
                     
                     SpawnProjectile(weaponTransform.position, offset * weaponTransform.rotation);
 
-                    if (weaponData.type == WeaponData.FireType.burst)
-                        yield return new WaitForSeconds(weaponData.burstDelay);
+                    yield return new WaitForSeconds(weaponData.burstDelay);
 
                     if (weaponData.fixedAngle != 0)
                         fixedOffset += weaponData.fixedAngle;
