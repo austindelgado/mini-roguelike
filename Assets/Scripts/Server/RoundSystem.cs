@@ -19,6 +19,8 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private TMP_Text challengerUIText = null;
     [SerializeField] private GameObject weaponDebugUI = null;
     
+    [SerializeField] private ChatBehaviour roundChat = null;
+
     private int activeRounds;
 
     private double countdownStartTime;
@@ -158,6 +160,8 @@ public class RoundSystem : NetworkBehaviour
         duelUI.SetActive(false);
         weaponDebugUI.SetActive(false);
 
+        roundChat.ServerSend("Round Start!");
+
         // Reset health
         for (int i = 0; i < Room.GamePlayers.Count; i++)
         {
@@ -191,7 +195,6 @@ public class RoundSystem : NetworkBehaviour
     [TargetRpc]
     public void RpcPlayerRoundEnd(NetworkConnection target)
     {
-        Debug.Log("Player finished round");
         timerActive = false;
     }
 
