@@ -19,7 +19,7 @@ public class Health : NetworkBehaviour
         this.onHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    [Server]
+    [ServerCallback]
     private void SetHealth(int value)
     {
         currentHealth = value;
@@ -29,7 +29,7 @@ public class Health : NetworkBehaviour
 
     public override void OnStartServer() => SetHealth(maxHealth);
 
-    [Server] 
+    [ServerCallback] 
     public void DealDamage(int value)
     {
         SetHealth(Mathf.Max(currentHealth - value, 0));
@@ -44,7 +44,7 @@ public class Health : NetworkBehaviour
         }
     }
 
-    [Server]
+    [ServerCallback]
     public void ResetHealth()
     {
         SetHealth(maxHealth);
