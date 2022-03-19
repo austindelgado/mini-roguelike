@@ -51,11 +51,18 @@ public class GameEvents : MonoBehaviour
             onRoundEnd(round);
     }
 
-    public event Action<NetworkConnection> onPlayerRoundEnd;
-    public void PlayerRoundEnd(NetworkConnection connection)
+    public event Action<NetworkConnection, NetworkConnection> onDuelEnd;
+    public void DuelEnd(NetworkConnection winner, NetworkConnection loser)
+    {
+        if (onDuelEnd != null)
+            onDuelEnd(winner, loser);
+    }
+
+    public event Action<NetworkConnection, bool> onPlayerRoundEnd;
+    public void PlayerRoundEnd(NetworkConnection connection, bool win)
     {
         if (onPlayerRoundEnd != null)
-            onPlayerRoundEnd(connection);
+            onPlayerRoundEnd(connection, win);
     }
 
     public event Action<AbilitySlot> onAbilityAdd;

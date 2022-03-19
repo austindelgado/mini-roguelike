@@ -12,14 +12,17 @@ public class GridCell : MonoBehaviour
     private GameObject enemyInstance;
     private bool roundActive = false;
 
+    private GameObject host;
+    private GameObject challenger;
+
     private void Awake() => RoundSystem.AddGridCell(this);
 
     private void OnDestroy() => RoundSystem.RemoveGridCell(this);
 
     void Update()
     {
-        if (roundActive && enemyInstance == null)
-            RoundEnd();
+        if (roundActive && enemyInstance == null) // Bad way to check if enemy is still alive
+            RoundEnd(true);
     }
 
     [Server]
@@ -36,18 +39,18 @@ public class GridCell : MonoBehaviour
     [Server]
     public void RoundStart(int round, GameObject host, GameObject challenger)
     {
-        roundActive = true;
-
         // If we're challenging, don't tp player or spawn enemies
         if(challenger == player)
-        {
-            enemyInstance = host;
             return;
-        }
+
+        roundActive = true;
 
         // If hosting adjust teleport and teleport in other player
         if (host == player)
         {
+            this.host = host;
+            this.challenger = challenger;
+
             // Teleport our player on the left
             player.GetComponent<Player>().Teleport(transform.position + new Vector3(-3f, 0f, 0f), transform.position);
             
@@ -68,15 +71,29 @@ public class GridCell : MonoBehaviour
 
     // Round ends when a player dies or all enemies are killed
     [Server]
-    public void RoundEnd()
+    public void RoundEnd(bool win)
     {
         roundActive = false;
 
-        Debug.Log(player.name + " ended round!");
         player.GetComponent<Player>().RpcTeleportSpawn();
-        GameEvents.current.PlayerRoundEnd(player.GetComponent<NetworkIdentity>().connectionToClient);
+        GameEvents.current.PlayerRoundEnd(player.GetComponent<NetworkIdentity>().connectionToClient, win);
 
         // Clear enemy if it's still there
+        if (enemyInstance != null && enemyInstance.tag != "Player")
+            Destroy(enemyInstance);
+    }
+
+    [Server]
+    public void DuelEnd(GameObject winner, GameObject loser)
+    {
+        roundActive = false;
+
+        winner.GetComponent<Player>().RpcTeleportSpawn();
+        loser.GetComponent<Player>().RpcTeleportSpawn();
+        GameEvents.current.DuelEnd(winner.GetComponent<NetworkIdentity>().connectionToClient, loser.GetComponent<NetworkIdentity>().connectionToClient);
+
+        host = null;
+        challenger = null;
     }
 
     [Server]
@@ -89,7 +106,15 @@ public class GridCell : MonoBehaviour
     [Server]
     public void PlayerDeath(GameObject player)
     {
-        if (this.player == player && roundActive || enemyInstance == player && roundActive)
-            RoundEnd();
+        if (!roundActive)
+            return;
+
+        if (this.player == host && player == host) // Host loses
+            DuelEnd(challenger, host);
+        else if (this.player == host && player == challenger) // Host wins
+            DuelEnd(host, challenger);
+
+        if (this.player == player)
+            RoundEnd(false);
     }
 }

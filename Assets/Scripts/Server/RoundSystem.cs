@@ -19,7 +19,10 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private TMP_Text challengerUIText = null;
     [SerializeField] private GameObject weaponDebugUI = null;
     
+    [SerializeField] private ChatBehaviour roundChat = null;
+
     private int activeRounds;
+    private int roundNumber = 0;
 
     private double countdownStartTime;
     private bool countdownActive = false;
@@ -81,6 +84,7 @@ public class RoundSystem : NetworkBehaviour
         NetworkManagerLobby.OnServerStopped += CleanUpServer;
         NetworkManagerLobby.OnServerReadied += CheckToStartRound;
 
+        GameEvents.current.onDuelEnd += DuelEnd;
         GameEvents.current.onPlayerRoundEnd += PlayerEndRound;
     }
 
@@ -117,7 +121,8 @@ public class RoundSystem : NetworkBehaviour
     [Server]
     public void StartRound()
     {
-        GameEvents.current.RoundStart(0, host.player, challenger.player);
+        roundNumber++;
+        GameEvents.current.RoundStart(roundNumber, host.player, challenger.player);
         RpcStartRound(NetworkTime.time);
     }
 
@@ -158,6 +163,8 @@ public class RoundSystem : NetworkBehaviour
         duelUI.SetActive(false);
         weaponDebugUI.SetActive(false);
 
+        roundChat.ServerSend("Round " + roundNumber +" Start!");
+
         // Reset health
         for (int i = 0; i < Room.GamePlayers.Count; i++)
         {
@@ -174,11 +181,33 @@ public class RoundSystem : NetworkBehaviour
     }
 
     [Server]
-    public void PlayerEndRound(NetworkConnection target)
+    public void PlayerEndRound(NetworkConnection target, bool win)
     {
         activeRounds--;
+
+        if (win)
+            roundChat.ServerSend(target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " finished in " + (NetworkTime.time - timerStartTime).ToString("0.##") + " seconds.");
+        else
+            roundChat.ServerSend(target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " died!");
+
         RpcPlayerRoundEnd(target);
         
+        if (activeRounds == 0)
+        {
+            if (isServer)
+                PrepDuel();
+
+            RpcStartCountdown(NetworkTime.time, 0, host, challenger);
+        }
+    }
+
+    [Server]
+    public void DuelEnd(NetworkConnection winner, NetworkConnection loser)
+    {
+        activeRounds -= 2; // 2 rounds end when a duel ends
+
+        roundChat.ServerSend(winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " defeated " + loser.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName);
+
         if (activeRounds == 0)
         {
             if (isServer)
@@ -191,7 +220,6 @@ public class RoundSystem : NetworkBehaviour
     [TargetRpc]
     public void RpcPlayerRoundEnd(NetworkConnection target)
     {
-        Debug.Log("Player finished round");
         timerActive = false;
     }
 
