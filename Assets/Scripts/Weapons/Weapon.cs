@@ -19,14 +19,32 @@ public class Weapon : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
-        Equip(weaponData); // Equip pistol by default
+        Equip(weaponData.ID); // Equip pistol by default
     }
 
-    public void Equip(WeaponData weaponData)
+    public void Equip(string ID) // Change this to use ID
     {
-        this.weaponData = weaponData;
+        this.weaponData = Data.Instance.GetWeaponData(ID);
+        weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
         currentAmmo = weaponData.ammoAmount;
-        weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite; // This only works locally
+
+        CmdEquip(ID);
+    }
+
+    [Command]
+    void CmdEquip(string ID)
+    {
+        RpcEquip(ID);
+    }
+
+    [ClientRpc]
+    void RpcEquip(string ID)
+    {
+        if (hasAuthority)
+            return;
+
+        this.weaponData = Data.Instance.GetWeaponData(ID);
+        weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
     }
 
     public void ToggleFire(bool firing)
@@ -39,7 +57,7 @@ public class Weapon : NetworkBehaviour
         }
         else if (firing && this.firing) // We want to shoot and already are
         {
-            if (weaponData.type == WeaponData.FireType.auto && !requireLift) // Only if it's auto
+            if (weaponData.type == WeaponData.FireType.auto && !requireLift)
                 StartCoroutine(Fire());
         }
         else if (!firing) // We don't want to shoot

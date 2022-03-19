@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4015255318458904058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4015255318458904052}
+  - component: {fileID: 4015255318458904059}
+  m_Layer: 0
+  m_Name: Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4015255318458904052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4015255318458904058}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4015255318458904059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4015255318458904058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372ed7ce7f91eed46929f7695177b124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponDB:
+  - {fileID: 11400000, guid: 7a3b7d84d9342294f9ecff822664df36, type: 2}
+  - {fileID: 11400000, guid: adc379a1a6767504da1d1f5212e8cc62, type: 2}
+  - {fileID: 11400000, guid: dcbbff060c4fafe48933949cee43ee8f, type: 2}
+  - {fileID: 11400000, guid: 2abccc89be8e97648b30526e52256306, type: 2}
+  - {fileID: 11400000, guid: 875fc5de7efc07f4b8bbd92432ec8b48, type: 2}
+  - {fileID: 11400000, guid: 123f4205e12ec9e43add1953025487f8, type: 2}
+  - {fileID: 11400000, guid: 4bb9b53f6f58c314d95add2f29c6c5df, type: 2}
+  - {fileID: 11400000, guid: 61ac3ce577d7caa46a4f36493eebb346, type: 2}
+  - {fileID: 11400000, guid: 337f501609feaf14c80cd9a4050cc4f6, type: 2}
+  - {fileID: 11400000, guid: b831c0d6452f51643a6fe2f203d2fede, type: 2}

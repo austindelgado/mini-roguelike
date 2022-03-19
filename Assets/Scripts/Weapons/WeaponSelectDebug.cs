@@ -14,6 +14,6 @@ public class WeaponSelectDebug : MonoBehaviour
     {
         GameObject localPlayer = NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>().player; // A little clunky but gets local player
 
-        localPlayer.GetComponent<Weapon>().Equip(weapons[val]);
+        localPlayer.GetComponent<Weapon>().Equip(weapons[val].ID);
     }
 }

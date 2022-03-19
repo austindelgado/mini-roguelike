@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "WeaponData")]
 public class WeaponData : ScriptableObject
@@ -8,6 +11,8 @@ public class WeaponData : ScriptableObject
     public enum FireType {single, burst, auto};
 
     [Header("Info")]
+    [SerializeField] string id;
+    public string ID { get {return id; } }
     public new string name;
     public string description;
     public Sprite sprite;
@@ -26,4 +31,12 @@ public class WeaponData : ScriptableObject
     public int ammoAmount; // Default max ammo
     public int ammoCost; // Ammo used per shot
     public float reloadTime; // Time for reload on empty magazine
+
+    #if UNITY_EDITOR
+    private void OnValidate()
+    {
+        string path = AssetDatabase.GetAssetPath(this);
+        id = AssetDatabase.AssetPathToGUID(path);
+    }
+    #endif
 }
