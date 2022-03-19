@@ -77,6 +77,8 @@ public class GridCell : MonoBehaviour
         GameEvents.current.PlayerRoundEnd(player.GetComponent<NetworkIdentity>().connectionToClient);
 
         // Clear enemy if it's still there
+        if (enemyInstance.tag != "Player" && enemyInstance != null)
+            Destroy(enemyInstance);
     }
 
     [Server]
@@ -89,7 +91,7 @@ public class GridCell : MonoBehaviour
     [Server]
     public void PlayerDeath(GameObject player)
     {
-        if (this.player == player && roundActive || enemyInstance == player && roundActive)
+        if (this.player == player && roundActive || enemyInstance == player && roundActive) // Need to add a DuelEnd and event
             RoundEnd();
     }
 }

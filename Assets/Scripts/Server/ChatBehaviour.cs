@@ -51,7 +51,7 @@ public class ChatBehaviour : NetworkBehaviour
     [Command]
     private void CmdSendMessage(string message)
     {
-        RpcHandleMessage($"[{NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName}]: {message}");
+        RpcHandleMessage($"[{connectionToClient.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName}]: {message}");
     }
 
     [ClientRpc]
