@@ -123,6 +123,7 @@ public class RoundSystem : NetworkBehaviour
     {
         roundNumber++;
         GameEvents.current.RoundStart(roundNumber, host.player, challenger.player);
+        roundChat.ServerSend("Round " + roundNumber +" Start!");
         RpcStartRound(NetworkTime.time);
     }
 
@@ -162,8 +163,6 @@ public class RoundSystem : NetworkBehaviour
 
         duelUI.SetActive(false);
         weaponDebugUI.SetActive(false);
-
-        roundChat.ServerSend("Round " + roundNumber +" Start!");
 
         // Reset health
         for (int i = 0; i < Room.GamePlayers.Count; i++)
