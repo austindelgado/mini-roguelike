@@ -113,8 +113,7 @@ public class GridCell : MonoBehaviour
             DuelEnd(challenger, host);
         else if (this.player == host && player == challenger) // Host wins
             DuelEnd(host, challenger);
-
-        if (this.player == player)
+        else if (this.player == player) // Player died in PvE
             RoundEnd(false);
     }
 }
