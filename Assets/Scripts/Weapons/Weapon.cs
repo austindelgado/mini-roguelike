@@ -22,13 +22,21 @@ public class Weapon : NetworkBehaviour
         Equip(weaponData.ID); // Equip pistol by default
     }
 
+    public override void OnStartServer()
+    {
+        Equip(weaponData.ID); // Equip pistol by default
+    }
+
     public void Equip(string ID) // Change this to use ID
     {
         this.weaponData = Data.Instance.GetWeaponData(ID);
         weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
         currentAmmo = weaponData.ammoAmount;
 
-        CmdEquip(ID);
+        if (!isServer)
+            CmdEquip(ID);
+        else
+            RpcEquip(ID);
     }
 
     [Command]
@@ -123,9 +131,10 @@ public class Weapon : NetworkBehaviour
         {
             Projectile projectile = Instantiate(projectilePrefab, position, rotation);
             projectile.Initialize(gameObject, weaponData.damage, weaponData.speed, 0f);
+            CmdSpawnProjectile(gameObject, weaponData.damage, weaponData.speed, position, rotation, NetworkTime.time);
         }
-
-        CmdSpawnProjectile(gameObject, weaponData.damage, weaponData.speed, position, rotation, NetworkTime.time);
+        else
+            RpcSpawnProjectile(gameObject, weaponData.damage, weaponData.speed, position, rotation, NetworkTime.time);
     }
 
     [Command]
@@ -142,7 +151,7 @@ public class Weapon : NetworkBehaviour
     [ClientRpc]
     void RpcSpawnProjectile(GameObject parent, int damage, float speed, Vector3 position, Quaternion rotation, double networkTime)
     {
-        if (hasAuthority)
+        if (!isServer && hasAuthority)
             return;
 
         double timePassed = NetworkTime.time - networkTime;
