@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Mirror;
 
@@ -9,7 +10,7 @@ public class GridCell : MonoBehaviour
 
     [SerializeField] private GameObject enemyPrefab = null;
 
-    private GameObject enemyInstance;
+    private List<GameObject> enemies = new List<GameObject>();
     private bool roundActive = false;
 
     private GameObject host;
@@ -18,12 +19,6 @@ public class GridCell : MonoBehaviour
     private void Awake() => RoundSystem.AddGridCell(this);
 
     private void OnDestroy() => RoundSystem.RemoveGridCell(this);
-
-    void Update()
-    {
-        if (roundActive && enemyInstance == null) // Bad way to check if enemy is still alive
-            RoundEnd(true);
-    }
 
     [Server]
     public void AssignPlayer(GameObject player)
@@ -57,8 +52,6 @@ public class GridCell : MonoBehaviour
             // Teleport challenger on the right
             challenger.GetComponent<Player>().Teleport(transform.position + new Vector3(3f, 0f, 0f), transform.position);
 
-            enemyInstance = challenger;
-
             return;
         }
 
@@ -66,7 +59,7 @@ public class GridCell : MonoBehaviour
         player.GetComponent<Player>().Teleport(transform.position, transform.position);
 
         // Start spawning enemies
-        SpawnEnemy();
+        SpawnEnemy(round);
     }
 
     // Round ends when a player dies or all enemies are killed
@@ -78,9 +71,7 @@ public class GridCell : MonoBehaviour
         player.GetComponent<Player>().RpcTeleportSpawn();
         GameEvents.current.PlayerRoundEnd(player.GetComponent<NetworkIdentity>().connectionToClient, win);
 
-        // Clear enemy if it's still there
-        if (enemyInstance != null && enemyInstance.tag != "Player")
-            Destroy(enemyInstance);
+        ClearEnemies();
     }
 
     [Server]
@@ -97,11 +88,34 @@ public class GridCell : MonoBehaviour
     }
 
     [Server]
-    private void SpawnEnemy()
+    private void SpawnEnemy(int round)
     {
-        enemyInstance = Instantiate(enemyPrefab, transform.position + new Vector3(0f, 2f, 0f), transform.rotation);
-        enemyInstance.GetComponent<Enemy>().SetGridPlayer(player);
-        NetworkServer.Spawn(enemyInstance);
+        // for (int i = 0; i < round; i++)
+        // {
+            GameObject enemyInstance = Instantiate(enemyPrefab, transform.position + new Vector3(0f, 2f, 0f), transform.rotation); // TODO enemies should be children of grid but grid is currently scaled up from 1
+            enemyInstance.GetComponent<Enemy>().SetGridPlayer(player, this);
+            NetworkServer.Spawn(enemyInstance);
+            enemies.Add(enemyInstance);
+        // }
+    }
+
+    [Server]
+    private void ClearEnemies()
+    {
+        if (enemies.Any())
+        {
+            foreach (var enemy in enemies)
+                Destroy(enemy);
+        }
+    }
+
+    [Server]
+    public void EnemyDeath(GameObject enemy)
+    {
+        enemies.Remove(enemy);
+
+        if (roundActive && !enemies.Any())
+            RoundEnd(true);
     }
 
     [Server]

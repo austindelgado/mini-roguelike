@@ -6,6 +6,7 @@ using Mirror;
 public class Enemy : Entity
 {
     private GameObject player; // Our Targetted enemy
+    private GridCell grid;
 
     public float currSpeed;
     public float currAcceleration;
@@ -104,14 +105,17 @@ public class Enemy : Entity
 
     // On spawn, serve sets player we're targetting
     [Server]
-    public void SetGridPlayer(GameObject player)
+    public void SetGridPlayer(GameObject player, GridCell grid)
     {
         this.player = player;
         fireDelay = startFireDelay;
+        this.grid = grid;
     }
 
     public override void Kill()
     {
+        GameEvents.current.EnemyDeath(gameObject);
+        grid.EnemyDeath(gameObject);
         Destroy(gameObject); // Just destroy self right now, TODO let grid cell now so this can be tracked
     }
 }
