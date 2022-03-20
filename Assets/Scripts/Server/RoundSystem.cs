@@ -122,7 +122,12 @@ public class RoundSystem : NetworkBehaviour
     public void StartRound()
     {
         roundNumber++;
-        GameEvents.current.RoundStart(roundNumber, host.player, challenger.player);
+
+        if (host && challenger)
+            GameEvents.current.RoundStart(roundNumber, host.player, challenger.player);
+        else
+            GameEvents.current.RoundStart(roundNumber, null, null);
+
         roundChat.ServerSend("Round " + roundNumber +" Start!");
         RpcStartRound(NetworkTime.time);
     }
@@ -247,6 +252,11 @@ public class RoundSystem : NetworkBehaviour
                     numNeeded--;
                 }
             }
+        }
+        else // Solo player 
+        {
+            host = null;
+            challenger = null;
         }
     }
 
