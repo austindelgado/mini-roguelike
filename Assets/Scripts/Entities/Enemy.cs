@@ -1,51 +1,66 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class Enemy : Entity
 {
-    private GameObject player;
+    private GameObject player; // Our Targetted enemy
 
     public float currSpeed;
     public float currAcceleration;
     public float currDeceleration;
 
-    public AbilitySlot ability1;
-    public float attackRadius;
+    public float stoppingDistance;
+    public float retreatDistance;
 
     public CircleCollider2D circleCollider;
 
-    public override void Start()
-    {
-        base.Start();
+    public Weapon weapon;
+    public Transform weaponTransform;
 
-        // player = GameObject.Find("Player");
+    [SerializeField] private float startFireDelay = .5f;
+    private float fireDelay;
 
-        currSpeed = speed;
-        currAcceleration = acceleration;
-        currDeceleration = deceleration;
-    }
+    // TODO Really clean this up and turn as many components into scriptableObjects as possible
 
     // Update is called once per frame
+    [Server]
     void Update()
     {
+        if (hasAuthority)
+            return;
+
+        if (player == null)
+            return;
+
         // // Get Player Position
-        // //moveInput = (player.transform.position - transform.position).normalized;
-        // currSpeed = speed + player.GetComponent<Player>().enemyKillCount * .1f;
-        // currAcceleration = acceleration + player.GetComponent<Player>().enemyKillCount * .075f;
-        // currDeceleration = deceleration + player.GetComponent<Player>().enemyKillCount * .075f;
+        if (Vector2.Distance(transform.position, player.transform.position) > stoppingDistance)
+            moveInput = (player.transform.position - transform.position).normalized;
+        else if (Vector2.Distance(transform.position, player.transform.position) <= stoppingDistance && Vector2.Distance(transform.position, player.transform.position) >= retreatDistance)
+        {
+            moveInput = Vector2.zero;
+            if (fireDelay <= 0)
+            {
+                weapon.ToggleFire(true);
+                weapon.ToggleFire(false);
+                fireDelay = startFireDelay;
+            }
+        }
+        else if (Vector2.Distance(transform.position, player.transform.position) < retreatDistance)
+            moveInput = (transform.position -  player.transform.position).normalized;
+
 
         // // Get player direction
-        // lookDir = moveInput;
+        lookDir = (player.transform.position - transform.position).normalized;
         // float distance = Vector2.Distance(player.transform.position, transform.position);
 
-        // if (ability1.available && distance < attackRadius)
-        //     ability1.Trigger();
+        RotateWeapon();
 
-        // if (currSpeed > 3)
-        //     currSpeed = 3;
+        fireDelay -= Time.deltaTime;
     }
 
+    [Server]
     void FixedUpdate()
     {
         // Movement
@@ -66,15 +81,8 @@ public class Enemy : Entity
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider.
-            if (hit.gameObject.tag != "Player")
+            if (hit.gameObject == gameObject || hit.gameObject.tag == "Projectile")
                 continue;
-            else if (hit.gameObject.tag == "Player")
-            {
-                if(!hit.gameObject.TryGetComponent<Health>(out var damageable))
-                    continue;
-                damageable.DealDamage(100);
-            }
-
 
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
 
@@ -88,16 +96,22 @@ public class Enemy : Entity
         }
     }
 
+    [Server]
+    void RotateWeapon()
+    {
+        weaponTransform.rotation = Quaternion.AngleAxis(Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg, Vector3.forward);
+    }
+
+    // On spawn, serve sets player we're targetting
+    [Server]
+    public void SetGridPlayer(GameObject player)
+    {
+        this.player = player;
+        fireDelay = startFireDelay;
+    }
+
     public override void Kill()
     {
-        Debug.Log("Enemy killed");
-        // player.GetComponent<Player>().enemyKillCount++;
-
-        // // Let spawner know
-        // GameObject.Find("EnemySpawner").GetComponent<Spawner>().EnemyRemoved();
-
-        // GameEvents.current.EnemyDeath(gameObject);
-
-        Destroy(gameObject);
+        Destroy(gameObject); // Just destroy self right now, TODO let grid cell now so this can be tracked
     }
 }

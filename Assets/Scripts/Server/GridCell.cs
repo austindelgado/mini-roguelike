@@ -100,6 +100,7 @@ public class GridCell : MonoBehaviour
     private void SpawnEnemy()
     {
         enemyInstance = Instantiate(enemyPrefab, transform.position + new Vector3(0f, 2f, 0f), transform.rotation);
+        enemyInstance.GetComponent<Enemy>().SetGridPlayer(player);
         NetworkServer.Spawn(enemyInstance);
     }
 

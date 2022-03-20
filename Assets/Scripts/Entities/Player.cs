@@ -111,7 +111,7 @@ public class Player : Entity
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider.
-            if (hit == circleCollider || hit.gameObject.tag == "Projectile" || hit.gameObject.tag == "Friendly")
+            if (hit == circleCollider || hit.gameObject.tag == "Projectile")
                 continue;
 
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
