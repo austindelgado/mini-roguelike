@@ -69,7 +69,12 @@ public class Enemy : Entity
             if (hit.gameObject.tag != "Player")
                 continue;
             else if (hit.gameObject.tag == "Player")
-                hit.gameObject.GetComponent<Player>().Kill();
+            {
+                if(!hit.gameObject.TryGetComponent<Health>(out var damageable))
+                    continue;
+                damageable.DealDamage(100);
+            }
+
 
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);
 

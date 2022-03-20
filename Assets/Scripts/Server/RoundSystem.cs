@@ -22,7 +22,7 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private ChatBehaviour roundChat = null;
 
     private int activeRounds;
-    private int roundNumber = 0;
+    private int roundNumber = 1;
 
     private double countdownStartTime;
     private bool countdownActive = false;
@@ -61,6 +61,7 @@ public class RoundSystem : NetworkBehaviour
         if (countdownActive)
         {
             timerObject.SetActive(true);
+            weaponDebugUI.SetActive(true);
             timerText.text = ((int)(timeBtwRound - (NetworkTime.time - countdownStartTime))).ToString();
             timerImage.fillAmount = (float)((timeBtwRound - (NetworkTime.time - countdownStartTime)) / timeBtwRound);
             
@@ -121,8 +122,6 @@ public class RoundSystem : NetworkBehaviour
     [Server]
     public void StartRound()
     {
-        roundNumber++;
-
         if (host && challenger)
             GameEvents.current.RoundStart(roundNumber, host.player, challenger.player);
         else
@@ -198,9 +197,8 @@ public class RoundSystem : NetworkBehaviour
         
         if (activeRounds == 0)
         {
-            if (isServer)
-                PrepDuel();
-
+            roundNumber++;
+            PrepDuel();
             RpcStartCountdown(NetworkTime.time, 0, host, challenger);
         }
     }
@@ -214,9 +212,8 @@ public class RoundSystem : NetworkBehaviour
 
         if (activeRounds == 0)
         {
-            if (isServer)
-                PrepDuel();
-
+            roundNumber++; // TODO Clean this up, round might increment twice?
+            PrepDuel();
             RpcStartCountdown(NetworkTime.time, 0, host, challenger);
         }
     }
@@ -232,7 +229,7 @@ public class RoundSystem : NetworkBehaviour
     {
         // Check round
 
-        if (Room.GamePlayers.Count > 1)
+        if (Room.GamePlayers.Count > 1 && roundNumber % 2 == 0) // Duel every other round if there are more than 2 people TODO fix numbering
         {
             // Loop through and give chance to grab a player
             int numNeeded = 2;
@@ -263,7 +260,6 @@ public class RoundSystem : NetworkBehaviour
     private void SetDuelIU(NetworkGamePlayerLobby host, NetworkGamePlayerLobby challenger)
     {
         duelUI.SetActive(true);
-        weaponDebugUI.SetActive(true);
         hostUIText.text = host.displayName;
         challengerUIText.text = challenger.displayName;
     }
