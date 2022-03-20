@@ -90,13 +90,13 @@ public class GridCell : MonoBehaviour
     [Server]
     private void SpawnEnemy(int round)
     {
-        // for (int i = 0; i < round; i++)
-        // {
-            GameObject enemyInstance = Instantiate(enemyPrefab, transform.position + new Vector3(0f, 2f, 0f), transform.rotation); // TODO enemies should be children of grid but grid is currently scaled up from 1
-            enemyInstance.GetComponent<Enemy>().SetGridPlayer(player, this);
+        for (int i = 0; i < round; i++)
+        {
+            GameObject enemyInstance = Instantiate(enemyPrefab, transform.position + new Vector3(i + 0f, 2f, 0f), transform.rotation); // TODO enemies should be children of grid but grid is currently scaled up from 1
             NetworkServer.Spawn(enemyInstance);
+            enemyInstance.GetComponent<Enemy>().SetGridPlayer(player, this);
             enemies.Add(enemyInstance);
-        // }
+        }
     }
 
     [Server]
