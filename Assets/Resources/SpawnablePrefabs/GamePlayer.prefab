@@ -248,7 +248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6837391156215279354
 RectTransform:
   m_ObjectHideFlags: 0
@@ -472,6 +472,7 @@ MonoBehaviour:
   displayName: Loading...
   player: {fileID: 0}
   gold: 50
+  goldUI: {fileID: 5358472177237158224}
   goldText: {fileID: 7751769379639330470}
 --- !u!114 &8840797315112351838
 MonoBehaviour:

@@ -12,6 +12,7 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
 
     [SyncVar(hook = nameof(OnGoldChanged))]
     public int gold = 100;
+    [SerializeField]private GameObject goldUI = null;
     [SerializeField]private TMP_Text goldText = null;
 
     private NetworkManagerLobby room;
@@ -37,6 +38,11 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     public override void OnStopClient()
     {
         Room.GamePlayers.Remove(this);
+    }
+
+    public override void OnStartAuthority()
+    {
+        goldUI.SetActive(true);
     }
 
     void OnGoldChanged(int _Old, int _New)
