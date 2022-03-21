@@ -32,6 +32,9 @@ public class Health : NetworkBehaviour
     [ServerCallback] 
     public void DealDamage(int value)
     {
+        if(!isServer)
+            return;
+
         SetHealth(Mathf.Max(currentHealth - value, 0));
 
         if (currentHealth == 0)
