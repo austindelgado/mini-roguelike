@@ -22,6 +22,7 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private ChatBehaviour roundChat = null;
 
     private int activeRounds;
+    private int numRounds;
     private int roundNumber = 1;
 
     private double countdownStartTime;
@@ -188,8 +189,19 @@ public class RoundSystem : NetworkBehaviour
     {
         activeRounds--;
 
+        // Get text of position finished
+        int place = numRounds - activeRounds; // Get number of place finish
+        string textPlace;
+        switch (place % 10)
+        {
+            case 1: textPlace = place + "st"; break;
+            case 2: textPlace = place + "nd"; break;
+            case 3: textPlace = place + "rd"; break;
+            default: textPlace = place + "th"; break;
+        }
+
         if (win)
-            roundChat.ServerSend(target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " finished in " + (NetworkTime.time - timerStartTime).ToString("0.##") + " seconds.");
+            roundChat.ServerSend(target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " finished " + textPlace +" in " + (NetworkTime.time - timerStartTime).ToString("0.##") + " seconds.");
         else
             roundChat.ServerSend(target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " died!");
 
@@ -228,7 +240,7 @@ public class RoundSystem : NetworkBehaviour
     public void PrepDuel()
     {
         // Check round
-
+        numRounds = Room.GamePlayers.Count; 
         if (Room.GamePlayers.Count > 1 && roundNumber % 2 == 0) // Duel every other round if there are more than 2 people TODO fix numbering
         {
             // Loop through and give chance to grab a player
