@@ -128,6 +128,7 @@ public class RoundSystem : NetworkBehaviour
         else
             GameEvents.current.RoundStart(roundNumber, null, null);
 
+        roundChat.ServerClear();
         roundChat.ServerSend("Round " + roundNumber +" Start!");
         RpcStartRound(NetworkTime.time);
     }
@@ -174,8 +175,6 @@ public class RoundSystem : NetworkBehaviour
         {
             Room.GamePlayers[i].player.GetComponent<Health>().ResetHealth();
         }
-
-        Debug.Log("Start");
     }
 
     [TargetRpc]
