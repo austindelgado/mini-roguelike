@@ -72,4 +72,11 @@ public class GameEvents : MonoBehaviour
         if (onAbilityAdd != null)
             onAbilityAdd(slot);
     }
+
+    public event Action<NetworkConnection, int, bool> onBetPlaced;
+    public void BetPlaced(NetworkConnection connection, int amount, bool onHost)
+    {
+        if (onBetPlaced != null)
+            onBetPlaced(connection, amount, onHost);
+    }
 }

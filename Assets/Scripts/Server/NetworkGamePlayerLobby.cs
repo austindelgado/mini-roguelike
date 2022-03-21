@@ -80,4 +80,14 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
             player.GetComponent<Weapon>().ServerEquip(ID);
         }
     }
+
+    [Command]
+    public void CmdBet(int amount, bool isHost)
+    {
+        if (gold < amount)
+            return;
+
+        GameEvents.current.BetPlaced(connectionToClient, amount, isHost);
+        gold -= amount;
+    }
 }

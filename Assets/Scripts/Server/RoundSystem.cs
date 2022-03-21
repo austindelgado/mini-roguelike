@@ -19,6 +19,7 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private TMP_Text hostUIText = null;
     [SerializeField] private TMP_Text challengerUIText = null;
     [SerializeField] private GameObject shopUI = null;
+    [SerializeField] private GameObject betUI = null;
     
     [SerializeField] private ChatBehaviour roundChat = null;
 
@@ -33,6 +34,8 @@ public class RoundSystem : NetworkBehaviour
 
     private NetworkGamePlayerLobby host;
     private NetworkGamePlayerLobby challenger;
+    private List<Bet> hostBets = new List<Bet>();
+    private List<Bet> challengerBets = new List<Bet>();
 
     private static List<GridCell> gridCells = new List<GridCell>();
 
@@ -89,6 +92,7 @@ public class RoundSystem : NetworkBehaviour
 
         GameEvents.current.onDuelEnd += DuelEnd;
         GameEvents.current.onPlayerRoundEnd += PlayerEndRound;
+        GameEvents.current.onBetPlaced += BetPlaced;
     }
 
     [ServerCallback]
@@ -224,8 +228,26 @@ public class RoundSystem : NetworkBehaviour
     {
         activeRounds -= 2; // 2 rounds end when a duel ends
 
-        roundChat.ServerSend(winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " defeated " + loser.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName);
+        roundChat.ServerSend(winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " defeated " + loser.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + "!");
 
+        // Payout bets
+        if (winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>() == host)
+        {
+            foreach (Bet bet in hostBets)
+            {
+                bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(bet.amount);
+                roundChat.ServerSend(bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won bet and earned " + bet.amount + "!");
+            }
+        }
+        else
+        {
+            foreach (Bet bet in challengerBets)
+            {
+                bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(bet.amount);
+                roundChat.ServerSend(bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won bet and earned " + bet.amount + "!");
+            }
+        }
+        
         if (activeRounds == 0)
         {
             roundNumber++; // TODO Clean this up, round might increment twice?
@@ -275,8 +297,40 @@ public class RoundSystem : NetworkBehaviour
 
     private void SetDuelIU(NetworkGamePlayerLobby host, NetworkGamePlayerLobby challenger)
     {
+
         duelUI.SetActive(true);
         hostUIText.text = host.displayName;
         challengerUIText.text = challenger.displayName;
+
+        if (NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>() == host || NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>() == challenger) // Hide bets if player is in duel
+            betUI.SetActive(false);
+        else
+            betUI.SetActive(true);
+    }
+
+    public class Bet {
+        public NetworkConnection better;
+        public int amount;
+
+        public Bet(NetworkConnection better, int amount)
+        {
+            this.better = better;
+            this.amount = amount;
+        }
+    }
+
+    [Server]
+    public void BetPlaced(NetworkConnection better, int amount, bool onHost)
+    {
+        if (host == null || challenger == null)
+            return;
+
+        roundChat.ServerSend(better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " bet " + amount + " on " + (onHost == true ? host.displayName : challenger.displayName));
+
+        // Create the bet
+        if (onHost)
+            hostBets.Add(new Bet(better, amount));
+        else
+            challengerBets.Add(new Bet(better, amount));
     }
 }
