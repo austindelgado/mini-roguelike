@@ -10,7 +10,9 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     [SyncVar] public string displayName = "Loading...";
     [SyncVar] public GameObject player = null;
 
-    [SyncVar] public int gold = 100;
+    [SyncVar(hook = nameof(OnGoldChanged))]
+    public int gold = 100;
+    [SerializeField]private TMP_Text goldText = null;
 
     private NetworkManagerLobby room;
 
@@ -37,6 +39,12 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
         Room.GamePlayers.Remove(this);
     }
 
+    void OnGoldChanged(int _Old, int _New)
+    {
+        gold = _New;
+        goldText.text = gold.ToString();
+    }
+
     [Server]
     public void SetDisplayName(string displayName)
     {
@@ -46,11 +54,24 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     public void SetPlayer(GameObject player)
     {
         this.player = player;
+        goldText.text = gold.ToString();
     }
     
     [Server]
     public void ChangeGold(int goldAmount)
     {
         this.gold += goldAmount;
+    }
+
+    [Command]
+    public void CmdPurchase(string ID)
+    {
+        WeaponData weaponData = Data.Instance.GetWeaponData(ID);
+
+        if (gold >= weaponData.price)
+        {
+            gold -= weaponData.price;
+            player.GetComponent<Weapon>().ServerEquip(ID);
+        }
     }
 }
