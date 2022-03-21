@@ -10,6 +10,8 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     [SyncVar] public string displayName = "Loading...";
     [SyncVar] public GameObject player = null;
 
+    [SyncVar] public int gold = 100;
+
     private NetworkManagerLobby room;
 
     private NetworkManagerLobby Room
@@ -44,5 +46,11 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     public void SetPlayer(GameObject player)
     {
         this.player = player;
+    }
+    
+    [Server]
+    public void ChangeGold(int goldAmount)
+    {
+        this.gold += goldAmount;
     }
 }

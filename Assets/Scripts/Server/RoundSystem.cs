@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using System.Linq;
+using System;
 using UnityEngine.UI;
 using TMPro;
 
@@ -189,7 +190,7 @@ public class RoundSystem : NetworkBehaviour
         activeRounds--;
 
         // Get text of position finished
-        int place = numRounds - activeRounds; // Get number of place finish
+        int place = Room.GamePlayers.Count - activeRounds; // Get number of place finish
         string textPlace;
         switch (place % 10)
         {
@@ -199,12 +200,16 @@ public class RoundSystem : NetworkBehaviour
             default: textPlace = place + "th"; break;
         }
 
+        int baseGold = 100 + 10 * (roundNumber - 1); // TODO Have this scale later
+        int goldEarned = (int)Math.Floor(baseGold * (double)(8 - (place - 1))/8);
+
         if (win)
-            roundChat.ServerSend(target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " finished " + textPlace +" in " + (NetworkTime.time - timerStartTime).ToString("0.##") + " seconds.");
+            roundChat.ServerSend(target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " finished " + textPlace +" and earned " + goldEarned + " gold!");
         else
             roundChat.ServerSend(target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " died!");
 
         RpcPlayerRoundEnd(target);
+        target.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(goldEarned); // Gold per round is 100 * (activeRounds + 1 / )
         
         if (activeRounds == 0)
         {
@@ -250,7 +255,7 @@ public class RoundSystem : NetworkBehaviour
                 float chance = (float)numNeeded / (float)i;
                 
                 // Should weigh in rounds since last duel here
-                if (Random.value < chance)
+                if (UnityEngine.Random.value < chance)
                 {
                     if (numNeeded == 2)
                         host = Room.GamePlayers[i-1];
