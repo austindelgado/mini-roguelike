@@ -34,7 +34,7 @@ public class ChatBehaviour : NetworkBehaviour
         if (message != "")
             chatText.text += message;
         else
-            chatText.text = "";
+            chatText.text = string.Empty;
     }
 
     [Client]
