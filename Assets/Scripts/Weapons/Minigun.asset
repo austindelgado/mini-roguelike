@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06daf432cc3b0834cba112643d14a5f5, type: 3}
   m_Name: Minigun
   m_EditorClassIdentifier: 
+  id: 123f4205e12ec9e43add1953025487f8
   name: Minigun
   description: High rate of fire with high spread
   sprite: {fileID: 21300000, guid: 0b7213ebc78b839439aa20f569e88f1d, type: 3}
+  price: 300
   damage: 3
   numBullet: 1
   type: 2
