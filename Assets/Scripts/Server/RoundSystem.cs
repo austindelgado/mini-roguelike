@@ -18,7 +18,7 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private GameObject duelUI = null;
     [SerializeField] private TMP_Text hostUIText = null;
     [SerializeField] private TMP_Text challengerUIText = null;
-    [SerializeField] private GameObject weaponDebugUI = null;
+    [SerializeField] private GameObject shopUI = null;
     
     [SerializeField] private ChatBehaviour roundChat = null;
 
@@ -63,7 +63,7 @@ public class RoundSystem : NetworkBehaviour
         if (countdownActive)
         {
             timerObject.SetActive(true);
-            weaponDebugUI.SetActive(true);
+            shopUI.SetActive(true);
             timerText.text = ((int)(timeBtwRound - (NetworkTime.time - countdownStartTime))).ToString();
             timerImage.fillAmount = (float)((timeBtwRound - (NetworkTime.time - countdownStartTime)) / timeBtwRound);
             
@@ -169,7 +169,7 @@ public class RoundSystem : NetworkBehaviour
         activeRounds = Room.GamePlayers.Count;
 
         duelUI.SetActive(false);
-        weaponDebugUI.SetActive(false);
+        shopUI.SetActive(false);
 
         // Reset health
         for (int i = 0; i < Room.GamePlayers.Count; i++)
