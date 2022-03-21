@@ -40,6 +40,8 @@ public class Player : Entity
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        
+        weapon.Equip("4bb9b53f6f58c314d95add2f29c6c5df");
         CmdSetupPlayer(color);
     }
 

@@ -26,10 +26,10 @@ public class Enemy : Entity
     // TODO Really clean this up and turn as many components into scriptableObjects as possible
 
     // Update is called once per frame
-    [Server]
+    [ServerCallback]
     void Update()
     {
-        if (hasAuthority)
+        if (!isServer)
             return;
 
         if (player == null)
@@ -61,9 +61,11 @@ public class Enemy : Entity
         fireDelay -= Time.deltaTime;
     }
 
-    [Server]
+    [ServerCallback]
     void FixedUpdate()
     {
+        if (!isServer)
+            return;
         // Movement
         if (moveInput != Vector2.zero)
         {
@@ -103,13 +105,14 @@ public class Enemy : Entity
         weaponTransform.rotation = Quaternion.AngleAxis(Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg, Vector3.forward);
     }
 
-    // On spawn, serve sets player we're targetting
+    // On spawn, server sets player we're targetting
     [Server]
     public void SetGridPlayer(GameObject player, GridCell grid)
     {
         this.player = player;
         fireDelay = startFireDelay;
         this.grid = grid;
+        weapon.ServerEquip("4bb9b53f6f58c314d95add2f29c6c5df");
     }
 
     public override void Kill()

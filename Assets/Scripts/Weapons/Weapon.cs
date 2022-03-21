@@ -7,6 +7,7 @@ public class Weapon : NetworkBehaviour
 {
     public Transform weaponTransform;
     public WeaponData weaponData;
+    [SyncVar] public string weaponID;
     public int currentAmmo;
 
     private bool canShoot = true;
@@ -15,28 +16,32 @@ public class Weapon : NetworkBehaviour
 
     public Projectile projectilePrefab; // Here because all are shared for now
 
+    public void Start()
+    {
+        if (!hasAuthority && !isServer)
+            Equip(weaponID);
+    }
+
     // Player is currently responsible for rotating weaponTransform, maybe move that here in the future
-
-    public override void OnStartAuthority()
-    {
-        Equip(weaponData.ID); // Equip pistol by default
-    }
-
-    public override void OnStartServer()
-    {
-        Equip(weaponData.ID); // Equip pistol by default
-    }
-
     public void Equip(string ID) // Change this to use ID
     {
-        this.weaponData = Data.Instance.GetWeaponData(ID);
+        weaponID = ID;
+        this.weaponData = Data.Instance.GetWeaponData(weaponID);
         weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
         currentAmmo = weaponData.ammoAmount;
 
-        if (!isServer)
+        if (hasAuthority)
             CmdEquip(ID);
-        else
-            RpcEquip(ID);
+    }
+
+    [Server]
+    public void ServerEquip(string ID)
+    {
+        weaponID = ID;
+        weaponData = Data.Instance.GetWeaponData(weaponID);
+        weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
+
+        RpcEquip(ID);
     }
 
     [Command]
@@ -51,7 +56,8 @@ public class Weapon : NetworkBehaviour
         if (hasAuthority)
             return;
 
-        this.weaponData = Data.Instance.GetWeaponData(ID);
+        weaponID = ID;
+        weaponData = Data.Instance.GetWeaponData(weaponID);
         weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
     }
 
