@@ -16,6 +16,7 @@ public class WeaponData : ScriptableObject
     public new string name;
     public string description;
     public Sprite sprite;
+    public int price;
 
     [Header("Shooting")]
     public int damage; // Damage per bullet
