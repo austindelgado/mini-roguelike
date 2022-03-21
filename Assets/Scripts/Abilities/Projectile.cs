@@ -68,6 +68,9 @@ public class Projectile : MonoBehaviour
                 if(!hit.gameObject.TryGetComponent<Health>(out var damageable))
                     continue;
 
+                if (parent.tag == "Enemy" && hit.gameObject.tag == "Enemy")
+                    continue;
+
                 damageable.DealDamage(damage);
 
                 if (!piercing)
