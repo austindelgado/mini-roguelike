@@ -230,23 +230,34 @@ public class RoundSystem : NetworkBehaviour
 
         roundChat.ServerSend(winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " defeated " + loser.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + "!");
 
+        // Calculate bet multiplier
+        float betMultiplier = 1;
+
         // Payout bets
         if (winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>() == host)
         {
             foreach (Bet bet in hostBets)
             {
-                bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(bet.amount);
-                roundChat.ServerSend(bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won bet and earned " + bet.amount + "!");
+                int playerAmount = Mathf.RoundToInt(bet.amount * betMultiplier);
+                bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(playerAmount);
+                roundChat.ServerSend(bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won bet and earned " + playerAmount + "!");
             }
+
+            // Payout duel winner
         }
         else
         {
             foreach (Bet bet in challengerBets)
             {
-                bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(bet.amount);
-                roundChat.ServerSend(bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won bet and earned " + bet.amount + "!");
+                int playerAmount = Mathf.RoundToInt(bet.amount * betMultiplier);
+                bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(playerAmount);
+                roundChat.ServerSend(bet.better.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won bet and earned " + playerAmount + "!");
             }
+            
+            // Payout duel winner
+
         }
+
         
         if (activeRounds == 0)
         {
