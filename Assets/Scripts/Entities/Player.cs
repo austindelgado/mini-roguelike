@@ -40,6 +40,8 @@ public class Player : Entity
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        
+        weapon.Equip("4bb9b53f6f58c314d95add2f29c6c5df");
         CmdSetupPlayer(color);
     }
 
@@ -111,7 +113,7 @@ public class Player : Entity
         foreach (Collider2D hit in hits)
         {
             // Ignore our own collider.
-            if (hit == circleCollider || hit.gameObject.tag == "Projectile" || hit.gameObject.tag == "Friendly")
+            if (hit == circleCollider || hit.gameObject.tag == "Projectile")
                 continue;
 
             ColliderDistance2D colliderDistance = hit.Distance(circleCollider);

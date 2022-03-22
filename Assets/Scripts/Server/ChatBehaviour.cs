@@ -31,7 +31,10 @@ public class ChatBehaviour : NetworkBehaviour
 
     private void HandleNewMessage(string message)
     {
-        chatText.text += message;
+        if (message != "")
+            chatText.text += message;
+        else
+            chatText.text = string.Empty;
     }
 
     [Client]
@@ -64,5 +67,17 @@ public class ChatBehaviour : NetworkBehaviour
     public void ServerSend(string message)
     {
         RpcHandleMessage($"{message}");
+    }
+
+    [Server]
+    public void ServerClear()
+    {
+        RpcClear();
+    }
+
+    [ClientRpc]
+    private void RpcClear()
+    {
+        OnMessage?.Invoke($"");
     }
 }

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06daf432cc3b0834cba112643d14a5f5, type: 3}
   m_Name: DoubleShotgun
   m_EditorClassIdentifier: 
+  id: dcbbff060c4fafe48933949cee43ee8f
   name: Double Shtogun
   description: 
   sprite: {fileID: 21300000, guid: 44a534cd35c574c4ab7cf28a0e023244, type: 3}
+  price: 300
   damage: 2
   numBullet: 14
   type: 0

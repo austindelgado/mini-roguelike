@@ -7,6 +7,7 @@ public class Weapon : NetworkBehaviour
 {
     public Transform weaponTransform;
     public WeaponData weaponData;
+    [SyncVar] public string weaponID;
     public int currentAmmo;
 
     private bool canShoot = true;
@@ -15,20 +16,32 @@ public class Weapon : NetworkBehaviour
 
     public Projectile projectilePrefab; // Here because all are shared for now
 
-    // Player is currently responsible for rotating weaponTransform, maybe move that here in the future
-
-    public override void OnStartAuthority()
+    public void Start()
     {
-        Equip(weaponData.ID); // Equip pistol by default
+        if (!hasAuthority && !isServer)
+            Equip(weaponID);
     }
 
+    // Player is currently responsible for rotating weaponTransform, maybe move that here in the future
     public void Equip(string ID) // Change this to use ID
     {
-        this.weaponData = Data.Instance.GetWeaponData(ID);
+        weaponID = ID;
+        this.weaponData = Data.Instance.GetWeaponData(weaponID);
         weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
         currentAmmo = weaponData.ammoAmount;
 
-        CmdEquip(ID);
+        if (hasAuthority)
+            CmdEquip(ID);
+    }
+
+    [Server]
+    public void ServerEquip(string ID)
+    {
+        weaponID = ID;
+        weaponData = Data.Instance.GetWeaponData(weaponID);
+        weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
+
+        RpcEquip(ID);
     }
 
     [Command]
@@ -43,7 +56,8 @@ public class Weapon : NetworkBehaviour
         if (hasAuthority)
             return;
 
-        this.weaponData = Data.Instance.GetWeaponData(ID);
+        weaponID = ID;
+        weaponData = Data.Instance.GetWeaponData(weaponID);
         weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;
     }
 
@@ -87,7 +101,10 @@ public class Weapon : NetworkBehaviour
                     // Calculate spread
                     Quaternion offset = Quaternion.AngleAxis(fixedOffset + Random.Range(-weaponData.spreadAngle, weaponData.spreadAngle), Vector3.forward);
                     
-                    SpawnProjectile(weaponTransform.position, offset * weaponTransform.rotation);
+                    if (!isServer && hasAuthority)
+                        SpawnProjectile(weaponTransform.position, offset * weaponTransform.rotation);
+                    else
+                        ServerSpawnProjectile(weaponTransform.position, offset * weaponTransform.rotation);
 
                     yield return new WaitForSeconds(weaponData.burstDelay);
 
@@ -124,8 +141,16 @@ public class Weapon : NetworkBehaviour
             Projectile projectile = Instantiate(projectilePrefab, position, rotation);
             projectile.Initialize(gameObject, weaponData.damage, weaponData.speed, 0f);
         }
-
         CmdSpawnProjectile(gameObject, weaponData.damage, weaponData.speed, position, rotation, NetworkTime.time);
+    }
+
+    [Server]
+    private void ServerSpawnProjectile(Vector3 position, Quaternion rotation)
+    {
+        Projectile projectile = Instantiate(projectilePrefab, position, rotation);
+        projectile.Initialize(gameObject, weaponData.damage, weaponData.speed, 0f);
+
+        RpcSpawnProjectile(gameObject, weaponData.damage, weaponData.speed, position, rotation, NetworkTime.time);
     }
 
     [Command]
@@ -134,7 +159,7 @@ public class Weapon : NetworkBehaviour
         double timePassed = NetworkTime.time - networkTime;
 
         Projectile projectile = Instantiate(projectilePrefab, position, rotation);
-        projectile.Initialize(parent, damage, speed, (float)timePassed); // Add passing in parent here
+        projectile.Initialize(parent, damage, speed, (float)timePassed);
 
         RpcSpawnProjectile(parent, damage, speed, position, rotation, networkTime);
     }
@@ -142,13 +167,13 @@ public class Weapon : NetworkBehaviour
     [ClientRpc]
     void RpcSpawnProjectile(GameObject parent, int damage, float speed, Vector3 position, Quaternion rotation, double networkTime)
     {
-        if (hasAuthority)
+        if ((isServer && isClient) || hasAuthority)
             return;
 
         double timePassed = NetworkTime.time - networkTime;
 
         Projectile projectile = Instantiate(projectilePrefab, position, rotation);
-        projectile.Initialize(parent, damage, speed, (float)timePassed); // Add passing in parent here
+        projectile.Initialize(parent, damage, speed, (float)timePassed);
     }
 
     #endregion
