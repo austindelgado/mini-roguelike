@@ -23,7 +23,6 @@ public class GridCell : MonoBehaviour
     [Server]
     public void AssignPlayer(GameObject player)
     {
-        Debug.Log(gameObject.name + " is assigned " + player.name);
         this.player = player;
 
         // With a player assigned, we want to subscribe to RoundStart event
