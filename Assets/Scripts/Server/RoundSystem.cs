@@ -244,6 +244,9 @@ public class RoundSystem : NetworkBehaviour
             }
 
             // Payout duel winner
+            int duelWin = 100 + 10 * (roundNumber - 1);
+            winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(duelWin);
+            roundChat.ServerSend(winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won duel and earned " + duelWin + "!");
         }
         else
         {
@@ -255,7 +258,9 @@ public class RoundSystem : NetworkBehaviour
             }
             
             // Payout duel winner
-
+            int duelWin = 100 + 10 * (roundNumber - 1);
+            winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(duelWin);
+            roundChat.ServerSend(winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won duel and earned " + duelWin + "!");
         }
 
         

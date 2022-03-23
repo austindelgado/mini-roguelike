@@ -77,7 +77,7 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
         if (gold >= weaponData.price)
         {
             gold -= weaponData.price;
-            player.GetComponent<Weapon>().ServerEquip(ID);
+            player.GetComponent<Weapon>().Equip(ID);
         }
     }
 
