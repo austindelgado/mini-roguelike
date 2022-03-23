@@ -50,7 +50,6 @@ public class PlayerSpawnSystem : NetworkBehaviour
             return;
         }
 
-        Debug.Log(spawnPoint.position);
         GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation);
         playerInstance.name = "Player " + nextIndex;
         NetworkServer.Spawn(playerInstance, conn);

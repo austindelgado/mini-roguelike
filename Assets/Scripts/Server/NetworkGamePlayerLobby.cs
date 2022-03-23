@@ -43,6 +43,7 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     public override void OnStartAuthority()
     {
         goldUI.SetActive(true);
+        goldText.text = gold.ToString();
     }
 
     void OnGoldChanged(int _Old, int _New)

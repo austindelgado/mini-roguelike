@@ -53,9 +53,6 @@ public class Weapon : NetworkBehaviour
     [ClientRpc]
     void RpcEquip(string ID)
     {
-        if (hasAuthority)
-            return;
-
         weaponID = ID;
         weaponData = Data.Instance.GetWeaponData(weaponID);
         weaponTransform.gameObject.GetComponent<SpriteRenderer>().sprite = weaponData.sprite;

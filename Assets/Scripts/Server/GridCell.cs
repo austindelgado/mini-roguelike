@@ -23,7 +23,6 @@ public class GridCell : MonoBehaviour
     [Server]
     public void AssignPlayer(GameObject player)
     {
-        Debug.Log(gameObject.name + " is assigned " + player.name);
         this.player = player;
 
         // With a player assigned, we want to subscribe to RoundStart event
@@ -92,7 +91,7 @@ public class GridCell : MonoBehaviour
     {
         for (int i = 0; i < round; i++)
         {
-            GameObject enemyInstance = Instantiate(enemyPrefab, transform.position + new Vector3(i + 0f, 2f, 0f), transform.rotation); // TODO enemies should be children of grid but grid is currently scaled up from 1
+            GameObject enemyInstance = Instantiate(enemyPrefab, transform.position + new Vector3(0f, 2, 0f), transform.rotation); // TODO enemies should be children of grid but grid is currently scaled up from 1
             NetworkServer.Spawn(enemyInstance);
             enemyInstance.GetComponent<Enemy>().SetGridPlayer(player, this);
             enemies.Add(enemyInstance);
