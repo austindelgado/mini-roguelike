@@ -231,7 +231,7 @@ public class RoundSystem : NetworkBehaviour
         roundChat.ServerSend(winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " defeated " + loser.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + "!");
 
         // Calculate bet multiplier
-        float betMultiplier = 1;
+        float betMultiplier = 2;
 
         // Payout bets
         if (winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>() == host)
