@@ -16,7 +16,7 @@ MonoBehaviour:
   name: Auto Shotgun
   description: 
   sprite: {fileID: 21300000, guid: c72778c2328b02a40a1ea89209fde6a0, type: 3}
-  price: 400
+  price: 550
   damage: 2
   numBullet: 6
   type: 2

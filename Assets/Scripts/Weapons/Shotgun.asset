@@ -21,7 +21,7 @@ MonoBehaviour:
   numBullet: 7
   type: 0
   speed: 5
-  spreadAngle: 20
+  spreadAngle: 18
   fixedAngle: 0
   burstDelay: 0
   fireDelay: 0.57
