@@ -43,6 +43,7 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
     public override void OnStartAuthority()
     {
         goldUI.SetActive(true);
+        goldText.text = gold.ToString();
     }
 
     void OnGoldChanged(int _Old, int _New)
@@ -77,7 +78,7 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
         if (gold >= weaponData.price)
         {
             gold -= weaponData.price;
-            player.GetComponent<Weapon>().Equip(ID);
+            player.GetComponent<Weapon>().ServerEquip(ID);
         }
     }
 
