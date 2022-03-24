@@ -25,13 +25,11 @@ public class BetUI : NetworkBehaviour
             if (!string.IsNullOrWhiteSpace(hostBet.text))
             {
                 amount = int.Parse(hostBet.text);
-                Debug.Log(amount);
                 NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>().CmdBet(amount, true);
             }
             else
             {
                 amount = int.Parse(challengerBet.text);
-                Debug.Log(amount);
                 NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>().CmdBet(amount, false);
             }
 

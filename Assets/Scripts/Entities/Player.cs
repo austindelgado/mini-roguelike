@@ -10,6 +10,7 @@ public class Player : Entity
     public GameObject playerUI;
 
     public Vector3 spawnPoint;
+    [SyncVar] public Vector3 gridCellPos;
 
     public Weapon weapon;
     public Transform weaponTransform;
@@ -172,5 +173,17 @@ public class Player : Entity
             // Move Camera too
             cam.gameObject.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, -10);
         }
+    }
+
+    public void TeleportCam(Vector3 cameraPosition)
+    {
+        if (hasAuthority)
+            cam.gameObject.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, -10);
+    }
+
+    public void ResetCam()
+    {
+        if (hasAuthority)
+            cam.gameObject.transform.position = new Vector3(0, 0, -10);
     }
 }

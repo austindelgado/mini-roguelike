@@ -20,6 +20,7 @@ public class RoundSystem : NetworkBehaviour
     [SerializeField] private TMP_Text challengerUIText = null;
     [SerializeField] private GameObject shopUI = null;
     [SerializeField] private GameObject betUI = null;
+    [SerializeField] private GameObject spectateUI = null;
     
     [SerializeField] private ChatBehaviour roundChat = null;
 
@@ -65,6 +66,7 @@ public class RoundSystem : NetworkBehaviour
     {
         if (countdownActive)
         {
+            ResetCamera();
             timerObject.SetActive(true);
             shopUI.SetActive(true);
             timerText.text = ((int)(timeBtwRound - (NetworkTime.time - countdownStartTime))).ToString();
@@ -120,7 +122,7 @@ public class RoundSystem : NetworkBehaviour
             }
 
             gridCell.AssignPlayer(Room.GamePlayers[i].player);
-
+            Room.GamePlayers[i].player.GetComponent<Player>().gridCellPos = gridCell.transform.position;
             nextIndex++;
         }
     }
@@ -157,6 +159,10 @@ public class RoundSystem : NetworkBehaviour
     {
         countdownStartTime = time;
         countdownActive = true;
+        spectateUI.SetActive(false);
+
+        this.host = host;
+        this.challenger = challenger;
 
         if (host != null && challenger != null)
             SetDuelIU(host, challenger);
@@ -218,6 +224,7 @@ public class RoundSystem : NetworkBehaviour
         if (activeRounds == 0)
         {
             roundNumber++;
+            ResetCamera();
             PrepDuel();
             RpcStartCountdown(NetworkTime.time, 0, host, challenger);
         }
@@ -262,11 +269,11 @@ public class RoundSystem : NetworkBehaviour
             winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().ChangeGold(duelWin);
             roundChat.ServerSend(winner.identity.gameObject.GetComponent<NetworkGamePlayerLobby>().displayName + " won duel and earned " + duelWin + "!");
         }
-
         
         if (activeRounds == 0)
         {
             roundNumber++; // TODO Clean this up, round might increment twice?
+            ResetCamera();
             PrepDuel();
             RpcStartCountdown(NetworkTime.time, 0, host, challenger);
         }
@@ -276,6 +283,9 @@ public class RoundSystem : NetworkBehaviour
     public void RpcPlayerRoundEnd(NetworkConnection target)
     {
         timerActive = false;
+
+        if (host != null && challenger != null)
+            spectateUI.SetActive(true);
     }
 
     [Server]
@@ -348,5 +358,17 @@ public class RoundSystem : NetworkBehaviour
             hostBets.Add(new Bet(better, amount));
         else
             challengerBets.Add(new Bet(better, amount));
+    }
+
+    [Client]
+    public void Spectate()
+    {
+        NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>().player.GetComponent<Player>().TeleportCam(host.player.GetComponent<Player>().gridCellPos);
+    }
+
+    [Client]
+    public void ResetCamera()
+    {
+        NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>().player.GetComponent<Player>().ResetCam();
     }
 }
