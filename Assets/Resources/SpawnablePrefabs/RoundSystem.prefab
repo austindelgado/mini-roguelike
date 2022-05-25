@@ -5060,6 +5060,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Auto Shotgun
       m_Image: {fileID: 0}
+    - m_Text: Sword
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -7341,7 +7343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8652663861487897076
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7394,6 +7396,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 337f501609feaf14c80cd9a4050cc4f6, type: 2}
   - {fileID: 11400000, guid: b831c0d6452f51643a6fe2f203d2fede, type: 2}
   - {fileID: 11400000, guid: adc379a1a6767504da1d1f5212e8cc62, type: 2}
+  - {fileID: 11400000, guid: f58271c26bb8cd34ba4f26620bc414d3, type: 2}
 --- !u!1 &8628333493288403240
 GameObject:
   m_ObjectHideFlags: 0

@@ -7084,6 +7084,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Data
       objectReference: {fileID: 0}
+    - target: {fileID: 4015255318458904059, guid: 33d5208880548ec40bdeb318c3689dd6, type: 3}
+      propertyPath: weaponDB.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015255318458904059, guid: 33d5208880548ec40bdeb318c3689dd6, type: 3}
+      propertyPath: weaponDB.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: f58271c26bb8cd34ba4f26620bc414d3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d5208880548ec40bdeb318c3689dd6, type: 3}
 --- !u!1 &1937724407

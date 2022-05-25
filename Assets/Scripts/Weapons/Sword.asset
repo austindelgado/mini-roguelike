@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06daf432cc3b0834cba112643d14a5f5, type: 3}
-  m_Name: Bat
+  m_Name: Sword
   m_EditorClassIdentifier: 
   id: f58271c26bb8cd34ba4f26620bc414d3
-  name: Bat
-  description: A Bat
-  sprite: {fileID: 0}
+  name: Sword
+  description: A sword
+  sprite: {fileID: 21300000, guid: 38ad99365a1c4ae41bea8da839f37ff5, type: 3}
   price: 0
+  projectilePrefab: {fileID: 1810171906407645521, guid: 9144a1ffc7178f14aa53b67c2112f2f6, type: 3}
   damage: 5
   numBullet: 0
   type: 0

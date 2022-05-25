@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06daf432cc3b0834cba112643d14a5f5, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
+  id: 4bb9b53f6f58c314d95add2f29c6c5df
   name: Revolver
   description: Your standard pistol
   sprite: {fileID: 21300000, guid: 9c2da7b7760565b44b501b8e780f63d4, type: 3}
+  price: 0
+  projectilePrefab: {fileID: 1810171906407645521, guid: 9144a1ffc7178f14aa53b67c2112f2f6, type: 3}
   damage: 2
   numBullet: 1
   type: 0
