@@ -19,6 +19,7 @@ public class WeaponData : ScriptableObject
     public int price;
 
     [Header("Shooting")]
+    public Projectile projectilePrefab;
     public int damage; // Damage per bullet
     public int numBullet; // Number of bullets per shot
     public FireType type;

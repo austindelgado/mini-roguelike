@@ -135,7 +135,7 @@ public class Weapon : NetworkBehaviour
     {
         if (!isServer)
         {
-            Projectile projectile = Instantiate(projectilePrefab, position, rotation);
+            Projectile projectile = Instantiate(weaponData.projectilePrefab, position, rotation);
             projectile.Initialize(gameObject, weaponData.damage, weaponData.speed, 0f);
         }
         CmdSpawnProjectile(gameObject, weaponData.damage, weaponData.speed, position, rotation, NetworkTime.time);
@@ -144,7 +144,7 @@ public class Weapon : NetworkBehaviour
     [Server]
     private void ServerSpawnProjectile(Vector3 position, Quaternion rotation)
     {
-        Projectile projectile = Instantiate(projectilePrefab, position, rotation);
+        Projectile projectile = Instantiate(weaponData.projectilePrefab, position, rotation);
         projectile.Initialize(gameObject, weaponData.damage, weaponData.speed, 0f);
 
         RpcSpawnProjectile(gameObject, weaponData.damage, weaponData.speed, position, rotation, NetworkTime.time);
@@ -155,7 +155,7 @@ public class Weapon : NetworkBehaviour
     {
         double timePassed = NetworkTime.time - networkTime;
 
-        Projectile projectile = Instantiate(projectilePrefab, position, rotation);
+        Projectile projectile = Instantiate(weaponData.projectilePrefab, position, rotation);
         projectile.Initialize(parent, damage, speed, (float)timePassed);
 
         RpcSpawnProjectile(parent, damage, speed, position, rotation, networkTime);
@@ -169,7 +169,7 @@ public class Weapon : NetworkBehaviour
 
         double timePassed = NetworkTime.time - networkTime;
 
-        Projectile projectile = Instantiate(projectilePrefab, position, rotation);
+        Projectile projectile = Instantiate(weaponData.projectilePrefab, position, rotation);
         projectile.Initialize(parent, damage, speed, (float)timePassed);
     }
 
