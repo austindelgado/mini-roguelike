@@ -58,6 +58,7 @@ public class NetworkGamePlayerLobby : NetworkBehaviour
         this.displayName = displayName;
     }
 
+    [ClientRpc]
     public void SetPlayer(GameObject player)
     {
         this.player = player;
