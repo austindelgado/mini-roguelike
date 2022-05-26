@@ -48,6 +48,7 @@ public class NetworkManagerLobby : NetworkManager
     {
         base.OnClientDisconnect();
 
+        ServerChangeScene("MainMenu");
         OnClientDisconnected?.Invoke();
     }
 
