@@ -39,6 +39,7 @@ public class Player : Entity
     public override void OnStartAuthority()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        cam.GetComponent<CameraController>().enabled = true;
 
         Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         
@@ -149,7 +150,7 @@ public class Player : Entity
             this.transform.position = spawnPoint;
         
             // Move Camera too
-            cam.gameObject.transform.position = new Vector3(0, 0, -10);
+            //cam.gameObject.transform.position = new Vector3(0, 0, -10);
         }
     }
 
@@ -160,7 +161,7 @@ public class Player : Entity
             this.transform.position = spawnPoint;
         
             // Move Camera too
-            cam.gameObject.transform.position = new Vector3(0, 0, -10);
+            //cam.gameObject.transform.position = new Vector3(0, 0, -10);
         }
     }
 
@@ -171,19 +172,19 @@ public class Player : Entity
         {
             this.transform.position = playerPosition;
             // Move Camera too
-            cam.gameObject.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, -10);
+            //cam.gameObject.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, -10);
         }
     }
 
     public void TeleportCam(Vector3 cameraPosition)
     {
-        if (hasAuthority)
-            cam.gameObject.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, -10);
+        // if (hasAuthority)
+        //     cam.gameObject.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, -10);
     }
 
     public void ResetCam()
     {
-        if (hasAuthority)
-            cam.gameObject.transform.position = new Vector3(0, 0, -10);
+        // if (hasAuthority)
+        //     cam.gameObject.transform.position = new Vector3(0, 0, -10);
     }
 }

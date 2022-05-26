@@ -66,7 +66,6 @@ public class RoundSystem : NetworkBehaviour
     {
         if (countdownActive)
         {
-            ResetCamera();
             timerObject.SetActive(true);
             shopUI.SetActive(true);
             timerText.text = ((int)(timeBtwRound - (NetworkTime.time - countdownStartTime))).ToString();
@@ -224,7 +223,6 @@ public class RoundSystem : NetworkBehaviour
         if (activeRounds == 0)
         {
             roundNumber++;
-            ResetCamera();
             PrepDuel();
             RpcStartCountdown(NetworkTime.time, 0, host, challenger);
         }
@@ -273,7 +271,6 @@ public class RoundSystem : NetworkBehaviour
         if (activeRounds == 0)
         {
             roundNumber++; // TODO Clean this up, round might increment twice?
-            ResetCamera();
             PrepDuel();
             RpcStartCountdown(NetworkTime.time, 0, host, challenger);
         }
@@ -358,17 +355,5 @@ public class RoundSystem : NetworkBehaviour
             hostBets.Add(new Bet(better, amount));
         else
             challengerBets.Add(new Bet(better, amount));
-    }
-
-    [Client]
-    public void Spectate()
-    {
-        NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>().player.GetComponent<Player>().TeleportCam(host.player.GetComponent<Player>().gridCellPos);
-    }
-
-    [Client]
-    public void ResetCamera()
-    {
-        NetworkClient.localPlayer.gameObject.GetComponent<NetworkGamePlayerLobby>().player.GetComponent<Player>().ResetCam();
     }
 }
